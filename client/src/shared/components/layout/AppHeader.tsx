@@ -8,6 +8,7 @@ import { CSSTransition } from 'react-transition-group';
 import { v4 } from 'uuid';
 
 import fullLogo from '../../../assets/images/logo-full.png';
+import { AppRoute, ShopRoute } from '../../../config/route';
 import { CartIcon, PhoneIcon } from '../icon';
 
 const LayoutHeader = styled(Layout.Header)(props => ({
@@ -25,14 +26,14 @@ const LayoutHeader = styled(Layout.Header)(props => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    '.phone-box': {
+    '.phone-line': {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       gap: '0.8rem'
     },
     '& .ant-typography': {
-      color: props.theme.colors.primaryBlack,
+      color: 'inherit',
       fontSize: '1.4rem',
       fontFamily: "'Oxygen', san-serif"
     }
@@ -60,10 +61,11 @@ const LayoutHeader = styled(Layout.Header)(props => ({
       fontFamily: "'Playfair Display', san-serif",
       fontSize: '1.6rem',
       textTransform: 'uppercase',
+      color: props.theme.colors.primaryBlack,
       '& a:hover': {
         color: props.theme.colors.secondaryRed
       },
-      '.active': {
+      '.link-active': {
         color: props.theme.colors.secondaryRed,
         position: 'relative',
         '&:after': {
@@ -104,15 +106,15 @@ const transitionDownOutlinedStyles = {
 
 const items: MenuProps['items'] = [
   {
-    label: 'For Men',
+    label: <Link to={`${AppRoute.SHOP}/${ShopRoute.MEN}`}>For Men</Link>,
     key: v4()
   },
   {
-    label: 'For Women',
+    label: <Link to={`${AppRoute.SHOP}/${ShopRoute.WOMEN}`}>For Women</Link>,
     key: v4()
   },
   {
-    label: 'For Unisex',
+    label: <Link to={`${AppRoute.SHOP}/${ShopRoute.UNISEX}`}>For Unisex</Link>,
     key: v4()
   }
 ];
@@ -133,15 +135,18 @@ const AppHeader: React.FC = () => {
   return (
     <LayoutHeader>
       <nav className="header-box">
-        <div className="phone-box">
+        <a
+          href="tel:+0123456789"
+          className="phone-line"
+        >
           <PhoneIcon />
           <Typography.Text>Hotline: (01) 23 456 789</Typography.Text>
-        </div>
+        </a>
         <Typography.Text>Welcome Guest, have a nice day!</Typography.Text>
       </nav>
       <hr />
       <nav className="main-nav">
-        <Link to="/">
+        <Link to={AppRoute.HOME}>
           <img
             className="brand-logo"
             src={fullLogo}
@@ -151,8 +156,10 @@ const AppHeader: React.FC = () => {
         <ul className="nav-list">
           <li>
             <NavLink
-              className={({ isActive }) => (isActive ? 'active' : undefined)}
-              to="/"
+              className={({ isActive }) =>
+                isActive ? 'link-active' : undefined
+              }
+              to={AppRoute.HOME}
               end
             >
               Home
@@ -160,8 +167,10 @@ const AppHeader: React.FC = () => {
           </li>
           <li>
             <NavLink
-              className={({ isActive }) => (isActive ? 'active' : undefined)}
-              to="/about"
+              className={({ isActive }) =>
+                isActive ? 'link-active' : undefined
+              }
+              to={AppRoute.ABOUT}
               end
             >
               About us
@@ -182,21 +191,39 @@ const AppHeader: React.FC = () => {
                 }}
               >
                 <Space align="start">
-                  <span>Shop</span>
+                  <NavLink
+                    to={AppRoute.SHOP}
+                    className={({ isActive }) =>
+                      isActive ? 'link-active' : undefined
+                    }
+                  >
+                    Shop
+                  </NavLink>
                   <CSSTransition
                     ref={nodeRef}
                     in={open}
                     timeout={duration}
                   >
                     {state => (
-                      <DownOutlined
-                        ref={nodeRef}
-                        style={{
-                          ...defaultDownOutlinedStyle,
-                          ...transitionDownOutlinedStyles[state],
-                          fontSize: '1.4rem'
+                      <NavLink
+                        to={AppRoute.SHOP}
+                        style={({ isActive }) => {
+                          return {
+                            color: isActive
+                              ? emotionTheme.colors.secondaryRed
+                              : 'inherit'
+                          };
                         }}
-                      />
+                      >
+                        <DownOutlined
+                          ref={nodeRef}
+                          style={{
+                            ...defaultDownOutlinedStyle,
+                            ...transitionDownOutlinedStyles[state],
+                            fontSize: '1.4rem'
+                          }}
+                        />
+                      </NavLink>
                     )}
                   </CSSTransition>
                 </Space>
@@ -205,8 +232,10 @@ const AppHeader: React.FC = () => {
           </li>
           <li>
             <NavLink
-              className={({ isActive }) => (isActive ? 'active' : undefined)}
-              to="/contact"
+              className={({ isActive }) =>
+                isActive ? 'link-active' : undefined
+              }
+              to={AppRoute.CONTACT}
               end
             >
               Contact
@@ -219,7 +248,9 @@ const AppHeader: React.FC = () => {
             count={0}
             showZero
           >
-            <CartIcon />
+            <Link to={AppRoute.CART}>
+              <CartIcon />
+            </Link>
           </Badge>
           <Typography.Text style={{ fontSize: '1.6rem' }}>
             $ 0.00

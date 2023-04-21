@@ -27,15 +27,24 @@ ul {
   list-style-type: none;
 }
 
-a {
+li {
+  text-align: start;
+}
+
+
+a,
+a:hover,
+a:visited,
+a:active,
+a:link {
   color: inherit;
 }
 
 @keyframes pulse {
   0% {
-    width: 30%;
+    width: 0.8rem;
   }
   50% {
-    width: 40%;
+    width: 2.8rem;
   }
 }
