@@ -20,4 +20,22 @@ body {
   font-family: 'Oxygen', 'Playfair Display', 'Rufina', sans-serif;
   line-height: 1;
   font-weight: 400;
+  color: #2b2f32;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  color: inherit;
+}
+
+@keyframes pulse {
+  0% {
+    width: 30%;
+  }
+  50% {
+    width: 40%;
+  }
 }

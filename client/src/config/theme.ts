@@ -5,6 +5,10 @@ export const theme: Theme = {
     primaryBlack: '#2B2F32',
     secondaryRed: '#C97178',
     bgWhite: '#FCFCFC',
-    textWhite: '#FFFFFF'
+    textWhite: '#FFFFFF',
+    textGray: '#AAACAD'
+  },
+  keyframes: {
+    pulse: 'pulse 1s ease'
   }
 };

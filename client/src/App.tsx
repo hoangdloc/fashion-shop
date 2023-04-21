@@ -1,7 +1,9 @@
 import { useTheme } from '@emotion/react';
-import { ConfigProvider as AntdGlobalConfigProvider } from 'antd';
+import { ConfigProvider as AntdGlobalConfigProvider, Layout } from 'antd';
 import React, { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
+
+import { AppFooter, AppHeader } from './shared/components/layout';
 
 function App (): JSX.Element {
   const emotionTheme = useTheme();
@@ -12,11 +14,18 @@ function App (): JSX.Element {
         theme={{
           token: {
             colorPrimary: emotionTheme.colors.primaryBlack,
-            borderRadius: 0
+            borderRadius: 0,
+            fontFamily: "'Oxygen', san-serif"
           }
         }}
       >
-        <Outlet />
+        <Layout>
+          <AppHeader />
+          <Layout.Content>
+            <Outlet />
+          </Layout.Content>
+          <AppFooter />
+        </Layout>
       </AntdGlobalConfigProvider>
     </Suspense>
   );

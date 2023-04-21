@@ -1,4 +1,5 @@
 import './index.css';
+import 'antd/dist/reset.css';
 
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import React from 'react';

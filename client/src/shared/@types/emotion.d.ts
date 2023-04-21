@@ -7,6 +7,10 @@ declare module '@emotion/react' {
       secondaryRed: string
       bgWhite: string
       textWhite: string
+      textGray: string
+    }
+    keyframes: {
+      pulse: string
     }
   }
 }
