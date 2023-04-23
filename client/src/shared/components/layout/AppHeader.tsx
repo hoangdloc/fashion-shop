@@ -62,7 +62,7 @@ const LayoutHeader = styled(Layout.Header)(props => ({
       fontSize: '1.6rem',
       textTransform: 'uppercase',
       color: props.theme.colors.primaryBlack,
-      '& a:hover': {
+      '& a:hover, span:hover': {
         color: props.theme.colors.secondaryRed
       },
       '.link-active': {
@@ -185,11 +185,7 @@ const AppHeader: React.FC = () => {
               onOpenChange={handleOpenChange}
               open={open}
             >
-              <a
-                onClick={e => {
-                  e.preventDefault();
-                }}
-              >
+              <span>
                 <Space align="start">
                   <NavLink
                     to={AppRoute.SHOP}
@@ -227,7 +223,7 @@ const AppHeader: React.FC = () => {
                     )}
                   </CSSTransition>
                 </Space>
-              </a>
+              </span>
             </Dropdown>
           </li>
           <li>

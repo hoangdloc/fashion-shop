@@ -9,6 +9,7 @@ declare module '@emotion/react' {
       textWhite: string
       textGray: string
       footerBg: string
+      horizontalColor: string
     }
     keyframes: {
       pulse: string
