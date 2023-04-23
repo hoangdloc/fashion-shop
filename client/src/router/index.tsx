@@ -44,10 +44,6 @@ export default createBrowserRouter([
         ]
       },
       {
-        path: AppRoute.CONTACT,
-        element: <div>Contact...</div>
-      },
-      {
         path: AppRoute.CART,
         element: <div>Cart...</div>
       },
