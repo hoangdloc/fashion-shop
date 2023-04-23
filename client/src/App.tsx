@@ -1,16 +1,19 @@
 import { useTheme } from '@emotion/react';
 import { ConfigProvider as AntdGlobalConfigProvider, Layout } from 'antd';
-import React, { Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
+import LoadingPage from './pages/LoadingPage';
 import EmotionGlobalStyles from './shared/components/global-style';
-import { AppFooter, AppHeader } from './shared/components/layout';
+
+const AppFooter = lazy(async () => await import('./shared/components/layout/AppFooter'));
+const AppHeader = lazy(async () => await import('./shared/components/layout/AppHeader'));
 
 function App (): JSX.Element {
   const emotionTheme = useTheme();
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingPage />}>
       <EmotionGlobalStyles />
       <AntdGlobalConfigProvider
         theme={{

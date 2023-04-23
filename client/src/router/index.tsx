@@ -5,6 +5,7 @@ import App from '../App';
 import { AppRoute, ShopRoute } from '../config/route';
 import ErrorPage from '../pages/ErrorPage';
 
+const HomePage = lazy(async () => await import('../pages/HomePage'));
 const NotFoundPage = lazy(async () => await import('../pages/NotFoundPage'));
 
 export default createBrowserRouter([
@@ -15,7 +16,7 @@ export default createBrowserRouter([
       {
         index: true,
         path: AppRoute.HOME,
-        element: <div>Home...</div>
+        element: <HomePage />
       },
       {
         path: AppRoute.ABOUT,
