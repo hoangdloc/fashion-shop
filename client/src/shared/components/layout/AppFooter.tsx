@@ -26,7 +26,6 @@ const LayoutFooter = styled(Layout.Footer)(props => ({
   '& .footer-container': {
     padding: '4rem 0 6rem 0',
     paddingBottom: '6rem',
-    borderBottom: `0.1rem solid ${props.theme.colors.horizontalColor}`,
     display: 'grid',
     // gridTemplateColumns: '25.4rem 26.8rem 17.3rem 36.3rem',
     gridTemplateColumns: 'minmax(25.4rem, 1fr) 1fr minmax(17.3rem, 1fr) 1fr',
@@ -254,6 +253,7 @@ const AppFooter: React.FC = () => {
           </div>
         </section>
       </div>
+      <hr />
       <div className="copyright">
         <Typography.Text
           style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '1.2rem' }}

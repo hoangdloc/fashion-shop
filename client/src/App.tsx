@@ -24,7 +24,9 @@ function App (): JSX.Element {
       >
         <Layout>
           <AppHeader />
-          <Layout.Content>
+          <Layout.Content
+            style={{ backgroundColor: emotionTheme.colors.bgWhite }}
+          >
             <Outlet />
           </Layout.Content>
           <AppFooter />

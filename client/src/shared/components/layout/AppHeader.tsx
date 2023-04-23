@@ -38,11 +38,6 @@ const LayoutHeader = styled(Layout.Header)(props => ({
       fontFamily: "'Oxygen', san-serif"
     }
   },
-  hr: {
-    border: 'none',
-    height: '0.1rem',
-    backgroundColor: '#D5D5D6'
-  },
   '.main-nav': {
     width: '100%',
     padding: '0 16rem',
@@ -253,6 +248,7 @@ const AppHeader: React.FC = () => {
           </Typography.Text>
         </div>
       </nav>
+      <hr />
     </LayoutHeader>
   );
 };

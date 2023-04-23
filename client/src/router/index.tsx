@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import App from '../App';
 import { AppRoute, ShopRoute } from '../config/route';
 import ErrorPage from '../pages/ErrorPage';
-import MyButton from '../shared/components/button';
+
+const NotFoundPage = lazy(async () => await import('../pages/NotFoundPage'));
 
 export default createBrowserRouter([
   {
@@ -14,10 +15,10 @@ export default createBrowserRouter([
       {
         index: true,
         path: AppRoute.HOME,
-        element: <MyButton type="primary">Hello World</MyButton>
+        element: <div>Home...</div>
       },
       {
-        path: AppRoute.CONTACT,
+        path: AppRoute.ABOUT,
         element: <div>About...</div>
       },
       {
@@ -52,7 +53,7 @@ export default createBrowserRouter([
       },
       {
         path: '*',
-        element: <div>404 Page</div>
+        element: <NotFoundPage />
       }
     ]
   }
