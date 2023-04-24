@@ -19,6 +19,7 @@ const LayoutHeader = styled(Layout.Header)(props => ({
   height: '14.2rem',
   backgroundColor: props.theme.colors.bgWhite,
   padding: 0,
+  borderBottom: `0.1rem solid ${props.theme.colors.horizontalColor}`,
   '.header-box': {
     height: '4rem',
     width: '100%',
@@ -248,7 +249,6 @@ const AppHeader: React.FC = () => {
           </Typography.Text>
         </div>
       </nav>
-      <hr />
     </LayoutHeader>
   );
 };

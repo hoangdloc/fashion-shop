@@ -28,6 +28,7 @@ const EmotionGlobalStyles: React.FC = () => {
           color: theme.colors.secondaryRed
         },
         ul: {
+          margin: 0,
           listStyleType: 'none'
         },
         li: {
@@ -35,6 +36,9 @@ const EmotionGlobalStyles: React.FC = () => {
         },
         hr: {
           border: `0.05rem solid ${theme.colors.horizontalColor}`
+        },
+        '.ant-typography': {
+          margin: 0
         },
         '@keyframes pulse': {
           '0%': {
