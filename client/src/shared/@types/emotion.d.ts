@@ -8,6 +8,7 @@ declare module '@emotion/react' {
       bgWhite: string
       textWhite: string
       textGray: string
+      textSubtitle: string
       footerBg: string
       horizontalColor: string
     }

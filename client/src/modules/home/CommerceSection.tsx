@@ -1,3 +1,4 @@
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Typography } from 'antd';
 import React from 'react';
@@ -61,6 +62,7 @@ const CommerceSectionStyles = styled('section')(props => ({
 
 const CommerceSection: React.FC = () => {
   const navigate = useNavigate();
+  const emotionTheme = useTheme();
 
   return (
     <CommerceSectionStyles>
@@ -97,7 +99,8 @@ const CommerceSection: React.FC = () => {
             fontWeight: 300,
             lineHeight: '140%',
             marginBottom: '6rem',
-            width: '36.3rem'
+            width: '36.3rem',
+            color: emotionTheme.colors.textSubtitle
           }}
         >
           Fashion is a both of womenswear and menswear store dedicated to

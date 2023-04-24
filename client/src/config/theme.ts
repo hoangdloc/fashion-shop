@@ -8,6 +8,7 @@ export const theme: Theme = {
     bgWhite: '#FCFCFC',
     textWhite: '#FFFFFF',
     textGray: '#AAACAD',
+    textSubtitle: '#55585A',
     footerBg: '#F3F3F3',
     horizontalColor: '#D5D5D6'
   },
