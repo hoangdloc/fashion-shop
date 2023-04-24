@@ -2,12 +2,10 @@ import styled from '@emotion/styled';
 import { Button, ButtonProps } from 'antd';
 import React from 'react';
 
-import { theme } from '../../../config/theme';
-
-const ButtonStyles = styled(Button)(() => ({
+const ButtonStyles = styled(Button)((props) => ({
   fontFamily: "'Oxygen', san-serif",
   boxShadow: 'none',
-  color: theme.colors.textWhite
+  color: props.theme.colors.textWhite
 }));
 
 const MyButton: React.FC<ButtonProps> = props => {

@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-import { HeroSection } from '../modules/home';
+import { CommerceSection, HeroSection } from '../modules/home';
 
 const HomePage: React.FC = () => {
   return (
-    <main>
+    <Fragment>
       <HeroSection />
-    </main>
+      <CommerceSection />
+    </Fragment>
   );
 };
 

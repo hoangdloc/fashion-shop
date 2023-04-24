@@ -1,3 +1,4 @@
+import CommerceSection from './CommerceSection';
 import HeroSection from './HeroSection';
 
-export { HeroSection };
+export { HeroSection, CommerceSection };
