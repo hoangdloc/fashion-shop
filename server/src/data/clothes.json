@@ -12,6 +12,8 @@
     "salePercent": 0,
     "soldOut": false,
     "hot": true,
+    "bestSeller": true,
+    "featured": true,
     "overview": "LoLorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit atque eum ut nulla iure fuga, repellat, officiis quasi ab dolor magnam corrupti rerum sit adipisci voluptatum nihil exercitationem facilis sed, totam repudiandae debitis? Incidunt molestias nesciunt enim excepturi quas repellendus, vitae exercitationem odit ea vero ipsa iusto obcaecati placeat esse?rem",
     "description": [
       "Woman 3-piece dress suits: 100% organic cotton",
@@ -31,6 +33,8 @@
     "salePercent": 5,
     "soldOut": true,
     "hot": false,
+    "bestSeller": true,
+    "featured": true,
     "overview": "LoLorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit atque eum ut nulla iure fuga, repellat, officiis quasi ab dolor magnam corrupti rerum sit adipisci voluptatum nihil exercitationem facilis sed, totam repudiandae debitis? Incidunt molestias nesciunt enim excepturi quas repellendus, vitae exercitationem odit ea vero ipsa iusto obcaecati placeat esse?rem",
     "description": [
       "LoLorem ipsum, dolor sit amet consectetur adipisicing elit",
@@ -49,6 +53,8 @@
     "salePercent": 10,
     "soldOut": false,
     "hot": false,
+    "bestSeller": true,
+    "featured": true,
     "overview": "LoLorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit atque eum ut nulla iure fuga, repellat, officiis quasi ab dolor magnam corrupti rerum sit adipisci voluptatum nihil exercitationem facilis sed, totam repudiandae debitis? Incidunt molestias nesciunt enim excepturi quas repellendus, vitae exercitationem odit ea vero ipsa iusto obcaecati placeat esse?rem",
     "description": [
       "LoLorem ipsum, dolor sit amet consectetur adipisicing elit",

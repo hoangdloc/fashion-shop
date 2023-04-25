@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
 
@@ -16,11 +16,13 @@ interface getAllClothesQuery {
   color?: Color;
   size?: Size;
   sortByPrice?: 0 | 1;
+  featured?: boolean;
+  bestSeller?: boolean;
 }
 
-const getAllClothes = (req: Request, res: Response, next: NextFunction) => {
+const getAllClothes = (req: Request, res: Response) => {
   let clothings = clothes;
-  const { gender, type, color, size, sortByPrice } =
+  const { gender, type, color, size, sortByPrice, featured, bestSeller } =
     req.query as getAllClothesQuery;
 
   if (gender) {
@@ -32,6 +34,12 @@ const getAllClothes = (req: Request, res: Response, next: NextFunction) => {
     clothings = clothings.filter(
       clothes => clothes.category[1].toLowerCase() === type.toLowerCase()
     );
+  }
+  if (featured) {
+    clothings = clothings.filter(clothes => clothes.featured);
+  }
+  if (bestSeller) {
+    clothings = clothings.filter(clothes => clothes.bestSeller);
   }
   if (color) {
     clothings = clothings.filter(clothes => {

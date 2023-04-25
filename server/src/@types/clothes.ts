@@ -9,6 +9,8 @@ export interface Clothes {
   salePercent: number
   soldOut: boolean
   hot: boolean
+  bestSeller: boolean,
+  featured: boolean,
   overview: string
   description: string[]
   category: Category
