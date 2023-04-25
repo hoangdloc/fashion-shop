@@ -7,12 +7,12 @@ import MyCarousel from '../../shared/components/carousel';
 import ClothesCard from '../../shared/components/clothes-card';
 
 const FeaturedProductSectionStyles = styled('section')(props => ({
-  padding: '6rem 9.998rem 6.9rem 9.998rem',
+  padding: '6rem 16rem 7rem 16rem',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   '& .ant-tabs-nav': {
-    marginBottom: '3.2rem',
+    marginBottom: '1.6rem',
     '&::before': {
       content: 'none'
     },
@@ -69,6 +69,7 @@ const FeaturedProductSection: React.FC = () => {
           fontWeight: 700,
           lineHeight: '3.952rem',
           letterSpacing: '10%',
+          textTransform: 'uppercase',
           marginBottom: '1.2rem'
         }}
         level={3}
@@ -103,7 +104,10 @@ const FeaturedProductSection: React.FC = () => {
         }}
         items={tabItems}
       />
-      <MyCarousel total={dataTest.length} renderItem={<ClothesCard />} />
+      <MyCarousel
+        total={dataTest.length}
+        renderItem={<ClothesCard />}
+      />
     </FeaturedProductSectionStyles>
   );
 };

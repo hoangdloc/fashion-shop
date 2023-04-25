@@ -1,11 +1,19 @@
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Typography } from 'antd';
+import { ConfigProvider, Typography } from 'antd';
 import React from 'react';
 
 import MyBadge from '../badge';
 import MyButton from '../button';
 import { ShoppingBagIcon } from '../icon';
+
+export interface ClothesCardProps {
+  imgSrc: string
+  to: string
+  title: string
+  price: number
+  salePercent: number
+}
 
 const ClothesCardStyles = styled('div')(props => ({
   '.img-box': {
@@ -34,8 +42,7 @@ const ClothesCardStyles = styled('div')(props => ({
       height: '100%',
       objectFit: 'cover',
       transition: 'transform 0.3s'
-    },
-    '.info-box': {}
+    }
   }
 }));
 
@@ -50,7 +57,7 @@ const ClothesCard: React.FC = () => {
             position: 'absolute',
             top: '1.2rem',
             left: '1.2rem',
-            zIndex: 10
+            zIndex: 2
           }}
         />
         <img
@@ -59,22 +66,26 @@ const ClothesCard: React.FC = () => {
           draggable={false}
         />
         <div className="overlay"></div>
-        <MyButton
-          style={{
-            position: 'absolute',
-            right: '1.6rem',
-            bottom: '1.6rem',
-            width: '4rem',
-            height: '4rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 10,
-            color: emotionTheme.colors.primaryBlack
-          }}
-          icon={<ShoppingBagIcon />}
-          shape="circle"
-        />
+        <ConfigProvider
+          theme={{ token: { colorPrimary: emotionTheme.colors.textWhite } }}
+        >
+          <MyButton
+            style={{
+              position: 'absolute',
+              right: '1.6rem',
+              bottom: '1.6rem',
+              width: '4rem',
+              height: '4rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 2,
+              color: emotionTheme.colors.primaryBlack
+            }}
+            icon={<ShoppingBagIcon />}
+            shape="circle"
+          />
+        </ConfigProvider>
       </div>
       <div className="info-box">
         <Typography.Title

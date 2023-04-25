@@ -51,7 +51,6 @@ const MyCarousel: React.FC<MyCarouselProps> = props => {
           setSwiperInstance(swiper);
         }}
         slidesPerView={4}
-        spaceBetween={50}
         grabCursor
       >
         {new Array(total).fill(0).map((_, index) => (

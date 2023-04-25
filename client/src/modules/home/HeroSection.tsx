@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { Carousel, Typography } from 'antd';
 import { CarouselRef } from 'antd/es/carousel';
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
 
 import hero1 from '../../assets/images/hero1.png';
 import hero2 from '../../assets/images/hero2.jpg';
@@ -11,6 +10,7 @@ import hero4 from '../../assets/images/hero4.jpg';
 import { AppRoute, ShopRoute } from '../../config/route';
 import MyButton from '../../shared/components/button';
 import { LeftArrowIcon, RightArrowIcon } from '../../shared/components/icon';
+import MyLinkButton from '../../shared/components/link-button';
 
 const HeroSectionStyles = styled('div')(props => ({
   width: '100%',
@@ -63,18 +63,6 @@ const HeroSectionStyles = styled('div')(props => ({
         margin: 0,
         color: props.theme.colors.textWhite,
         lineHeight: '140%'
-      },
-      '& > a': {
-        fontSize: '1.6rem',
-        fontWeight: 700,
-        textTransform: 'uppercase',
-        border: `0.2rem solid ${props.theme.colors.textWhite}`,
-        padding: '1.5rem 2.2rem',
-        transition: 'all 0.3s ease-in-out',
-        '&:hover': {
-          backgroundColor: props.theme.colors.textWhite,
-          color: props.theme.colors.primaryBlack
-        }
       }
     }
   }
@@ -168,7 +156,7 @@ const HeroSection: React.FC = () => {
               >
                 {item.description}
               </Typography.Text>
-              <Link to={item.link}>View our shop</Link>
+              <MyLinkButton to={item.link}>View our shop</MyLinkButton>
             </div>
           </div>
         ))}

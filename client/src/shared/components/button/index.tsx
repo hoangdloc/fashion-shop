@@ -4,8 +4,7 @@ import React from 'react';
 
 const ButtonStyles = styled(Button)((props) => ({
   fontFamily: "'Oxygen', san-serif",
-  boxShadow: 'none',
-  color: props.theme.colors.textWhite
+  boxShadow: 'none'
 }));
 
 const MyButton: React.FC<ButtonProps> = props => {
