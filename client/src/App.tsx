@@ -1,13 +1,10 @@
 import { useTheme } from '@emotion/react';
-import { ConfigProvider as AntdGlobalConfigProvider, Layout } from 'antd';
-import React, { lazy, Suspense } from 'react';
+import { ConfigProvider as AntdGlobalConfigProvider } from 'antd';
+import React, { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import LoadingPage from './pages/LoadingPage';
 import EmotionGlobalStyles from './shared/components/global-style';
-
-const AppFooter = lazy(async () => await import('./shared/components/layout/AppFooter'));
-const AppHeader = lazy(async () => await import('./shared/components/layout/AppHeader'));
 
 function App (): JSX.Element {
   const emotionTheme = useTheme();
@@ -25,15 +22,7 @@ function App (): JSX.Element {
           }
         }}
       >
-        <Layout>
-          <AppHeader />
-          <Layout.Content
-            style={{ backgroundColor: emotionTheme.colors.bgWhite }}
-          >
-            <Outlet />
-          </Layout.Content>
-          <AppFooter />
-        </Layout>
+        <Outlet />
       </AntdGlobalConfigProvider>
     </Suspense>
   );

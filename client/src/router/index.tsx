@@ -5,6 +5,10 @@ import App from '../App';
 import { AppRoute, ShopRoute } from '../config/route';
 import ErrorPage from '../pages/ErrorPage';
 
+const MainAppLayout = lazy(
+  async () => await import('../shared/components/layout/MainAppLayout')
+);
+const LoginPage = lazy(async () => await import('../pages/LoginPage'));
 const HomePage = lazy(async () => await import('../pages/HomePage'));
 const NotFoundPage = lazy(async () => await import('../pages/NotFoundPage'));
 
@@ -14,43 +18,53 @@ export default createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        index: true,
-        path: AppRoute.HOME,
-        element: <HomePage />
-      },
-      {
-        path: AppRoute.ABOUT,
-        element: <div>About...</div>
-      },
-      {
-        path: AppRoute.SHOP,
+        element: <MainAppLayout />,
         children: [
           {
-            path: '',
-            element: <Navigate to='men' />
-          },
-          {
             index: true,
-            path: ShopRoute.MEN,
-            element: <div>Shop men...</div>
+            path: AppRoute.HOME,
+            element: <HomePage />
           },
           {
-            path: ShopRoute.WOMEN,
-            element: <div>Shop women...</div>
+            path: AppRoute.ABOUT,
+            element: <div>About...</div>
           },
           {
-            path: ShopRoute.UNISEX,
-            element: <div>Shop unisex...</div>
+            path: AppRoute.SHOP,
+            children: [
+              {
+                path: '',
+                element: <Navigate to="men" />
+              },
+              {
+                index: true,
+                path: ShopRoute.MEN,
+                element: <div>Shop men...</div>
+              },
+              {
+                path: ShopRoute.WOMEN,
+                element: <div>Shop women...</div>
+              },
+              {
+                path: ShopRoute.UNISEX,
+                element: <div>Shop unisex...</div>
+              }
+            ]
+          },
+          {
+            path: AppRoute.CART,
+            element: <div>Cart...</div>
+          },
+          {
+            path: '*',
+            element: <NotFoundPage />
           }
         ]
       },
       {
-        path: AppRoute.CART,
-        element: <div>Cart...</div>
-      },
-      {
-        path: '*',
-        element: <NotFoundPage />
+        element: <LoginPage />,
+        errorElement: <ErrorPage />,
+        path: '/login'
       }
     ]
   }
