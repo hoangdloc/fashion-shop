@@ -3,7 +3,9 @@ export enum AppRoute {
   ABOUT = '/about',
   CONTACT = '/contact',
   SHOP = '/shop',
-  CART = '/cart'
+  CART = '/cart',
+  LOGIN = '/login',
+  SIGNUP = '/signup'
 }
 
 export enum ShopRoute {

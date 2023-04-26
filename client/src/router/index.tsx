@@ -64,7 +64,12 @@ export default createBrowserRouter([
       {
         element: <LoginPage />,
         errorElement: <ErrorPage />,
-        path: '/login'
+        path: AppRoute.LOGIN
+      },
+      {
+        element: <div>Sign up...</div>,
+        errorElement: <ErrorPage />,
+        path: AppRoute.SIGNUP
       }
     ]
   }

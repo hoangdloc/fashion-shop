@@ -34,6 +34,9 @@ const EmotionGlobalStyles: React.FC = () => {
         li: {
           textAlign: 'start'
         },
+        label: {
+          cursor: 'pointer'
+        },
         hr: {
           border: `0.05rem solid ${theme.colors.horizontalColor}`
         },
