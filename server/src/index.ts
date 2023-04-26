@@ -1,4 +1,5 @@
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
@@ -13,6 +14,10 @@ dotenv.config({ path: './config.env' });
 const app = express();
 
 app.use(morgan('dev'));
+
+app.use(cors());
+
+app.options('*', cors());
 
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
