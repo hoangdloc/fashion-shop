@@ -18,7 +18,7 @@ const signToken = (id: number): string =>
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
 const createSendToken = (
-  user: Optional<User, 'password'>,
+  user: User,
   statusCode: number,
   req: Request,
   res: Response
@@ -33,13 +33,14 @@ const createSendToken = (
     httpOnly: true
   });
 
-  user.password = undefined;
+  const infoUser: Optional<User, 'password'> = Object.assign({}, user);
+  infoUser.password = undefined;
 
   res.status(statusCode).json({
     status: 'success',
     token,
     data: {
-      user
+      infoUser
     }
   });
 };
@@ -77,7 +78,13 @@ const login = (req: Request, res: Response, next: NextFunction): void => {
 
   const user = users.find(user => user.email === email);
 
-  if (!user || user.password !== password) {
+  console.log(user, '|||||||', password);
+
+  if (!user) {
+    return next(new AppError('This user does not exist!', 401));
+  }
+
+  if (user.password !== password) {
     return next(new AppError('Incorrect email or password', 401));
   }
 
