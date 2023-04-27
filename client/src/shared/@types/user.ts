@@ -17,6 +17,8 @@ export interface UserLogin {
   password: string
 }
 
+export type UserSignup = Omit<User, 'id' | 'role'> & UserLogin
+
 export interface UserResponse {
   data: {
     token: string

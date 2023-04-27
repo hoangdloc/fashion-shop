@@ -2,20 +2,21 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import isPropValid from '@emotion/is-prop-valid';
 import { Theme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Input } from 'antd';
-import React, { useRef } from 'react';
+import { Checkbox, Input } from 'antd';
+import React, { Fragment, useRef } from 'react';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 
 interface MyFormItemProps<TFieldValues extends FieldValues, TContext = any> {
   id: Path<TFieldValues>
   containerWidth?: string
-  label: React.ReactNode
-  placeholder: string
+  label?: React.ReactNode
+  placeholder?: string
   control: Control<TFieldValues, TContext>
-  hasError: boolean
+  hasError?: boolean
   errorMessage?: React.ReactNode
-  type?: 'text' | 'password'
+  type?: 'text' | 'password' | 'checkbox'
+  children?: React.ReactNode
 }
 
 type MyFormItemStylesProps = Partial<Theme> &
@@ -63,57 +64,78 @@ const MyFormItem = <T extends FieldValues>(
     control,
     hasError,
     errorMessage,
-    type = 'text'
+    type = 'text',
+    children
   } = props;
   const nodeRef = useRef(null);
 
   return (
     <MyFormItemStyles containerWidth={containerWidth}>
-      <label htmlFor={id}>{label}</label>
-      <Controller
-        name={id}
-        control={control}
-        render={({ field }) =>
-          type === 'password'
-            ? (
-              <Input.Password
-                id={id}
-                {...field}
-                placeholder={placeholder}
-                size="large"
-                status={hasError ? 'error' : undefined}
-              />)
-            : (
-              <Input
-                id={id}
-                {...field}
-                placeholder={placeholder}
-                size="large"
-                status={hasError ? 'error' : undefined}
-              />)
-        }
-      />
-      <CSSTransition
-        ref={nodeRef}
-        in={hasError}
-        timeout={duration}
-        unmountOnExit
-      >
-        {state => (
-          <p
-            style={{
-              ...defaultErrorStyles,
-              ...transitionErrorStyle[state],
-              color: '#ff4d4f',
-              fontSize: '1.2rem',
-              position: 'absolute'
-            }}
-            ref={nodeRef}
-          >
-            <ExclamationCircleOutlined /> {errorMessage}
-          </p>
-        )}
-      </CSSTransition>
+      {type === 'checkbox'
+        ? (
+          <Controller
+            name={id}
+            control={control}
+            render={({ field: { onChange, value, ...rest } }) => (
+              <Checkbox
+                onChange={e => {
+                  onChange(e.target.checked);
+                }}
+                checked={value}
+                {...rest}
+              >
+                {children}
+              </Checkbox>
+            )}
+          />)
+        : (
+          <Fragment>
+            <label htmlFor={id}>{label}</label>
+            <Controller
+              name={id}
+              control={control}
+              render={({ field }) =>
+                type === 'password'
+                  ? (
+                    <Input.Password
+                      id={id}
+                      {...field}
+                      placeholder={placeholder}
+                      size="large"
+                      status={hasError === true ? 'error' : undefined}
+                    />)
+                  : (
+                    <Input
+                      id={id}
+                      {...field}
+                      placeholder={placeholder}
+                      size="large"
+                      status={hasError === true ? 'error' : undefined}
+                    />)
+              }
+            />
+            <CSSTransition
+              ref={nodeRef}
+              in={hasError}
+              timeout={duration}
+              unmountOnExit
+            >
+              {state => (
+                <p
+                  style={{
+                    ...defaultErrorStyles,
+                    ...transitionErrorStyle[state],
+                    color: '#ff4d4f',
+                    fontSize: '1.2rem',
+                    position: 'absolute'
+                  }}
+                  ref={nodeRef}
+                >
+                  <ExclamationCircleOutlined /> {errorMessage}
+                </p>
+              )}
+            </CSSTransition>
+          </Fragment>)}
     </MyFormItemStyles>
   );
 };

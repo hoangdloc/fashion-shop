@@ -10,12 +10,13 @@ import * as yup from 'yup';
 
 import logo from '../assets/images/logo-full.png';
 import { AppRoute } from '../config/route';
+import { UserSignup } from '../shared/@types/user';
 import MyButton from '../shared/components/button';
 import MyFormItem from '../shared/components/form-item';
-import { useUserLoginMutation } from '../store/reducers/auth/authService';
+import { useUserSignupMutation } from '../store/reducers/auth/authService';
 import { RootState } from '../store/store';
 
-const LoginPageStyles = styled('main')(props => ({
+const SignupPageStyles = styled('main')(props => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -42,15 +43,21 @@ const LoginPageStyles = styled('main')(props => ({
     top: '50%',
     zIndex: 1
   },
-  '.login-form': {
-    padding: '5rem 6rem',
+  '.signup-form': {
+    padding: '4rem 6rem',
     backgroundColor: props.theme.colors.textWhite,
     boxShadow:
       'rgba(0, 0, 0, 0.1) 0 0.2rem 0.6rem -0.1rem, rgba(0, 0, 0, 0.06) 0 0.1rem 0.4rem -0.1rem',
     borderRadius: '0.4rem',
     zIndex: 2,
-    width: '43.7rem',
+    width: '53.7rem',
     fontSize: '1.4rem',
+    '.group-form-items': {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '1.8rem'
+    },
     '.form-items': {
       display: 'flex',
       flexDirection: 'column',
@@ -70,23 +77,40 @@ const LoginPageStyles = styled('main')(props => ({
 const schema = yup
   .object()
   .shape({
+    firstName: yup.string().required('Please enter first name!'),
+    lastName: yup.string().required('Please enter your last name!'),
+    phoneNumber: yup
+      .string()
+      .required('Please enter your phone number')
+      .matches(/^\d+$/, 'Phone number should have digits only!')
+      .min(10, 'Must be exactly 10 digits')
+      .max(10, 'Must be exactly 10 digits'),
     email: yup
       .string()
       .email('Please enter valid email!')
       .required('Please enter your email!'),
-    password: yup.string().required('Please enter your password!')
+    password: yup
+      .string()
+      .required('Please enter your password!')
+      .min(8, 'Password must be at least 8 characters long')
+      .max(32, 'Password must be less than 32 characters long'),
+    term: yup.bool().oneOf([true]).required()
   })
   .required();
 type FormData = yup.InferType<typeof schema>;
 
-const LoginPage: React.FC = () => {
+const SignupPage: React.FC = () => {
   const emotionTime = useTheme();
-  const [login, { isLoading }] = useUserLoginMutation();
+  const [signup, { isLoading }] = useUserSignupMutation();
   const navigate = useNavigate();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const initialValues: FormData = {
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
     email: '',
-    password: ''
+    password: '',
+    term: false
   };
 
   const {
@@ -103,7 +127,14 @@ const LoginPage: React.FC = () => {
   const onSubmit = handleSubmit(async (data, event) => {
     event?.preventDefault();
     if (!isValid) return;
-    await login(data)
+    const newUser: UserSignup = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phoneNumber: data.phoneNumber,
+      password: data.password
+    };
+    await signup(newUser)
       .unwrap()
       .finally(() => {
         reset(initialValues);
@@ -115,7 +146,7 @@ const LoginPage: React.FC = () => {
   }, [accessToken]);
 
   return (
-    <LoginPageStyles>
+    <SignupPageStyles>
       <img
         src={logo}
         alt="Fashion"
@@ -127,7 +158,7 @@ const LoginPage: React.FC = () => {
         onSubmit={e => {
           void onSubmit(e);
         }}
-        className="login-form"
+        className="signup-form"
         autoComplete="off"
       >
         <Typography.Title
@@ -148,9 +179,54 @@ const LoginPage: React.FC = () => {
             marginBottom: '2rem'
           }}
         >
-          Don&lsquo;t have an account? <Link to={AppRoute.SIGNUP}>Sign up</Link>
+          Already have an account? <Link to={AppRoute.LOGIN}>Sign in</Link>
         </Typography.Text>
         <div className="form-items">
+          <div className="group-form-items">
+            <MyFormItem
+              id="firstName"
+              label={
+                <Typography.Text
+                  style={{ fontWeight: 700, fontSize: '1.4rem' }}
+                >
+                  First name
+                </Typography.Text>
+              }
+              control={control}
+              hasError={errors.firstName != null}
+              errorMessage={errors.firstName?.message}
+              placeholder="Enter your first name"
+              containerWidth="100%"
+            />
+            <MyFormItem
+              id="lastName"
+              label={
+                <Typography.Text
+                  style={{ fontWeight: 700, fontSize: '1.4rem' }}
+                >
+                  Last name
+                </Typography.Text>
+              }
+              control={control}
+              hasError={errors.lastName != null}
+              errorMessage={errors.lastName?.message}
+              placeholder="Enter your last name"
+              containerWidth="100%"
+            />
+          </div>
+          <MyFormItem
+            id="phoneNumber"
+            label={
+              <Typography.Text style={{ fontWeight: 700, fontSize: '1.4rem' }}>
+                Phone number
+              </Typography.Text>
+            }
+            control={control}
+            hasError={errors.phoneNumber != null}
+            errorMessage={errors.phoneNumber?.message}
+            placeholder="Enter your phone number"
+            containerWidth="100%"
+          />
           <MyFormItem
             id="email"
             label={
@@ -178,30 +254,28 @@ const LoginPage: React.FC = () => {
             placeholder="Enter your password"
             containerWidth="100%"
           />
+          <MyFormItem
+            id="term"
+            type="checkbox"
+            control={control}
+          >
+            I agree to the Tearms of Use and have read and understand the
+            Privacy policy.
+          </MyFormItem>
         </div>
-        <Link
-          style={{
-            textAlign: 'right',
-            display: 'block',
-            textDecoration: 'none',
-            marginBottom: '2rem'
-          }}
-          to="#"
-        >
-          Forgot password?
-        </Link>
         <MyButton
           htmlType="submit"
           type="primary"
           block
           size="large"
+          disabled={!isValid}
           loading={isLoading}
         >
-          Sign in
+          Sign up
         </MyButton>
       </form>
-    </LoginPageStyles>
+    </SignupPageStyles>
   );
 };
 
-export default LoginPage;
+export default SignupPage;

@@ -44,7 +44,15 @@ const createSendToken = (
   });
 };
 
-const signup = (req: Request, res: Response): void => {
+const signup = (req: Request, res: Response, next: NextFunction): void => {
+  const { email } = req.body;
+
+  const existedUser = users.find(user => user.email === email);
+
+  if (existedUser) {
+    return next(new AppError('User with this email existed!', 409))
+  }
+
   const newId = users[users.length - 1].id + 1;
   const newUser: User = Object.assign(
     { id: newId },
