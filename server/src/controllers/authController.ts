@@ -6,16 +6,16 @@ import path from 'path';
 import { User, UserRole } from '../@types/user';
 import AppError from './../utils/appError';
 
+type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
+
 const users: User[] = JSON.parse(
   fs.readFileSync(path.join('./src/data', 'users.json')).toString()
 );
 
-const signToken = (id: number): string =>
-  jwt.sign({ id: id }, process.env.JWT_SECRET, {
+const signToken = (userInfo: Optional<User, 'password'>): string =>
+  jwt.sign({ user: userInfo }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN
   });
-
-type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
 const createSendToken = (
   user: User,
@@ -23,7 +23,10 @@ const createSendToken = (
   req: Request,
   res: Response
 ): void => {
-  const token = signToken(user.id);
+  const infoUser: Optional<User, 'password'> = Object.assign({}, user);
+  infoUser.password = undefined;
+
+  const token = signToken(infoUser);
 
   res.cookie('jwt', token, {
     expires: new Date(
@@ -33,14 +36,10 @@ const createSendToken = (
     httpOnly: true
   });
 
-  const infoUser: Optional<User, 'password'> = Object.assign({}, user);
-  infoUser.password = undefined;
-
   res.status(statusCode).json({
     status: 'success',
-    token,
     data: {
-      infoUser
+      token
     }
   });
 };
@@ -77,8 +76,6 @@ const login = (req: Request, res: Response, next: NextFunction): void => {
   }
 
   const user = users.find(user => user.email === email);
-
-  console.log(user, '|||||||', password);
 
   if (!user) {
     return next(new AppError('This user does not exist!', 401));

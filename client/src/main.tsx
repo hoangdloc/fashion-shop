@@ -11,12 +11,14 @@ import '@fontsource/playfair-display/700.css';
 import '@fontsource/rufina/400.css';
 import '@fontsource/rufina/700.css';
 import 'antd/dist/reset.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider as ReduxProvider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { theme } from './config/theme';
@@ -35,5 +37,13 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         </PersistGate>
       </ReduxProvider>
     </EmotionThemeProvider>
+    <ToastContainer
+      autoClose={5000}
+      draggablePercent={60}
+      position={toast.POSITION.BOTTOM_RIGHT}
+      theme="colored"
+      pauseOnHover
+      bodyStyle={{ fontSize: '1.4rem' }}
+    />
   </React.StrictMode>
 );
