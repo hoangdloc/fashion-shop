@@ -17,3 +17,11 @@ export interface Clothes {
   category: Category
   sizes: Size[]
 }
+
+export interface ClothesResponse {
+  status: string
+  results: number
+  data: {
+    clothings: Clothes[]
+  }
+}

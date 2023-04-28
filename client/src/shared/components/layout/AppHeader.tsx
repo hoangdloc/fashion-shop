@@ -1,15 +1,19 @@
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Badge, Dropdown, Layout, MenuProps, Space, Typography } from 'antd';
 import React, { useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import { v4 } from 'uuid';
 
 import fullLogo from '../../../assets/images/logo-full.png';
 import { AppRoute, ShopRoute } from '../../../config/route';
+import { authApi } from '../../../store/auth/authService';
+import { RootState } from '../../../store/store';
 import { CartIcon, PhoneIcon } from '../icon';
+import { Spinner } from '../loader';
 
 const LayoutHeader = styled(Layout.Header)(props => ({
   position: 'sticky',
@@ -100,7 +104,7 @@ const transitionDownOutlinedStyles = {
   unmounted: { transform: 'rotate(0)' }
 };
 
-const items: MenuProps['items'] = [
+const shopItems: MenuProps['items'] = [
   {
     label: <Link to={`${AppRoute.SHOP}/${ShopRoute.MEN}`}>For Men</Link>,
     key: v4()
@@ -116,15 +120,29 @@ const items: MenuProps['items'] = [
 ];
 
 const AppHeader: React.FC = () => {
-  const [open, setOpen] = useState(false);
+  const [openShop, setOpenShop] = useState<boolean>(false);
+  const [openDetails, setOpenDetails] = useState<boolean>(false);
   const nodeRef = useRef(null);
   const emotionTheme = useTheme();
+  const userInfo = useSelector((state: RootState) => state.auth.userInfo);
+  const isLoggingOut = useSelector(
+    (state: RootState) => state.auth.isLoggingOut
+  );
+  const [trigger] = authApi.useLazyUserLogoutQuery();
 
-  const handleOpenChange = (flag: boolean): void => {
-    setOpen(flag);
-  };
+  const detailItems: MenuProps['items'] = [
+    {
+      label: 'Logout',
+      key: v4(),
+      itemIcon: isLoggingOut ? <Spinner size={14} /> : <LogoutOutlined />,
+      onClick: () => {
+        void trigger();
+      },
+      disabled: isLoggingOut
+    }
+  ];
 
-  const handleMenuClick: MenuProps['onClick'] = e => {
+  const handleMenuClickShop: MenuProps['onClick'] = e => {
     console.log('Hello World');
   };
 
@@ -138,7 +156,25 @@ const AppHeader: React.FC = () => {
           <PhoneIcon />
           <Typography.Text>Hotline: (01) 23 456 789</Typography.Text>
         </a>
-        <Typography.Text>Welcome Guest, have a nice day!</Typography.Text>
+        <Dropdown
+          menu={{ items: detailItems }}
+          open={openDetails}
+          onOpenChange={flag => {
+            setOpenDetails(flag);
+          }}
+          trigger={['click']}
+          arrow
+        >
+          <a
+            onClick={e => {
+              e.preventDefault();
+            }}
+          >
+            <Typography.Text id="user-greeting">
+              Welcome {userInfo?.firstName ?? 'Guest'}, have a nice day!
+            </Typography.Text>
+          </a>
+        </Dropdown>
       </nav>
       <hr />
       <nav className="main-nav">
@@ -175,11 +211,13 @@ const AppHeader: React.FC = () => {
           <li>
             <Dropdown
               menu={{
-                items,
-                onClick: handleMenuClick
+                items: shopItems,
+                onClick: handleMenuClickShop
               }}
-              onOpenChange={handleOpenChange}
-              open={open}
+              onOpenChange={flag => {
+                setOpenShop(flag);
+              }}
+              open={openShop}
             >
               <span>
                 <Space align="start">
@@ -193,7 +231,7 @@ const AppHeader: React.FC = () => {
                   </NavLink>
                   <CSSTransition
                     ref={nodeRef}
-                    in={open}
+                    in={openShop}
                     timeout={duration}
                   >
                     {state => (

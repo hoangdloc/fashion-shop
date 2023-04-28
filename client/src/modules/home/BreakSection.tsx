@@ -4,7 +4,13 @@ import React from 'react';
 import background from '../../assets/images/break-section-bg.png';
 
 const BreakSectionStyles = styled('section')(props => ({
-  height: '46rem'
+  height: '46rem',
+  width: '100%',
+  img: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover'
+  }
 }));
 
 const BreakSection: React.FC = () => {

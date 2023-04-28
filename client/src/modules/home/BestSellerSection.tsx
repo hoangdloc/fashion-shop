@@ -3,7 +3,8 @@ import styled from '@emotion/styled';
 import { Typography } from 'antd';
 import React from 'react';
 
-import ListCards from '../../shared/components/list-cards';
+import { ListCards } from '../../shared/components/list-cards';
+import { useFetchClothingQuery } from '../../store/clothes/clothesService';
 
 const BestSellerSectionStyles = styled('section')(props => ({
   padding: '8rem 16rem 6rem 16rem',
@@ -14,6 +15,8 @@ const BestSellerSectionStyles = styled('section')(props => ({
 
 const BestSellerSection: React.FC = () => {
   const emotionTheme = useTheme();
+
+  const { data, isFetching } = useFetchClothingQuery({ bestSeller: true });
 
   return (
     <BestSellerSectionStyles>
@@ -45,7 +48,11 @@ const BestSellerSection: React.FC = () => {
         Take a look at the most popular costumes at Fashion in recent times.
         Maybe you will like it!
       </Typography.Text>
-      <ListCards columnCount={4} data={[1, 2, 3, 4, 5, 6, 7, 8]} />
+      <ListCards
+        columnCount={4}
+        data={data}
+        loading={isFetching}
+      />
     </BestSellerSectionStyles>
   );
 };

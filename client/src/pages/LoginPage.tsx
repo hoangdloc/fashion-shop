@@ -12,7 +12,7 @@ import logo from '../assets/images/logo-full.png';
 import { AppRoute } from '../config/route';
 import MyButton from '../shared/components/button';
 import MyFormItem from '../shared/components/form-item';
-import { useUserLoginMutation } from '../store/reducers/auth/authService';
+import { useUserLoginMutation } from '../store/auth/authService';
 import { RootState } from '../store/store';
 
 const LoginPageStyles = styled('main')(props => ({

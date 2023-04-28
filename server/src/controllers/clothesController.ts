@@ -15,9 +15,9 @@ interface getAllClothesQuery {
   type?: Type;
   color?: Color;
   size?: Size;
-  sortByPrice?: 0 | 1;
-  featured?: boolean;
-  bestSeller?: boolean;
+  sortByPrice?: '0' | '1';
+  featured?: string;
+  bestSeller?: string;
 }
 
 const getAllClothes = (req: Request, res: Response) => {
@@ -35,11 +35,16 @@ const getAllClothes = (req: Request, res: Response) => {
       clothes => clothes.category[1].toLowerCase() === type.toLowerCase()
     );
   }
-  if (featured) {
-    clothings = clothings.filter(clothes => clothes.featured);
+  if (featured !== undefined) {
+    clothings = clothings.filter(
+      clothes => clothes.featured === (featured === ' true')
+    );
   }
-  if (bestSeller) {
-    clothings = clothings.filter(clothes => clothes.bestSeller);
+
+  if (bestSeller !== undefined) {
+    clothings = clothings.filter(
+      clothes => clothes.bestSeller === (bestSeller === 'true')
+    );
   }
   if (color) {
     clothings = clothings.filter(clothes => {

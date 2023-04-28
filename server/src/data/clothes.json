@@ -2,6 +2,7 @@
   {
     "id": 0,
     "name": "T-shirt with crew neck",
+    "slug": "t-shirt-with-crew-neck",
     "images": [
       "https://img.freepik.com/free-photo/basic-white-tee-women-s-apparel-rear-view_53876-108033.jpg?w=826&t=st=1681960524~exp=1681961124~hmac=5d2d857628b0ee2301db4542953563af9373f8760e08ff1ea56cdbe1ac65eda5",
       "https://img.freepik.com/premium-photo/yellow-tshirt_719385-441.jpg?w=1060",
@@ -10,8 +11,7 @@
     ],
     "price": 312,
     "salePercent": 0,
-    "soldOut": false,
-    "hot": true,
+    "status": 2,
     "bestSeller": true,
     "featured": true,
     "overview": "LoLorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit atque eum ut nulla iure fuga, repellat, officiis quasi ab dolor magnam corrupti rerum sit adipisci voluptatum nihil exercitationem facilis sed, totam repudiandae debitis? Incidunt molestias nesciunt enim excepturi quas repellendus, vitae exercitationem odit ea vero ipsa iusto obcaecati placeat esse?rem",
@@ -26,13 +26,13 @@
   {
     "id": 1,
     "name": "Shirt in blue",
+    "slug": "shirt-in-blue",
     "images": [
       "https://img.freepik.com/premium-psd/dress-shirt-mockup-half-side-vie_373676-7.jpg?w=1380"
     ],
     "price": 207,
     "salePercent": 5,
-    "soldOut": true,
-    "hot": false,
+    "status": 1,
     "bestSeller": true,
     "featured": true,
     "overview": "LoLorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit atque eum ut nulla iure fuga, repellat, officiis quasi ab dolor magnam corrupti rerum sit adipisci voluptatum nihil exercitationem facilis sed, totam repudiandae debitis? Incidunt molestias nesciunt enim excepturi quas repellendus, vitae exercitationem odit ea vero ipsa iusto obcaecati placeat esse?rem",
@@ -46,13 +46,13 @@
   {
     "id": 2,
     "name": "Sun Glasses in black",
+    "slug": "sun-glasses-in-black",
     "images": [
       "https://img.freepik.com/premium-vector/black-hipster-sunglasses_47243-602.jpg?w=1060"
     ],
     "price": 390,
     "salePercent": 10,
-    "soldOut": false,
-    "hot": false,
+    "status": 0,
     "bestSeller": true,
     "featured": true,
     "overview": "LoLorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit atque eum ut nulla iure fuga, repellat, officiis quasi ab dolor magnam corrupti rerum sit adipisci voluptatum nihil exercitationem facilis sed, totam repudiandae debitis? Incidunt molestias nesciunt enim excepturi quas repellendus, vitae exercitationem odit ea vero ipsa iusto obcaecati placeat esse?rem",

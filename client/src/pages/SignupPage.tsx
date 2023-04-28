@@ -13,7 +13,7 @@ import { AppRoute } from '../config/route';
 import { UserSignup } from '../shared/@types/user';
 import MyButton from '../shared/components/button';
 import MyFormItem from '../shared/components/form-item';
-import { useUserSignupMutation } from '../store/reducers/auth/authService';
+import { useUserSignupMutation } from '../store/auth/authService';
 import { RootState } from '../store/store';
 
 const SignupPageStyles = styled('main')(props => ({

@@ -4,7 +4,7 @@ import { Tabs, Typography } from 'antd';
 import React from 'react';
 
 import MyCarousel from '../../shared/components/carousel';
-import ClothesCard from '../../shared/components/clothes-card';
+import { ClothesCard } from '../../shared/components/clothes-card';
 
 const FeaturedProductSectionStyles = styled('section')(props => ({
   padding: '6rem 16rem 7rem 16rem',

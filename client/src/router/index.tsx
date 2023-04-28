@@ -2,7 +2,7 @@ import React, { lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import App from '../App';
-import { AppRoute, ShopRoute } from '../config/route';
+import { AppRoute, ShopRoute, SLUG } from '../config/route';
 import ErrorPage from '../pages/ErrorPage';
 
 const MainAppLayout = lazy(
@@ -38,17 +38,46 @@ export default createBrowserRouter([
                 element: <Navigate to="men" />
               },
               {
-                index: true,
                 path: ShopRoute.MEN,
-                element: <div>Shop men...</div>
+                children: [
+                  {
+                    index: true,
+                    path: '',
+                    element: <div>Shop men...</div>
+                  },
+                  {
+                    path: SLUG,
+                    element: <div>Product men...</div>
+                  }
+                ]
               },
               {
                 path: ShopRoute.WOMEN,
-                element: <div>Shop women...</div>
+                children: [
+                  {
+                    index: true,
+                    path: '',
+                    element: <div>Shop women...</div>
+                  },
+                  {
+                    path: SLUG,
+                    element: <div>Product women...</div>
+                  }
+                ]
               },
               {
                 path: ShopRoute.UNISEX,
-                element: <div>Shop unisex...</div>
+                children: [
+                  {
+                    index: true,
+                    path: '',
+                    element: <div>Shop unisex...</div>
+                  },
+                  {
+                    path: SLUG,
+                    element: <div>Product unisex...</div>
+                  }
+                ]
               }
             ]
           },

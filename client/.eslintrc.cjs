@@ -20,6 +20,7 @@ module.exports = {
     indent: ['error', 2, { SwitchCase: 1 }],
     semi: ['error', 'always'],
     '@typescript-eslint/semi': 'off',
-    '@typescript-eslint/consistent-type-imports': 'off'
+    '@typescript-eslint/consistent-type-imports': 'off',
+    'no-console': 'error'
   }
 };

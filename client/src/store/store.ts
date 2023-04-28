@@ -12,22 +12,25 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
+import { authPersistConfig } from './auth/authPersistConfig';
+import { authApi } from './auth/authService';
+import authSlice from './auth/authSlice';
+import { clothesApi } from './clothes/clothesService';
+import clothesSlice from './clothes/clothesSlice';
 import { rtkQueryErrorLogger } from './middleware';
-import { authApi } from './reducers/auth/authService';
-import authSlice from './reducers/auth/authSlice';
-import clothesSlice from './reducers/clothes/clothesSlice';
 
 const rootReducer = combineReducers({
-  clothes: clothesSlice,
   [authApi.reducerPath]: authApi.reducer,
-  auth: authSlice
+  auth: persistReducer(authPersistConfig, authSlice),
+  clothes: clothesSlice,
+  [clothesApi.reducerPath]: clothesApi.reducer
 });
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  blacklist: ['auth', 'authApi', 'clothes']
+  blacklist: ['auth', 'authApi', 'clothes', 'clothesApi']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -39,7 +42,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
       }
-    }).concat(authApi.middleware, rtkQueryErrorLogger)
+    }).concat(authApi.middleware, clothesApi.middleware, rtkQueryErrorLogger)
 });
 
 setupListeners(store.dispatch);

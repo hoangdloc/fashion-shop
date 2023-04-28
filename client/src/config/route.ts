@@ -13,3 +13,5 @@ export enum ShopRoute {
   WOMEN = 'women',
   UNISEX = 'unisex'
 }
+
+export const SLUG = ':slug';
