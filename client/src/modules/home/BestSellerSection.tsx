@@ -18,6 +18,10 @@ const BestSellerSection: React.FC = () => {
 
   const { data, isFetching } = useFetchClothingQuery({ bestSeller: true });
 
+  const bestSellerClothings = data
+    ?.filter(clothes => clothes.bestSeller)
+    .slice(0, 8);
+
   return (
     <BestSellerSectionStyles>
       <Typography.Title
@@ -50,7 +54,7 @@ const BestSellerSection: React.FC = () => {
       </Typography.Text>
       <ListCards
         columnCount={4}
-        data={data}
+        data={bestSellerClothings}
         loading={isFetching}
       />
     </BestSellerSectionStyles>

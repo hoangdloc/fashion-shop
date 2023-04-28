@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../config/route';
 import { Gender } from '../../@types/category';
 import { Clothes } from '../../@types/clothes';
+import { Status } from '../../@types/status';
 import { renderBadge } from '../../utils/renderBadge';
 import MyBadge from '../badge';
 import MyButton from '../button';
@@ -71,6 +72,7 @@ const ClothesCard: React.FC<ClothesCardProps> = props => {
     return price.toFixed(2);
   };
   const badge = renderBadge(status);
+  const isSale = salePercent !== 0 || status === Status.SALE;
 
   return (
     <ClothesCardStyles>
@@ -118,35 +120,36 @@ const ClothesCard: React.FC<ClothesCardProps> = props => {
         </ConfigProvider>
       </Link>
       <div className="info-box">
-        <Typography.Title
-          style={{
-            marginBottom: '0.4rem',
-            marginTop: '2rem',
-            lineHeight: '2.4rem',
-            letterSpacing: 1.05,
-            fontFamily: "'Playfair Display', san-serif",
-            fontSize: '1.8rem',
-            fontWeight: 600,
-            textTransform: 'uppercase'
-          }}
-          level={5}
-        >
-          {name}
-        </Typography.Title>
+        <Link to={linkToProduct}>
+          <Typography.Title
+            style={{
+              marginBottom: '0.4rem',
+              marginTop: '2rem',
+              lineHeight: '2.4rem',
+              letterSpacing: 1.05,
+              fontFamily: "'Playfair Display', san-serif",
+              fontSize: '1.8rem',
+              fontWeight: 600,
+              textTransform: 'uppercase'
+            }}
+            level={5}
+          >
+            {name}
+          </Typography.Title>
+        </Link>
         <div className="product-price">
           <Typography.Text
             style={{
               fontSize: '1.6rem',
-              color:
-                salePercent !== 0
-                  ? emotionTheme.colors.textGrayLight
-                  : emotionTheme.colors.secondaryRed
+              color: isSale
+                ? emotionTheme.colors.textGrayLight
+                : emotionTheme.colors.secondaryRed
             }}
-            delete={salePercent !== 0}
+            delete={isSale}
           >
             $ {fixedPrice(price)}
           </Typography.Text>
-          {salePercent !== 0 && (
+          {isSale && (
             <Typography.Text
               style={{
                 fontSize: '1.6rem',

@@ -88,4 +88,36 @@ const getAllClothes = (req: Request, res: Response) => {
   });
 };
 
-export default { getAllClothes };
+const getClothes = (req: Request, res: Response) => {
+  const id = +req.params.id;
+
+  const cloth = clothes.find(c => c.id === id);
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      clothes: cloth
+    }
+  });
+};
+
+const createClothes = (req: Request, res: Response) => {
+  const newId = clothes[clothes.length - 1].id + 1;
+  const newClothes = Object.assign({ id: newId }, req.body);
+
+  clothes.push(newClothes);
+
+  fs.writeFileSync(
+    path.join('./src/data', 'clothes.json'),
+    JSON.stringify(clothes)
+  );
+
+  res.status(201).json({
+    status: 'success',
+    data: {
+      clothes: newClothes
+    }
+  });
+};
+
+export default { getAllClothes, getClothes, createClothes };
