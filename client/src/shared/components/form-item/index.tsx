@@ -2,10 +2,12 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import isPropValid from '@emotion/is-prop-valid';
 import { Theme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Checkbox, Input } from 'antd';
+import { Input } from 'antd';
 import React, { Fragment, useRef } from 'react';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
+
+import MyCheckbox from '../checkbox';
 
 interface MyFormItemProps<TFieldValues extends FieldValues, TContext = any> {
   id: Path<TFieldValues>
@@ -76,17 +78,7 @@ const MyFormItem = <T extends FieldValues>(
           <Controller
             name={id}
             control={control}
-            render={({ field: { onChange, value, ...rest } }) => (
-              <Checkbox
-                onChange={e => {
-                  onChange(e.target.checked);
-                }}
-                checked={value}
-                {...rest}
-              >
-                {children}
-              </Checkbox>
-            )}
+            render={({ field }) => <MyCheckbox {...field}>{children}</MyCheckbox>}
           />)
         : (
           <Fragment>
