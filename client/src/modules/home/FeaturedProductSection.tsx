@@ -3,62 +3,89 @@ import styled from '@emotion/styled';
 import { Tabs, Typography } from 'antd';
 import React from 'react';
 
-import MyCarousel from '../../shared/components/carousel';
-import { ClothesCard } from '../../shared/components/clothes-card';
+import { Gender } from '../../shared/@types/category';
+import CarouselCards from '../../shared/components/carousel-cards';
+import { useFetchClothingQuery } from '../../store/clothes/clothesService';
 
 const FeaturedProductSectionStyles = styled('section')(props => ({
   padding: '6rem 16rem 7rem 16rem',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  '& .ant-tabs-nav': {
-    marginBottom: '1.6rem',
-    '&::before': {
-      content: 'none'
-    },
-    '.ant-tabs-nav-list': {
-      display: 'flex',
-      gap: '6.4rem',
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    '.ant-tabs-tab': {
-      margin: 0,
-      '&.ant-tabs-tab-active': {
-        '& > .ant-tabs-tab-btn': {
-          color: props.theme.colors.secondaryRed
+  '& .ant-tabs': {
+    width: '100%',
+    '& .ant-tabs-nav': {
+      marginBottom: '1.6rem',
+      '&::before': {
+        content: 'none'
+      },
+      '.ant-tabs-nav-list': {
+        display: 'flex',
+        gap: '6.4rem',
+        alignItems: 'center',
+        justifyContent: 'center'
+      },
+      '.ant-tabs-tab': {
+        margin: 0,
+        '&.ant-tabs-tab-active': {
+          '& > .ant-tabs-tab-btn': {
+            color: props.theme.colors.secondaryRed
+          }
         }
+      },
+      '.ant-tabs-ink-bar': {
+        backgroundColor: props.theme.colors.secondaryRed,
+        bottom: '1.2rem'
       }
-    },
-    '.ant-tabs-ink-bar': {
-      backgroundColor: props.theme.colors.secondaryRed,
-      bottom: '1.2rem'
     }
   }
 }));
 
-const tabItems = [
-  {
-    label: "Women's",
-    key: 'women',
-    children: null
-  },
-  {
-    label: "Men's",
-    key: 'men',
-    children: null
-  },
-  {
-    label: "Unisex's",
-    key: 'unisex',
-    children: null
-  }
-];
-
-const dataTest = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-
 const FeaturedProductSection: React.FC = () => {
   const emotionTheme = useTheme();
+  const { data, isFetching } = useFetchClothingQuery({ featured: true });
+  const featuredWomenClothings = data
+    ?.filter(item => item.category[0] === Gender.WOMEN)
+    .slice(0, 8);
+  const featuredMenClothings = data
+    ?.filter(item => item.category[0] === Gender.MEN)
+    .slice(0, 8);
+  const featuredUnisexClothings = data
+    ?.filter(item => item.category[0] === Gender.UNISEX)
+    .slice(0, 8);
+
+  const tabItems = [
+    {
+      label: "Women's",
+      key: Gender.WOMEN,
+      children: (
+        <CarouselCards
+          loading={isFetching}
+          data={featuredWomenClothings}
+        />
+      )
+    },
+    {
+      label: "Men's",
+      key: Gender.MEN,
+      children: (
+        <CarouselCards
+          loading={isFetching}
+          data={featuredMenClothings}
+        />
+      )
+    },
+    {
+      label: "Unisex's",
+      key: Gender.UNISEX,
+      children: (
+        <CarouselCards
+          loading={isFetching}
+          data={featuredUnisexClothings}
+        />
+      )
+    }
+  ];
 
   return (
     <FeaturedProductSectionStyles>
@@ -92,7 +119,7 @@ const FeaturedProductSection: React.FC = () => {
       </Typography.Text>
       <Tabs
         size="large"
-        defaultActiveKey="1"
+        defaultActiveKey={Gender.WOMEN}
         centered
         animated={{ inkBar: true, tabPane: true }}
         tabBarStyle={{
@@ -103,10 +130,6 @@ const FeaturedProductSection: React.FC = () => {
           textTransform: 'uppercase'
         }}
         items={tabItems}
-      />
-      <MyCarousel
-        total={dataTest.length}
-        renderItem={<ClothesCard />}
       />
     </FeaturedProductSectionStyles>
   );

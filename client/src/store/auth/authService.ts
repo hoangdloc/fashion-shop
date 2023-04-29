@@ -16,44 +16,46 @@ export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: axiosBaseQuery(),
   endpoints: builder => ({
-    userLogin: builder.mutation<UserResponse, UserLogin>({
+    userLogin: builder.mutation<{ token: string }, UserLogin>({
       query: body => ({
         url: '/users/login',
         method: 'post',
         data: body
       }),
+      transformResponse: (response: UserResponse) => ({ token: response.data.token }),
       onQueryStarted: async (_, api) => {
-        const payload = (await api.queryFulfilled).data.data;
-        const decodedJwt: JWTDecoded = jwtDecode(payload.token);
+        const payload = (await api.queryFulfilled).data.token;
+        const decodedJwt: JWTDecoded = jwtDecode(payload);
         const expireDays = convertTimestampToDays(decodedJwt.exp);
         const userInfo = decodedJwt.user;
-        Cookies.set('access_token', payload.token, {
+        Cookies.set('access_token', payload, {
           expires: expireDays,
           secure: true
         });
-        api.dispatch(setAccessToken(payload.token));
+        api.dispatch(setAccessToken(payload));
         api.dispatch(setCurrentUserInfo(userInfo));
         toast.success(
           `Welcome back! ${userInfo.firstName} ${userInfo.lastName} 😃`
         );
       }
     }),
-    userSignup: builder.mutation<UserResponse, UserSignup>({
+    userSignup: builder.mutation<{ token: string }, UserSignup>({
       query: body => ({
         url: '/users/signup',
         method: 'post',
         data: body
       }),
+      transformResponse: (response: UserResponse) => ({ token: response.data.token }),
       onQueryStarted: async (_, api) => {
-        const payload = (await api.queryFulfilled).data.data;
-        const decodedJwt: JWTDecoded = jwtDecode(payload.token);
+        const payload = (await api.queryFulfilled).data.token;
+        const decodedJwt: JWTDecoded = jwtDecode(payload);
         const expireDays = convertTimestampToDays(decodedJwt.exp);
         const userInfo = decodedJwt.user;
-        Cookies.set('access_token', payload.token, {
+        Cookies.set('access_token', payload, {
           expires: expireDays,
           secure: true
         });
-        api.dispatch(setAccessToken(payload.token));
+        api.dispatch(setAccessToken(payload));
         api.dispatch(setCurrentUserInfo(userInfo));
         toast.success(
           `Welcome ${userInfo.firstName} ${userInfo.lastName} to our store 🎉`

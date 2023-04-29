@@ -6,6 +6,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 import { AppRoute } from '../../../config/route';
 import { RootState } from '../../../store/store';
+import SubcribePopup from '../subscribe-popup';
 
 const AppFooter = lazy(async () => await import('./AppFooter'));
 const AppHeader = lazy(async () => await import('./AppHeader'));
@@ -30,6 +31,7 @@ const MainAppLayout: React.FC = () => {
         <Outlet />
       </Layout.Content>
       <AppFooter />
+      <SubcribePopup />
     </Layout>
   );
 };

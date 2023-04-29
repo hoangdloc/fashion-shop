@@ -15,12 +15,8 @@ const BestSellerSectionStyles = styled('section')(props => ({
 
 const BestSellerSection: React.FC = () => {
   const emotionTheme = useTheme();
-
   const { data, isFetching } = useFetchClothingQuery({ bestSeller: true });
-
-  const bestSellerClothings = data
-    ?.filter(clothes => clothes.bestSeller)
-    .slice(0, 8);
+  const bestSellerClothings = data?.slice(0, 8);
 
   return (
     <BestSellerSectionStyles>

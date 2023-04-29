@@ -17,9 +17,12 @@ import { authApi } from './auth/authService';
 import authSlice from './auth/authSlice';
 import { clothesApi } from './clothes/clothesService';
 import clothesSlice from './clothes/clothesSlice';
+import { generalPersistConfig } from './general/generalPersistConfig';
+import generalSlice from './general/generalSlice';
 import { rtkQueryErrorLogger } from './middleware';
 
 const rootReducer = combineReducers({
+  general: persistReducer(generalPersistConfig, generalSlice),
   [authApi.reducerPath]: authApi.reducer,
   auth: persistReducer(authPersistConfig, authSlice),
   clothes: clothesSlice,
@@ -30,7 +33,7 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  blacklist: ['auth', 'authApi', 'clothes', 'clothesApi']
+  blacklist: ['general', 'auth', 'authApi', 'clothes', 'clothesApi']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

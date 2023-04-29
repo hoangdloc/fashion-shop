@@ -10,7 +10,7 @@ import { ClothesCard, ClothesSkeletonCard } from '../clothes-card';
 interface ListCardsProps {
   columnCount: number
   data?: Clothes[]
-  loading?: boolean
+  loading: boolean
 }
 
 const antdColsSystem = 24;

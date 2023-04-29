@@ -4,7 +4,7 @@ import React from 'react';
 
 import { CheckIcon } from '../icon';
 
-interface MyCheckboxProps extends React.HTMLAttributes<HTMLInputElement> {
+interface MyCheckboxProps extends React.ComponentPropsWithRef<'input'> {
   children?: React.ReactNode
 }
 
@@ -43,15 +43,17 @@ const MyCheckBoxStyles = styled('label')`
       color: ${props => props.theme.colors.textSubtitle};
       font-size: 1.4rem;
       font-weight: 400;
+      user-select: none;
     }
   }
 `;
 
-const MyCheckbox: React.FC<MyCheckboxProps> = ({ children, ...rest }) => {
+const MyCheckbox = React.forwardRef<HTMLInputElement, MyCheckboxProps>(({ children, ...rest }, ref) => {
   return (
     <MyCheckBoxStyles>
       <input
         type="checkbox"
+        ref={ref}
         {...rest}
       />
       <div className="my-checkbox">
@@ -60,10 +62,12 @@ const MyCheckbox: React.FC<MyCheckboxProps> = ({ children, ...rest }) => {
             <CheckIcon />
           </span>
         </div>
-        <Typography.Text className='checkbox-label'>{children}</Typography.Text>
+        <Typography.Text className="checkbox-label">{children}</Typography.Text>
       </div>
     </MyCheckBoxStyles>
   );
-};
+});
+
+MyCheckbox.displayName = 'MyCheckbox';
 
 export default MyCheckbox;

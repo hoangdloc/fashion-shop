@@ -3,7 +3,7 @@ import React from 'react';
 
 import background from '../../assets/images/break-section-bg.png';
 
-const BreakSectionStyles = styled('section')(props => ({
+const BreakSectionStyles = styled('section')(() => ({
   height: '46rem',
   width: '100%',
   img: {

@@ -12,7 +12,8 @@ import MyButton from '../../shared/components/button';
 const CommerceSectionStyles = styled('section')(props => ({
   padding: '8rem 16rem 4rem 16rem',
   display: 'grid',
-  gridTemplateColumns: '44rem 1fr',
+  gridTemplateColumns: '44rem 55.2rem',
+  justifyContent: 'space-between',
   gap: '12rem',
   '.commerce-text-box': {
     display: 'flex',

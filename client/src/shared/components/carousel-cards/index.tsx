@@ -4,12 +4,14 @@ import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 
+import { Clothes } from '../../@types/clothes';
 import MyButton from '../button';
+import { ClothesCard, ClothesSkeletonCard } from '../clothes-card';
 import { LeftArrowIcon, RightArrowIcon } from '../icon';
 
 interface MyCarouselProps {
-  total: number
-  renderItem: React.ReactNode
+  data?: Clothes[]
+  loading: boolean
 }
 
 const MyCarouselStyles = styled('div')(props => ({
@@ -30,8 +32,8 @@ const MyCarouselStyles = styled('div')(props => ({
   }
 }));
 
-const MyCarousel: React.FC<MyCarouselProps> = props => {
-  const { total, renderItem } = props;
+const CarouselCards: React.FC<MyCarouselProps> = props => {
+  const { data, loading } = props;
   const swiper = useSwiper();
   const [swiperInstance, setSwiperInstance] = useState(swiper);
 
@@ -53,9 +55,18 @@ const MyCarousel: React.FC<MyCarouselProps> = props => {
         slidesPerView={4}
         grabCursor
       >
-        {new Array(total).fill(0).map((_, index) => (
-          <SwiperSlide key={index}>{renderItem}</SwiperSlide>
-        ))}
+        {loading &&
+          new Array(8).fill(0).map((_, index) => (
+            <SwiperSlide key={index}>
+              <ClothesSkeletonCard />
+            </SwiperSlide>
+          ))}
+        {!loading &&
+          data?.map(clothes => (
+            <SwiperSlide key={clothes.id}>
+              <ClothesCard clothes={clothes} />
+            </SwiperSlide>
+          ))}
       </Swiper>
       <MyButton
         type="ghost"
@@ -70,4 +81,4 @@ const MyCarousel: React.FC<MyCarouselProps> = props => {
   );
 };
 
-export default MyCarousel;
+export default CarouselCards;

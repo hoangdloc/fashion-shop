@@ -37,7 +37,7 @@ const getAllClothes = (req: Request, res: Response) => {
   }
   if (featured !== undefined) {
     clothings = clothings.filter(
-      clothes => clothes.featured === (featured === ' true')
+      clothes => clothes.featured === (featured === 'true')
     );
   }
 

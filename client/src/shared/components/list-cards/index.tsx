@@ -1,3 +1,3 @@
-import ListCards from './ListCard';
+import ListCards from './ListCards';
 
 export { ListCards };
