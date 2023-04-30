@@ -11,6 +11,7 @@ const MainAppLayout = lazy(
 const LoginPage = lazy(async () => await import('../pages/LoginPage'));
 const SignupPage = lazy(async () => await import('../pages/SignupPage'));
 const HomePage = lazy(async () => await import('../pages/HomePage'));
+const AboutPage = lazy(async () => await import('../pages/AboutPage'));
 const NotFoundPage = lazy(async () => await import('../pages/NotFoundPage'));
 
 export default createBrowserRouter([
@@ -28,7 +29,7 @@ export default createBrowserRouter([
           },
           {
             path: AppRoute.ABOUT,
-            element: <div>About...</div>
+            element: <AboutPage />
           },
           {
             path: AppRoute.SHOP,
