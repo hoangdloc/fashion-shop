@@ -32,16 +32,6 @@ const LoginPageStyles = styled('main')(props => ({
     left: '4rem',
     zIndex: 1
   },
-  '.ellipse-bg': {
-    backgroundImage:
-      'linear-gradient(0deg, rgba(200, 200, 200, 0.1), rgba(200, 200, 200, 0.1))',
-    width: '200rem',
-    height: '200rem',
-    borderRadius: '100%',
-    position: 'absolute',
-    top: '50%',
-    zIndex: 1
-  },
   '.login-form': {
     padding: '5rem 6rem',
     backgroundColor: props.theme.colors.textWhite,
@@ -66,6 +56,17 @@ const LoginPageStyles = styled('main')(props => ({
     }
   }
 }));
+
+const EllipseBgStyles = styled('div')`
+  background-image:
+      linear-gradient(0deg, rgba(200, 200, 200, 0.1), rgba(200, 200, 200, 0.1));
+    width: 200rem;
+    height: 200rem;
+    border-radius: 100%;
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+`;
 
 const schema = yup
   .object()
@@ -122,7 +123,7 @@ const LoginPage: React.FC = () => {
         className="logo"
         draggable={false}
       />
-      <div className="ellipse-bg"></div>
+      <EllipseBgStyles />
       <form
         onSubmit={e => {
           void onSubmit(e);
