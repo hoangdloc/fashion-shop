@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 
 import {
   BannerSection,
+  GallerySection,
   StorySection,
   TestimonialsSection
 } from '../modules/about';
@@ -13,6 +14,7 @@ const AboutPage: React.FC = () => {
       <BannerSection />
       <StorySection />
       <TestimonialsSection />
+      <GallerySection />
       <PartnerRibbon />
     </Fragment>
   );
