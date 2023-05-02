@@ -13,6 +13,8 @@ import MyBadge from '../badge';
 import MyButton from '../button';
 import { ShoppingBagIcon } from '../icon';
 import ClothesSkeletonCard from './ClothesSkeletonCard';
+import { useDispatch } from 'react-redux';
+import { setCurrentClothes } from '../../../store/clothes/clothesSlice';
 
 export interface ClothesCardProps {
   clothes?: Clothes
@@ -60,6 +62,7 @@ const ClothesCardStyles = styled('div')(() => ({
 const ClothesCard: React.FC<ClothesCardProps> = props => {
   const { clothes } = props;
   const emotionTheme = useTheme();
+  const disptach = useDispatch();
 
   if (clothes == null) {
     return <ClothesSkeletonCard />;
@@ -74,11 +77,17 @@ const ClothesCard: React.FC<ClothesCardProps> = props => {
   const badge = renderBadge(status);
   const isSale = salePercent !== 0 || status === Status.SALE;
 
+  const handleSetCurrentClothes = (): void => {
+    disptach(setCurrentClothes(clothes));
+  };
+
   return (
     <ClothesCardStyles>
       <Link
         to={linkToProduct}
         className="img-box"
+        state={clothes}
+        onClick={handleSetCurrentClothes}
       >
         {badge != null && (
           <MyBadge

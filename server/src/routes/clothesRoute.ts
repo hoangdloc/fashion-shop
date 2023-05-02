@@ -11,4 +11,6 @@ router
 
 router.route('/:id').get(clothesController.getClothes);
 
+router.route('/current/:slug').get(clothesController.getCurrentClothes);
+
 export default router;

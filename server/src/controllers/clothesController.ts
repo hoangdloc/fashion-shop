@@ -1,10 +1,11 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
 
 import { Color, Gender, Type } from '../@types/category';
 import { Clothes } from '../@types/clothes';
 import { Size } from '../@types/size';
+import AppError from '../utils/appError';
 
 const clothes: Clothes[] = JSON.parse(
   fs.readFileSync(path.join('./src/data', 'clothes.json')).toString()
@@ -101,9 +102,28 @@ const getClothes = (req: Request, res: Response) => {
   });
 };
 
-const createClothes = (req: Request, res: Response) => {
+const getCurrentClothes = (req: Request, res: Response) => {
+  const slug = req.params.slug;
+
+  const cloth = clothes.find(c => c.slug === slug);
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      clothes: cloth
+    }
+  });
+};
+
+const createClothes = (req: Request, res: Response, next: NextFunction) => {
   const newId = clothes[clothes.length - 1].id + 1;
-  const newClothes = Object.assign({ id: newId }, req.body);
+  const newClothes: Clothes = Object.assign({ id: newId }, req.body);
+
+  const checkExistedSlug = clothes.find(item => item.slug === newClothes.slug);
+
+  if (checkExistedSlug) {
+    return next(new AppError('Clothes slug has already existed!', 401));
+  }
 
   clothes.push(newClothes);
 
@@ -120,4 +140,9 @@ const createClothes = (req: Request, res: Response) => {
   });
 };
 
-export default { getAllClothes, getClothes, createClothes };
+export default {
+  getAllClothes,
+  getClothes,
+  getCurrentClothes,
+  createClothes
+};

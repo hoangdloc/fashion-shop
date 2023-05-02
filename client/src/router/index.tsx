@@ -12,6 +12,10 @@ const LoginPage = lazy(async () => await import('../pages/LoginPage'));
 const SignupPage = lazy(async () => await import('../pages/SignupPage'));
 const HomePage = lazy(async () => await import('../pages/HomePage'));
 const AboutPage = lazy(async () => await import('../pages/AboutPage'));
+const ShopPage = lazy(async () => await import('../pages/ShopPage'));
+const ClothesDetailsPage = lazy(
+  async () => await import('../pages/ClothesDetailsPage')
+);
 const NotFoundPage = lazy(async () => await import('../pages/NotFoundPage'));
 
 export default createBrowserRouter([
@@ -44,11 +48,11 @@ export default createBrowserRouter([
                   {
                     index: true,
                     path: '',
-                    element: <div>Shop men...</div>
+                    element: <ShopPage />
                   },
                   {
                     path: SLUG,
-                    element: <div>Product men...</div>
+                    element: <ClothesDetailsPage />
                   }
                 ]
               },
@@ -58,11 +62,11 @@ export default createBrowserRouter([
                   {
                     index: true,
                     path: '',
-                    element: <div>Shop women...</div>
+                    element: <ShopPage />
                   },
                   {
                     path: SLUG,
-                    element: <div>Product women...</div>
+                    element: <ClothesDetailsPage />
                   }
                 ]
               },
@@ -72,11 +76,11 @@ export default createBrowserRouter([
                   {
                     index: true,
                     path: '',
-                    element: <div>Shop unisex...</div>
+                    element: <ShopPage />
                   },
                   {
                     path: SLUG,
-                    element: <div>Product unisex...</div>
+                    element: <ClothesDetailsPage />
                   }
                 ]
               }

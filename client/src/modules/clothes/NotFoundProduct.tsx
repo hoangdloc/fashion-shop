@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import { Typography } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../config/route';
+import { AppRoute } from '../../config/route';
 
-const NotFoundPageStyles = styled('section')(props => ({
+const NotFoundProductStyles = styled('section')(props => ({
   height: 'calc(100vh - 14.2rem - 31.5rem)',
   display: 'flex',
   flexDirection: 'column',
@@ -15,14 +15,14 @@ const NotFoundPageStyles = styled('section')(props => ({
   textAlign: 'center'
 }));
 
-const NotFoundPage: React.FC = () => {
+const NotFoundProduct: React.FC = () => {
   const emotionTheme = useTheme();
 
   return (
-    <NotFoundPageStyles>
+    <NotFoundProductStyles>
       <Typography.Title style={{ fontSize: '4.8rem', marginTop: '-1rem' }}>Oops!</Typography.Title>
       <Typography.Text style={{ fontSize: '2.4rem', marginBottom: '1.6rem' }}>
-        404 - Page Not Found
+        404 - Product Not Found
       </Typography.Text>
       <Typography.Text
         style={{
@@ -32,7 +32,7 @@ const NotFoundPage: React.FC = () => {
           marginBottom: '1.4rem'
         }}
       >
-        The page you looking for might have been removed had its name changed or
+        The product you looking for might have been removed had its name changed or
         is temporaily unvailable.
       </Typography.Text>
       <Link
@@ -46,8 +46,8 @@ const NotFoundPage: React.FC = () => {
       >
         Go to homepage
       </Link>
-    </NotFoundPageStyles>
+    </NotFoundProductStyles>
   );
 };
 
-export default NotFoundPage;
+export default NotFoundProduct;

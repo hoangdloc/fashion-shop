@@ -33,7 +33,7 @@ const globalErrorHandler = (
   }
 
   if (err.name === 'TokenExpiredError') {
-    err = handleJWTError();
+    err = handleJWTExpired();
   }
 
   sendError(err, req, res);

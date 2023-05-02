@@ -1,20 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { Clothes } from '../../shared/@types/clothes';
+import type { Clothes } from '../../shared/@types/clothes';
 import { clothesApi } from './clothesService';
 
 interface ClothesState {
   clothings: Clothes[]
+  currentClothes: Clothes | null
 }
 
 const initialState: ClothesState = {
-  clothings: []
+  clothings: [],
+  currentClothes: null
 };
 
 export const clothesSlice = createSlice({
   name: 'clothes',
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentClothes: (state, action) => {
+      state.currentClothes = action.payload;
+    }
+  },
   extraReducers: builder => {
     builder.addMatcher(
       clothesApi.endpoints.fetchClothing.matchFulfilled,
@@ -22,8 +28,14 @@ export const clothesSlice = createSlice({
         state.clothings = action.payload;
       }
     );
+    builder.addMatcher(
+      clothesApi.endpoints.getCurrentClothes.matchFulfilled,
+      (state, action) => {
+        state.currentClothes = action.payload;
+      }
+    );
   }
 });
 
-// export const {} = clothesSlice.actions;
+export const { setCurrentClothes } = clothesSlice.actions;
 export default clothesSlice.reducer;

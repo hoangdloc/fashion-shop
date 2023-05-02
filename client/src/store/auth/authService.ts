@@ -5,8 +5,8 @@ import jwtDecode from 'jwt-decode';
 import { toast } from 'react-toastify';
 
 import { axiosBaseQuery } from '../../config/axios';
-import { JWTDecoded } from '../../shared/@types/jwtDecoded';
-import { UserLogin, UserResponse, UserSignup } from '../../shared/@types/user';
+import type { JWTDecoded } from '../../shared/@types/jwtDecoded';
+import type { UserLogin, UserResponse, UserSignup } from '../../shared/@types/user';
 import {
   convertTimestampToDays
 } from '../../shared/utils/convertTimestampToDays';

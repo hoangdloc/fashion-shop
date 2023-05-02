@@ -2,9 +2,14 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 
 import { axiosBaseQuery } from '../../config/axios';
-import { Color, Gender, Type } from '../../shared/@types/category';
-import { Clothes, ClothesResponse } from '../../shared/@types/clothes';
-import { Size } from '../../shared/@types/size';
+import type { Color, Gender, Type } from '../../shared/@types/category';
+import type {
+  Clothes,
+  ClothesResponse,
+  ClothingsResponse
+} from '../../shared/@types/clothes';
+import type { Size } from '../../shared/@types/size';
+import { toast } from 'react-toastify';
 
 interface FetchClothingParams {
   gender?: Gender
@@ -23,12 +28,12 @@ export const clothesApi = createApi({
   refetchOnReconnect: true,
   endpoints: builder => ({
     fetchClothing: builder.query<Clothes[], FetchClothingParams | void>({
-      query: (params) => ({
+      query: params => ({
         url: '/clothes',
         method: 'get',
         params
       }),
-      transformResponse: (response: ClothesResponse) =>
+      transformResponse: (response: ClothingsResponse) =>
         response.data.clothings,
       providesTags: result => {
         if (result != null) {
@@ -43,8 +48,21 @@ export const clothesApi = createApi({
         }
         return [{ type: 'Clothes', id: 'LIST' }];
       }
+    }),
+    getCurrentClothes: builder.query<Clothes, string>({
+      query: slug => ({
+        url: `/clothes/current/${slug}`,
+        method: 'get'
+      }),
+      transformResponse: (response: ClothesResponse) => response.data.clothes,
+      onQueryStarted: async (_, api) => {
+        const payload = (await api.queryFulfilled).data;
+        if (payload == null) {
+          toast.error('Product not found! 😵‍💫');
+        }
+      }
     })
   })
 });
 
-export const { useFetchClothingQuery } = clothesApi;
+export const { useFetchClothingQuery, useGetCurrentClothesQuery } = clothesApi;

@@ -41,7 +41,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       autoClose={5000}
       draggablePercent={60}
       position={toast.POSITION.BOTTOM_RIGHT}
-      theme="colored"
+      theme="light"
       pauseOnHover
       bodyStyle={{ fontSize: '1.4rem' }}
     />

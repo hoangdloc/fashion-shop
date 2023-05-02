@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 
-import { User } from '../../shared/@types/user';
 import { authApi } from './authService';
+import type { User } from '../../shared/@types/user';
 
 interface IAuthState {
   accessToken?: string

@@ -1,6 +1,6 @@
-import { Category } from './category';
-import { Size } from './size';
-import { Status } from './status';
+import type { Category } from './category';
+import type { Size } from './size';
+import type { Status } from './status';
 
 export interface Clothes {
   id: number
@@ -18,10 +18,17 @@ export interface Clothes {
   sizes: Size[]
 }
 
-export interface ClothesResponse {
+export interface ClothingsResponse {
   status: string
   results: number
   data: {
     clothings: Clothes[]
+  }
+}
+
+export interface ClothesResponse {
+  status: string
+  data: {
+    clothes: Clothes
   }
 }
