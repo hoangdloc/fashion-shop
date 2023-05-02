@@ -1,10 +1,16 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import isPropValid from '@emotion/is-prop-valid';
-import { Theme } from '@emotion/react';
+import type { Theme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Input } from 'antd';
 import React, { Fragment, useRef } from 'react';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import
+{
+  Controller,
+  type Control,
+  type FieldValues,
+  type Path
+} from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 
 import MyCheckbox from '../checkbox';
@@ -43,7 +49,7 @@ const transitionErrorStyle = {
 
 const MyFormItemStyles = styled('div', {
   shouldForwardProp: prop => isPropValid(prop) && prop !== 'containerWidth'
-})((props: MyFormItemStylesProps) => ({
+})<MyFormItemStylesProps>(props => ({
   width: props.containerWidth,
   fontSize: '1.6rem',
   display: 'flex',

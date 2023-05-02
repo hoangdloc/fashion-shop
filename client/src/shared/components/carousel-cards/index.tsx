@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 
-import { Clothes } from '../../@types/clothes';
+import type { Clothes } from '../../@types/clothes';
 import MyButton from '../button';
 import { ClothesCard, ClothesSkeletonCard } from '../clothes-card';
 import { LeftArrowIcon, RightArrowIcon } from '../icon';

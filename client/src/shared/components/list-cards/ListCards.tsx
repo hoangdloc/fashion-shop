@@ -3,7 +3,7 @@ import { Col, Row } from 'antd';
 import React from 'react';
 import { v4 } from 'uuid';
 
-import { Clothes } from '../../@types/clothes';
+import type { Clothes } from '../../@types/clothes';
 import { chunkArray } from '../../utils/chunkArray';
 import { ClothesCard, ClothesSkeletonCard } from '../clothes-card';
 

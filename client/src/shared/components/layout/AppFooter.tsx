@@ -18,7 +18,8 @@ import {
   MapMarkerIcon,
   PhoneIcon
 } from '../icon';
-import MyInput from '../input';
+import { MyOutlinedInput } from '../input';
+import { useFakeLoading } from '../../hooks/useFakeLoading';
 
 const LayoutFooter = styled(Layout.Footer)(props => ({
   backgroundColor: props.theme.colors.footerBg,
@@ -164,6 +165,7 @@ const paymentItems = [
 
 const AppFooter: React.FC = () => {
   const emotionTheme = useTheme();
+  const { loading, fakeLoading } = useFakeLoading();
 
   return (
     <LayoutFooter>
@@ -209,7 +211,7 @@ const AppFooter: React.FC = () => {
           </Typography.Title>
           <div>
             <form>
-              <MyInput
+              <MyOutlinedInput
                 style={{
                   minWidth: '36.3rem',
                   maxWidth: '100%',
@@ -222,8 +224,8 @@ const AppFooter: React.FC = () => {
                 placeholderColor="#666666"
               />
               <MyButton
-                onClick={e => {
-                  e.preventDefault();
+                onClick={() => {
+                  void fakeLoading();
                 }}
                 type="primary"
                 style={{
@@ -233,6 +235,7 @@ const AppFooter: React.FC = () => {
                   padding: '1rem 1.6rem',
                   border: 'none'
                 }}
+                loading={loading}
               >
                 Submit
               </MyButton>

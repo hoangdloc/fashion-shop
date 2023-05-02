@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Carousel, Typography } from 'antd';
-import { CarouselRef } from 'antd/es/carousel';
+import type { CarouselRef } from 'antd/es/carousel';
 import React, { useRef } from 'react';
 
 import hero1 from '../../assets/images/hero1.png';
@@ -26,9 +26,6 @@ const HeroSectionStyles = styled('div')(props => ({
     border: 'none',
     width: '4.8rem',
     height: '4.8rem',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
     '&__left': {
       left: '4rem'
     },

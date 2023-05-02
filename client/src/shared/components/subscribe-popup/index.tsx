@@ -5,16 +5,17 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import subcribeImg from '../../../assets/images/subcribe.png';
 import { toggleShowPopupAgain } from '../../../store/general/generalSlice';
-import { RootState } from '../../../store/store';
+import type { RootState } from '../../../store/store';
 import MyButton from '../button';
 import MyCheckbox from '../checkbox';
 import { CloseIcon } from '../icon';
-import MyInput from '../input';
+import { MyOutlinedInput } from '../input';
+import { useFakeLoading } from '../../hooks/useFakeLoading';
 
 const SubcribePopupStyles = styled(Modal)`
   .ant-modal-content {
     padding: 0;
-    height: 40rem;
+    min-height: 40rem;
     & > .ant-modal-body {
       height: 100%;
       & > .popup-container {
@@ -72,9 +73,10 @@ const SubcribePopupStyles = styled(Modal)`
 
 const SubcribePopup: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
-  const showPopupAgain = useSelector(
-    (state: RootState) => state.general.showPopupAgain
+  const showSubcribePopupAgain = useSelector(
+    (state: RootState) => state.general.showSubcribePopupAgain
   );
+  const { loading, fakeLoading } = useFakeLoading();
   const dispatch = useDispatch();
   const checkboxRef = useRef<HTMLInputElement>(null);
 
@@ -83,7 +85,7 @@ const SubcribePopup: React.FC = () => {
     dispatch(toggleShowPopupAgain(!(checkboxRef.current?.checked ?? false)));
   };
 
-  if (!showPopupAgain) return null;
+  if (!showSubcribePopupAgain) return null;
 
   return (
     <SubcribePopupStyles
@@ -103,16 +105,17 @@ const SubcribePopup: React.FC = () => {
             Subcrise and get new our collection.
           </Typography.Text>
           <form className="email-form">
-            <MyInput
+            <MyOutlinedInput
               className="email-input"
               placeholder="youremail.@gmail.com"
               placeholderColor="#55595B"
             />
             <MyButton
               className="btn-submit"
-              onClick={e => {
-                e.preventDefault();
+              onClick={() => {
+                void fakeLoading();
               }}
+              loading={loading}
               type="primary"
             >
               Submit

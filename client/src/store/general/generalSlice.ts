@@ -3,11 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 import { authApi } from '../auth/authService';
 
 interface GeneralState {
-  showPopupAgain: boolean
+  showSubcribePopupAgain: boolean
+  showContactPopup: boolean
+  showOrderingPopup: boolean
 }
 
 const initialState: GeneralState = {
-  showPopupAgain: true
+  showSubcribePopupAgain: true,
+  showContactPopup: false,
+  showOrderingPopup: false
 };
 
 export const generalSlice = createSlice({
@@ -15,18 +19,25 @@ export const generalSlice = createSlice({
   initialState,
   reducers: {
     toggleShowPopupAgain: (state, action) => {
-      state.showPopupAgain = action.payload;
+      state.showSubcribePopupAgain = action.payload;
+    },
+    setShowContactPopup: (state, action) => {
+      state.showContactPopup = action.payload;
+    },
+    setShowOrderingPopup: (state, action) => {
+      state.showOrderingPopup = action.payload;
     }
   },
   extraReducers: builder => {
-    builder.addMatcher(
-      authApi.endpoints.userLogout.matchFulfilled,
-      state => {
-        state.showPopupAgain = true;
-      }
-    );
+    builder.addMatcher(authApi.endpoints.userLogout.matchFulfilled, state => {
+      state.showSubcribePopupAgain = true;
+    });
   }
 });
 
-export const { toggleShowPopupAgain } = generalSlice.actions;
+export const {
+  toggleShowPopupAgain,
+  setShowContactPopup,
+  setShowOrderingPopup
+} = generalSlice.actions;
 export default generalSlice.reducer;

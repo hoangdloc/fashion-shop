@@ -5,8 +5,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { AppRoute } from '../../../config/route';
-import { Gender } from '../../@types/category';
-import { Clothes } from '../../@types/clothes';
+import type { Gender } from '../../@types/category';
+import type { Clothes } from '../../@types/clothes';
 import { Status } from '../../@types/status';
 import { renderBadge } from '../../utils/renderBadge';
 import MyBadge from '../badge';
@@ -108,9 +108,6 @@ const ClothesCard: React.FC<ClothesCardProps> = props => {
               bottom: '1.6rem',
               width: '4rem',
               height: '4rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
               zIndex: 2,
               color: emotionTheme.colors.primaryBlack
             }}

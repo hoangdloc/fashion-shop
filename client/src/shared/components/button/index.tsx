@@ -1,10 +1,13 @@
 import styled from '@emotion/styled';
-import { Button, ButtonProps } from 'antd';
+import { Button, type ButtonProps } from 'antd';
 import React from 'react';
 
-const ButtonStyles = styled(Button)((props) => ({
+const ButtonStyles = styled(Button)(props => ({
   fontFamily: "'Oxygen', san-serif",
-  boxShadow: 'none'
+  boxShadow: 'none',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center'
 }));
 
 const MyButton: React.FC<ButtonProps> = props => {

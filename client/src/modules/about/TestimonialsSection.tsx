@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Carousel, Typography } from 'antd';
-import { CarouselRef } from 'antd/es/carousel';
+import type { CarouselRef } from 'antd/es/carousel';
 import React, { useRef } from 'react';
 
 import { LeftArrowIcon, RightArrowIcon } from '../../shared/components/icon';

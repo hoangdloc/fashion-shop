@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { Link, LinkProps } from 'react-router-dom';
+import { Link, type LinkProps } from 'react-router-dom';
 
 const MyLinkButtonStyle = styled(Link)(props => ({
   color: props.theme.colors.textWhite,

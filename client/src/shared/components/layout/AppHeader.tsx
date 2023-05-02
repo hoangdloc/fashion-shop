@@ -1,7 +1,14 @@
 import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Badge, Dropdown, Layout, MenuProps, Space, Typography } from 'antd';
+import {
+  Badge,
+  Dropdown,
+  Layout,
+  Space,
+  Typography,
+  type MenuProps
+} from 'antd';
 import React, { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
@@ -11,7 +18,7 @@ import { v4 } from 'uuid';
 import fullLogo from '../../../assets/images/logo-full.png';
 import { AppRoute, ShopRoute } from '../../../config/route';
 import { authApi } from '../../../store/auth/authService';
-import { RootState } from '../../../store/store';
+import type { RootState } from '../../../store/store';
 import { CartIcon, PhoneIcon } from '../icon';
 import { Spinner } from '../loader';
 
@@ -142,10 +149,6 @@ const AppHeader: React.FC = () => {
     }
   ];
 
-  const handleMenuClickShop: MenuProps['onClick'] = e => {
-    console.log('Hello World');
-  };
-
   return (
     <LayoutHeader>
       <nav className="header-box">
@@ -210,10 +213,7 @@ const AppHeader: React.FC = () => {
           </li>
           <li>
             <Dropdown
-              menu={{
-                items: shopItems,
-                onClick: handleMenuClickShop
-              }}
+              menu={{ items: shopItems }}
               onOpenChange={flag => {
                 setOpenShop(flag);
               }}
