@@ -1,11 +1,11 @@
-import React from 'react';
-import { DecoratedHeading } from '../../../../shared/components/heading';
 import styled from '@emotion/styled';
-import type { RadioItems } from '../../../../shared/components/radio-group';
+import React from 'react';
 import { Type } from '../../../../shared/@types/category';
+import { DecoratedHeading } from '../../../../shared/components/heading';
+import type { RadioItems } from '../../../../shared/components/radio-group';
 import MyRadioGroup from '../../../../shared/components/radio-group';
 
-const ProductCategoryContainer = styled.div`
+const ProductCategoryFilterContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
@@ -17,9 +17,9 @@ const categoryFilterItems: RadioItems[] = Object.values(Type).map(type => ({
   label: type
 }));
 
-const ProductCategory: React.FC = () => {
+const ProductCategoryFilter: React.FC = () => {
   return (
-    <ProductCategoryContainer>
+    <ProductCategoryFilterContainer>
       <DecoratedHeading level="h3">Products Category</DecoratedHeading>
       <MyRadioGroup
         name="category-filter"
@@ -27,9 +27,10 @@ const ProductCategory: React.FC = () => {
         onChange={e => {
           console.log(e.target.value);
         }}
+        underline
       />
-    </ProductCategoryContainer>
+    </ProductCategoryFilterContainer>
   );
 };
 
-export default ProductCategory;
+export default ProductCategoryFilter;

@@ -6,7 +6,7 @@ const DecoratedHeadingStyles = styled.div`
   font-family: 'Playfair Display', sans-serif;
   font-weight: 700;
   font-size: 1.8rem;
-  letter-spacing: 0.05rem;
+  letter-spacing: 0.1rem;
   text-transform: uppercase;
   color: ${props => props.theme.colors.primaryBlack};
   margin: 0 0 1.2rem 0;
