@@ -15,6 +15,9 @@ const BreadcrumbShopSection = styled.section`
   & > .ant-breadcrumb {
     color: ${props => props.theme.colors.primaryBlack};
     font-size: 1.6rem;
+    & .ant-breadcrumb-separator {
+      color: inherit;
+    }
   }
 `;
 

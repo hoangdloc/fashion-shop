@@ -56,6 +56,7 @@ const GalleryImgFigure = styled.figure`
   margin: 0;
   overflow: hidden;
   cursor: pointer;
+  background-color: #000;
   &.gallery-item {
     &-1 {
       grid-row: 1 / span 3;
@@ -90,6 +91,7 @@ const GalleryImgFigure = styled.figure`
     transition: all 0.2s;
     &:hover {
       transform: scale(1.1);
+      opacity: 0.6;
     }
   }
 `;
