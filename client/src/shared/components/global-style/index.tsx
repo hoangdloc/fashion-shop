@@ -43,6 +43,18 @@ const EmotionGlobalStyles: React.FC = () => {
         '.ant-typography': {
           margin: 0
         },
+        '.ant-select-dropdown': {
+          '& .ant-select-item-option-content': {
+            fontSize: '1.2rem'
+          },
+          '& .ant-select-item.ant-select-item-option.ant-select-item-option-selected':
+            {
+              backgroundColor: theme.colors.secondaryRed,
+              '& > .ant-select-item-option-content': {
+                color: theme.colors.textWhite
+              }
+            }
+        },
         '@keyframes pulse': {
           '0%': {
             width: '0.8rem'

@@ -15,6 +15,7 @@ import { ShoppingBagIcon } from '../icon';
 import ClothesSkeletonCard from './ClothesSkeletonCard';
 import { useDispatch } from 'react-redux';
 import { setCurrentClothes } from '../../../store/clothes/clothesSlice';
+import { calcActualPrice } from '../../utils/calcActualPrice';
 
 export interface ClothesCardProps {
   clothes?: Clothes
@@ -162,7 +163,7 @@ const ClothesCard: React.FC<ClothesCardProps> = props => {
                 color: emotionTheme.colors.secondaryRed
               }}
             >
-              $ {fixedPrice(price - price * (salePercent / 100))}
+              $ {fixedPrice(calcActualPrice(price, salePercent))}
             </Typography.Text>
           )}
         </div>
