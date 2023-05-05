@@ -45,7 +45,10 @@ const ListCards: React.FC<ListCardsProps> = props => {
       const chunkedData = chunkArray(data, columnCount);
 
       return chunkedData.map(row => (
-        <Row key={v4()}>
+        <Row
+          key={v4()}
+          gutter={16}
+        >
           {row.map(col => (
             <Col
               key={v4()}

@@ -24,7 +24,8 @@ export interface ClothesCardProps {
 const ClothesCardStyles = styled('div')(() => ({
   '.img-box': {
     display: 'block',
-    width: '26.8rem',
+    // width: '26.8rem',
+    width: '100%',
     height: '40.4rem',
     position: 'relative',
     overflow: 'hidden',

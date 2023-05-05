@@ -54,6 +54,7 @@ const CarouselCards: React.FC<MyCarouselProps> = props => {
         }}
         slidesPerView={4}
         grabCursor
+        spaceBetween={16}
       >
         {loading &&
           new Array(8).fill(0).map((_, index) => (

@@ -1,13 +1,70 @@
-import React, { useMemo } from 'react';
+import styled from '@emotion/styled';
+import ReactPaginate from 'react-paginate';
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ListCards } from '../../../../shared/components/list-cards';
 import { useFetchClothingQuery } from '../../../../store/clothes/clothesService';
-import type { RootState } from '../../../../store/store';
 import { Sorting } from '../../../../shared/@types/sorting';
 import { calcActualPrice } from '../../../../shared/utils/calcActualPrice';
+import { NextBtnIcon, PrevBtnIcon } from '../../../../shared/components/icon';
+import type { RootState } from '../../../../store/store';
+import type { Clothes } from '../../../../shared/@types/clothes';
+import { useLocation } from 'react-router-dom';
+import { ShopPathname } from '../../../../config/route';
+import { Gender } from '../../../../shared/@types/category';
+
+const ITEM_PER_PAGE = 9;
+
+const ProductGridContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6.5rem;
+  & > .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.6rem;
+    & .page-num,
+    .prev-btn,
+    .next-btn {
+      display: inline-block;
+      width: 4rem;
+      height: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0.1rem solid #808284;
+      color: #808284;
+      transition: all 0.3s ease-in-out;
+      font-size: 1.6rem;
+      &:hover {
+        border: 0.1rem solid ${props => props.theme.colors.secondaryRed};
+        color: ${props => props.theme.colors.secondaryRed};
+      }
+    }
+    & .page-active {
+      background-color: ${props => props.theme.colors.primaryBlack};
+      color: ${props => props.theme.colors.textWhite};
+      border: 0.1rem solid ${props => props.theme.colors.primaryBlack};
+      &:hover {
+        color: ${props => props.theme.colors.textWhite};
+        border: 0.1rem solid ${props => props.theme.colors.primaryBlack};
+      }
+    }
+  }
+`;
 
 const ProductGrid: React.FC = () => {
   const { isFetching } = useFetchClothingQuery();
+  const { pathname } = useLocation();
+  const [pageCount, setPageCount] = useState<number>(0);
+  const [currentItems, setCurrentItems] = useState<Clothes[] | undefined>(
+    undefined
+  );
+  const [itemOffset, setItemOffset] = useState<number>(0);
   const sorting = useSelector((state: RootState) => state.clothes.sorting);
   const filterByType = useSelector(
     (state: RootState) => state.clothes.filterByType
@@ -33,7 +90,6 @@ const ProductGrid: React.FC = () => {
               calcActualPrice(b.price, b.salePercent)
             );
           });
-
         case Sorting.HIGH_TO_LOW:
           return [...clothings].sort((a, b) => {
             return (
@@ -41,7 +97,6 @@ const ProductGrid: React.FC = () => {
               calcActualPrice(a.price, a.salePercent)
             );
           });
-
         default:
           return clothings;
       }
@@ -51,23 +106,75 @@ const ProductGrid: React.FC = () => {
 
   const filteredClothings = useMemo(() => {
     return sortedClothings
-      ?.filter(cloth => cloth.category[1] === filterByType)
+      ?.filter(cloth => {
+        switch (pathname) {
+          case ShopPathname.WOMEN:
+            return cloth.category[0] === Gender.WOMEN;
+          case ShopPathname.UNISEX:
+            return cloth.category[0] === Gender.UNISEX;
+          default:
+            return cloth.category[0] === Gender.MEN;
+        }
+      })
+      .filter(cloth => cloth.category[1] === filterByType)
       .filter(cloth => {
         return (
-          calcActualPrice(cloth.price, cloth.salePercent) >= filterByPrice.from &&
+          calcActualPrice(cloth.price, cloth.salePercent) >=
+            filterByPrice.from &&
           calcActualPrice(cloth.price, cloth.salePercent) <= filterByPrice.to
         );
       })
       .filter(cloth => cloth.category.slice(2).includes(filterByColor))
       .filter(cloth => cloth.sizes.includes(filterBySize));
-  }, [filterByType, filterByPrice, filterByColor, filterBySize, sortedClothings]);
+  }, [
+    pathname,
+    filterByType,
+    filterByPrice,
+    filterByColor,
+    filterBySize,
+    sortedClothings
+  ]);
+
+  useLayoutEffect(() => {
+    window.scroll({ behavior: 'instant', top: 350 });
+  }, [itemOffset]);
+
+  useEffect(() => {
+    const endOffset = itemOffset + ITEM_PER_PAGE;
+    if (filteredClothings == null) return;
+    setCurrentItems(filteredClothings.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(filteredClothings.length / ITEM_PER_PAGE));
+  }, [filteredClothings, itemOffset]);
+
+  const handlePageClick = (event: { selected: number }): void => {
+    if (filteredClothings == null) return;
+    const newOffset =
+      (event.selected * ITEM_PER_PAGE) % filteredClothings.length;
+    setItemOffset(newOffset);
+  };
 
   return (
-    <ListCards
-      loading={isFetching}
-      columnCount={3}
-      data={filteredClothings}
-    />
+    <ProductGridContainer>
+      <ListCards
+        loading={isFetching}
+        columnCount={3}
+        data={currentItems}
+      />
+      <ReactPaginate
+        breakLabel="..."
+        pageCount={pageCount}
+        pageRangeDisplayed={2}
+        nextLabel={<NextBtnIcon />}
+        previousLabel={<PrevBtnIcon />}
+        renderOnZeroPageCount={null}
+        onPageChange={handlePageClick}
+        className="pagination"
+        pageLinkClassName="page-num"
+        previousLinkClassName="prev-btn"
+        nextLinkClassName="next-btn"
+        activeLinkClassName="page-active"
+      />
+    </ProductGridContainer>
   );
 };
 

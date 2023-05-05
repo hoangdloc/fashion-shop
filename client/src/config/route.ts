@@ -14,4 +14,10 @@ export enum ShopRoute {
   UNISEX = 'unisex'
 }
 
+export enum ShopPathname {
+  MEN = `${AppRoute.SHOP}/${ShopRoute.MEN}`,
+  WOMEN = `${AppRoute.SHOP}/${ShopRoute.WOMEN}`,
+  UNISEX = `${AppRoute.SHOP}/${ShopRoute.UNISEX}`
+}
+
 export const SLUG = ':slug';
