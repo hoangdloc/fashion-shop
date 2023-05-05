@@ -3,7 +3,7 @@ import MyBreadcrump from '../shared/components/breadcrumb';
 import { useLocation, useParams } from 'react-router-dom';
 import { useGetCurrentClothesQuery } from '../store/clothes/clothesService';
 import LoadingScreen from '../shared/components/layout/LoadingScreen';
-import { NotFoundProduct } from '../modules/clothes';
+import { ClothesDetailSection, NotFoundProduct } from '../modules/clothes';
 import type { Clothes } from '../shared/@types/clothes';
 
 const ClothesDetailsPage: React.FC = () => {
@@ -24,6 +24,7 @@ const ClothesDetailsPage: React.FC = () => {
   return (
     <Fragment>
       <MyBreadcrump productName={currentClothes?.name ?? data?.name} />
+      <ClothesDetailSection />
     </Fragment>
   );
 };

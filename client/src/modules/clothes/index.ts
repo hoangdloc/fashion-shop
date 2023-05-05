@@ -1,3 +1,4 @@
 import NotFoundProduct from './NotFoundProduct';
+import ClothesDetailSection from './ClothesDetailSection';
 
-export { NotFoundProduct };
+export { NotFoundProduct, ClothesDetailSection };

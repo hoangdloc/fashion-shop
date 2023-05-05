@@ -40,6 +40,9 @@ const EmotionGlobalStyles: React.FC = () => {
         hr: {
           border: `0.05rem solid ${theme.colors.horizontalColor}`
         },
+        figure: {
+          margin: 0
+        },
         '.ant-typography': {
           margin: 0
         },
