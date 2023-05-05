@@ -1,11 +1,16 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { DecoratedHeading } from '../../../../shared/components/heading';
-import MyRadioGroup, { type RadioItems } from '../../../../shared/components/radio-group';
+import MyRadioGroup, {
+  type RadioItems
+} from '../../../../shared/components/radio-group';
 
 import { Color } from '../../../../shared/@types/category';
 import { renderColorBox } from '../../../../shared/utils/renderColorBox';
 import { useTheme } from '@emotion/react';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../../../../store/store';
+import { toggleFilterByColor } from '../../../../store/clothes/clothesSlice';
 
 const ProductColorFilterContainer = styled.div`
   display: flex;
@@ -28,20 +33,29 @@ const colorFilterItems: RadioItems[] = Object.values(Color).map(type => ({
 
 const ProductColorFilter: React.FC = () => {
   const emotionTheme = useTheme();
+  const dispatch = useDispatch();
+  const filterByColor = useSelector(
+    (state: RootState) => state.clothes.filterByColor
+  );
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    dispatch(toggleFilterByColor(e.target.value as Color));
+  };
 
   return (
     <ProductColorFilterContainer>
       <DecoratedHeading>Color</DecoratedHeading>
       <MyRadioGroup
         name="color-filter"
-        direction='horizontal'
-        type='box'
+        direction="horizontal"
+        type="box"
         data={colorFilterItems}
-        selectedStyle={{ border: `0.2rem solid ${emotionTheme.colors.secondaryRed}` }}
-        hoverStyle={{ opacity: 0.6 }}
-        onChange={e => {
-          console.log(e.target.value);
+        defaultCheckedRadio={filterByColor}
+        selectedStyle={{
+          border: `0.2rem solid ${emotionTheme.colors.secondaryRed}`
         }}
+        hoverStyle={{ opacity: 0.6 }}
+        onChange={onChange}
       />
     </ProductColorFilterContainer>
   );

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 
 import { authApi } from './authService';
@@ -20,10 +20,10 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setCurrentUserInfo: (state, action) => {
+    setCurrentUserInfo: (state, action: PayloadAction<User>) => {
       state.userInfo = action.payload;
     },
-    setAccessToken: (state, action) => {
+    setAccessToken: (state, action: PayloadAction<string>) => {
       state.accessToken = action.payload;
     }
   },

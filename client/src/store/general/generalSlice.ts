@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { authApi } from '../auth/authService';
 
@@ -18,13 +18,13 @@ export const generalSlice = createSlice({
   name: 'general',
   initialState,
   reducers: {
-    toggleShowPopupAgain: (state, action) => {
+    toggleShowPopupAgain: (state, action: PayloadAction<boolean>) => {
       state.showSubcribePopupAgain = action.payload;
     },
-    setShowContactPopup: (state, action) => {
+    setShowContactPopup: (state, action: PayloadAction<boolean>) => {
       state.showContactPopup = action.payload;
     },
-    setShowOrderingPopup: (state, action) => {
+    setShowOrderingPopup: (state, action: PayloadAction<boolean>) => {
       state.showOrderingPopup = action.payload;
     }
   },

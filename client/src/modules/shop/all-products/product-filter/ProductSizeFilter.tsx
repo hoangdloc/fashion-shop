@@ -6,6 +6,9 @@ import MyRadioGroup, {
 } from '../../../../shared/components/radio-group';
 import { Size } from '../../../../shared/@types/size';
 import { useTheme } from '@emotion/react';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../../../../store/store';
+import { toggleFilterBySize } from '../../../../store/clothes/clothesSlice';
 
 const ProductSizeFilterContainer = styled.div`
   display: flex;
@@ -29,6 +32,14 @@ const sizeFilterItems: RadioItems[] = Object.values(Size).map(type => ({
 
 const ProductSizeFilter: React.FC = () => {
   const emotionTheme = useTheme();
+  const dispatch = useDispatch();
+  const filterBySize = useSelector(
+    (state: RootState) => state.clothes.filterBySize
+  );
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    dispatch(toggleFilterBySize(e.target.value as Size));
+  };
 
   return (
     <ProductSizeFilterContainer>
@@ -38,6 +49,7 @@ const ProductSizeFilter: React.FC = () => {
         direction="horizontal"
         type="box"
         data={sizeFilterItems}
+        defaultCheckedRadio={filterBySize}
         selectedStyle={{
           backgroundColor: emotionTheme.colors.secondaryRed,
           color: emotionTheme.colors.textWhite
@@ -47,9 +59,7 @@ const ProductSizeFilter: React.FC = () => {
           color: emotionTheme.colors.textWhite,
           opacity: 0.6
         }}
-        onChange={e => {
-          console.log(e.target.value);
-        }}
+        onChange={onChange}
       />
     </ProductSizeFilterContainer>
   );

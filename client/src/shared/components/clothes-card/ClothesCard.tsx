@@ -52,6 +52,19 @@ const ClothesCardStyles = styled('div')(() => ({
     }
   },
   '.info-box': {
+    '.product-name': {
+      marginBottom: '0.4rem',
+      marginTop: '2rem',
+      lineHeight: '2.4rem',
+      letterSpacing: 1.05,
+      fontFamily: "'Playfair Display', san-serif",
+      fontSize: '1.8rem',
+      fontWeight: 600,
+      textTransform: 'uppercase',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden'
+    },
     '.product-price': {
       display: 'flex',
       alignItems: 'center',
@@ -129,16 +142,7 @@ const ClothesCard: React.FC<ClothesCardProps> = props => {
       <div className="info-box">
         <Link to={linkToProduct}>
           <Typography.Title
-            style={{
-              marginBottom: '0.4rem',
-              marginTop: '2rem',
-              lineHeight: '2.4rem',
-              letterSpacing: 1.05,
-              fontFamily: "'Playfair Display', san-serif",
-              fontSize: '1.8rem',
-              fontWeight: 600,
-              textTransform: 'uppercase'
-            }}
+            className="product-name"
             level={5}
           >
             {name}

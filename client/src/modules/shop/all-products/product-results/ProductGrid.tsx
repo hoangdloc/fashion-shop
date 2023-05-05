@@ -1,50 +1,72 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { Sorting } from '../../../../shared/@types/sorting';
 import { ListCards } from '../../../../shared/components/list-cards';
-import { calcActualPrice } from '../../../../shared/utils/calcActualPrice';
 import { useFetchClothingQuery } from '../../../../store/clothes/clothesService';
 import type { RootState } from '../../../../store/store';
+import { Sorting } from '../../../../shared/@types/sorting';
+import { calcActualPrice } from '../../../../shared/utils/calcActualPrice';
 
 const ProductGrid: React.FC = () => {
-  const { data, isFetching } = useFetchClothingQuery();
+  const { isFetching } = useFetchClothingQuery();
   const sorting = useSelector((state: RootState) => state.clothes.sorting);
+  const filterByType = useSelector(
+    (state: RootState) => state.clothes.filterByType
+  );
+  const filterByPrice = useSelector(
+    (state: RootState) => state.clothes.filterByPrice
+  );
+  const filterByColor = useSelector(
+    (state: RootState) => state.clothes.filterByColor
+  );
+  const filterBySize = useSelector(
+    (state: RootState) => state.clothes.filterBySize
+  );
+  const clothings = useSelector((state: RootState) => state.clothes.clothings);
 
-  const sortedData = useMemo(() => {
-    switch (sorting) {
-      case Sorting.LOW_TO_HIGH:
-        if (data != null) {
-          return [...data].sort((a, b) => {
+  const sortedClothings = useMemo(() => {
+    if (clothings != null) {
+      switch (sorting) {
+        case Sorting.LOW_TO_HIGH:
+          return [...clothings].sort((a, b) => {
             return (
               calcActualPrice(a.price, a.salePercent) -
               calcActualPrice(b.price, b.salePercent)
             );
           });
-        }
-        break;
 
-      case Sorting.HIGH_TO_LOW:
-        if (data != null) {
-          return [...data].sort((a, b) => {
+        case Sorting.HIGH_TO_LOW:
+          return [...clothings].sort((a, b) => {
             return (
               calcActualPrice(b.price, b.salePercent) -
               calcActualPrice(a.price, a.salePercent)
             );
           });
-        }
-        break;
 
-      default:
-        if (data != null) return data;
-        break;
+        default:
+          return clothings;
+      }
     }
-  }, [sorting, data]);
+    return clothings;
+  }, [clothings, sorting]);
+
+  const filteredClothings = useMemo(() => {
+    return sortedClothings
+      ?.filter(cloth => cloth.category[1] === filterByType)
+      .filter(cloth => {
+        return (
+          calcActualPrice(cloth.price, cloth.salePercent) >= filterByPrice.from &&
+          calcActualPrice(cloth.price, cloth.salePercent) <= filterByPrice.to
+        );
+      })
+      .filter(cloth => cloth.category.slice(2).includes(filterByColor))
+      .filter(cloth => cloth.sizes.includes(filterBySize));
+  }, [filterByType, filterByPrice, filterByColor, filterBySize, sortedClothings]);
 
   return (
     <ListCards
       loading={isFetching}
       columnCount={3}
-      data={sortedData}
+      data={filteredClothings}
     />
   );
 };

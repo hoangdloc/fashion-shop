@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { DecoratedHeading } from '../../../../shared/components/heading';
 import { InputNumber, Slider } from 'antd';
 import MyButton from '../../../../shared/components/button';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilterByPrice } from '../../../../store/clothes/clothesSlice';
+import type { RootState } from '../../../../store/store';
 
 enum ProductPrice {
   MAX = 1000,
@@ -46,8 +49,12 @@ const DashSign = styled.div`
 `;
 
 const ProductPriceFilter: React.FC = () => {
-  const [priceFrom, setPriceFrom] = useState<number>(0);
-  const [priceTo, setPriceTo] = useState<number>(500);
+  const dispatch = useDispatch();
+  const filterByPrice = useSelector(
+    (state: RootState) => state.clothes.filterByPrice
+  );
+  const [priceFrom, setPriceFrom] = useState<number>(filterByPrice.from);
+  const [priceTo, setPriceTo] = useState<number>(filterByPrice.to);
 
   const onPriceSliderChange = (value: [number, number]): void => {
     setPriceFrom(value[0]);
@@ -60,6 +67,10 @@ const ProductPriceFilter: React.FC = () => {
 
   const onPriceToInputChange = (newValue: number | null): void => {
     setPriceTo(newValue ?? 0);
+  };
+
+  const onButtonClick = (): void => {
+    dispatch(setFilterByPrice({ from: priceFrom, to: priceTo }));
   };
 
   return (
@@ -98,6 +109,7 @@ const ProductPriceFilter: React.FC = () => {
         <MyButton
           type="primary"
           style={{ fontWeight: 700 }}
+          onClick={onButtonClick}
         >
           Filter
         </MyButton>

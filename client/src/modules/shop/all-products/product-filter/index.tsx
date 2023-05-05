@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import ProductCategoryFilter from './ProductCategoryFilter';
+import ProductTypeFilter from './ProductTypeFilter';
 import ProductPriceFilter from './ProductPriceFilter';
 import ProductColorFilter from './ProductColorFilter';
 import ProductSizeFilter from './ProductSizeFilter';
@@ -14,7 +14,7 @@ const SideToolbarContainer = styled.aside`
 const SideToolbar: React.FC = () => {
   return (
     <SideToolbarContainer>
-      <ProductCategoryFilter />
+      <ProductTypeFilter />
       <ProductPriceFilter />
       <ProductColorFilter />
       <ProductSizeFilter />

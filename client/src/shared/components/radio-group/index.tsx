@@ -3,11 +3,12 @@ import React from 'react';
 
 export interface RadioItems {
   id: string
-  value: string
+  value: string | number
   label: React.ReactNode
 }
 
-interface MyRadioGroupProps extends React.ComponentProps<'input'> {
+interface MyRadioGroupProps
+  extends Omit<React.ComponentProps<'input'>, 'type' | 'defaultChecked'> {
   data: RadioItems[]
   name: string
   direction?: 'vertical' | 'horizontal'
@@ -15,6 +16,7 @@ interface MyRadioGroupProps extends React.ComponentProps<'input'> {
   type?: 'text' | 'box'
   selectedStyle?: React.CSSProperties
   hoverStyle?: React.CSSProperties
+  defaultCheckedRadio?: string | number
 }
 
 const MyRadioContainer = styled.div<Pick<MyRadioGroupProps, 'direction'>>`
@@ -89,6 +91,7 @@ const MyRadioGroup: React.FC<MyRadioGroupProps> = ({
   type = 'text',
   selectedStyle = {},
   hoverStyle = {},
+  defaultCheckedRadio,
   ...rest
 }) => {
   return (
@@ -107,7 +110,11 @@ const MyRadioGroup: React.FC<MyRadioGroupProps> = ({
             name={name}
             id={item.id}
             value={item.value}
-            defaultChecked={item.value === data[0].value}
+            defaultChecked={
+              defaultCheckedRadio != null
+                ? item.value === defaultCheckedRadio
+                : item.value === data[0].value
+            }
             {...rest}
           />
           <label htmlFor={item.id}>{item.label}</label>

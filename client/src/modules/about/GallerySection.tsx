@@ -131,15 +131,14 @@ const GallerySection: React.FC = () => {
           level={3}
           className="story-title"
         >
-          Our first expandation
+          Affordable luxury
         </Typography.Title>
         <Typography.Text className="story-content">
-          2018 imprints the beginning of our first worldwide endeavor. Venturing
-          into the US advertise, FASHION has arrived in a standout amongst
-          L.A&lsquo;s most looked for after retail areas, Platform. Exhibiting
-          our most cherished British brands and banding together with any
-          semblance of Psychic Sisters, an energizing new section is standing
-          by.
+          We are here to serve you and make sure you find the Perfect Look. Our
+          passion for fashion is the reason why we are here. We absolutely love
+          what we do, and our goal is to help our customers by providing them
+          with unique outfit and accessories that make them stand-out from the
+          crowd.
         </Typography.Text>
       </GalleryStory>
       <GalleryImgContainer>
