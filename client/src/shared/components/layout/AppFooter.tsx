@@ -9,7 +9,7 @@ import CashSVG from '../../../assets/svg/cash.svg';
 import PaypalSVG from '../../../assets/svg/paypal.svg';
 import VisaSVG from '../../../assets/svg/visa.svg';
 import { AppRoute } from '../../../config/route';
-import MyButton from '../button';
+import { MyButton } from '../button';
 import {
   FacebookIcon,
   InstagramIcon,

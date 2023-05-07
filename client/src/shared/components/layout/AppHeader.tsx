@@ -21,11 +21,12 @@ import { authApi } from '../../../store/auth/authService';
 import type { RootState } from '../../../store/store';
 import { CartIcon, PhoneIcon } from '../icon';
 import { Spinner } from '../loader';
+import { getCartItemsSelector } from '../../../store/cart/cartSlice';
 
 const LayoutHeader = styled(Layout.Header)(props => ({
   position: 'sticky',
   top: 0,
-  zIndex: 10,
+  zIndex: 999999,
   width: '100%',
   height: '14.2rem',
   backgroundColor: props.theme.colors.bgWhite,
@@ -135,6 +136,7 @@ const AppHeader: React.FC = () => {
   const isLoggingOut = useSelector(
     (state: RootState) => state.auth.isLoggingOut
   );
+  const cartItems = useSelector(getCartItemsSelector);
   const [trigger] = authApi.useLazyUserLogoutQuery();
 
   const detailItems: MenuProps['items'] = [
@@ -275,7 +277,7 @@ const AppHeader: React.FC = () => {
         <div className="customer-cart">
           <Badge
             color={emotionTheme.colors.secondaryRed}
-            count={0}
+            count={cartItems.length}
             showZero
           >
             <Link to={AppRoute.CART}>

@@ -4,18 +4,18 @@ import { ConfigProvider, Typography } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { useDispatch } from 'react-redux';
 import { AppRoute } from '../../../config/route';
-import type { Gender } from '../../@types/category';
-import type { Clothes } from '../../@types/clothes';
-import { Status } from '../../@types/status';
+import { setCurrentClothes } from '../../../store/clothes/clothesSlice';
 import { renderBadge } from '../../utils/renderBadge';
+import { renderPrice } from '../../utils/renderPrice';
 import MyBadge from '../badge';
-import MyButton from '../button';
+import { MyButton } from '../button';
 import { ShoppingBagIcon } from '../icon';
 import ClothesSkeletonCard from './ClothesSkeletonCard';
-import { useDispatch } from 'react-redux';
-import { setCurrentClothes } from '../../../store/clothes/clothesSlice';
-import { calcActualPrice } from '../../utils/calcActualPrice';
+
+import type { Gender } from '../../@types/category';
+import type { Clothes } from '../../@types/clothes';
 
 export interface ClothesCardProps {
   clothes?: Clothes
@@ -69,7 +69,10 @@ const ClothesCardStyles = styled('div')(() => ({
     '.product-price': {
       display: 'flex',
       alignItems: 'center',
-      gap: '1.5rem'
+      gap: '1.5rem',
+      '& > .ant-typography': {
+        fontSize: '1.6rem'
+      }
     }
   }
 }));
@@ -86,11 +89,12 @@ const ClothesCard: React.FC<ClothesCardProps> = props => {
   const { images, name, salePercent, price, category, slug, status } = clothes;
   const gender: Gender = category[0];
   const linkToProduct = [AppRoute.SHOP, gender.toLowerCase(), slug].join('/');
-  const fixedPrice = (price: number): string => {
-    return price.toFixed(2);
-  };
   const badge = renderBadge(status);
-  const isSale = salePercent !== 0 || status === Status.SALE;
+  const { isSale, originalPrice, actualPrice } = renderPrice(
+    price,
+    salePercent,
+    status
+  );
 
   const handleSetCurrentClothes = (): void => {
     disptach(setCurrentClothes(clothes));
@@ -152,23 +156,19 @@ const ClothesCard: React.FC<ClothesCardProps> = props => {
         <div className="product-price">
           <Typography.Text
             style={{
-              fontSize: '1.6rem',
               color: isSale
                 ? emotionTheme.colors.textGrayLight
                 : emotionTheme.colors.secondaryRed
             }}
             delete={isSale}
           >
-            $ {fixedPrice(price)}
+            $ {originalPrice}
           </Typography.Text>
           {isSale && (
             <Typography.Text
-              style={{
-                fontSize: '1.6rem',
-                color: emotionTheme.colors.secondaryRed
-              }}
+              style={{ color: emotionTheme.colors.secondaryRed }}
             >
-              $ {fixedPrice(calcActualPrice(price, salePercent))}
+              $ {actualPrice}
             </Typography.Text>
           )}
         </div>

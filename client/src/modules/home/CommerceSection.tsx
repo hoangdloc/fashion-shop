@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import commerce1 from '../../assets/images/commerce1.png';
 import commerce2 from '../../assets/images/commerce2.png';
 import { AppRoute } from '../../config/route';
-import MyButton from '../../shared/components/button';
+import { MyButton } from '../../shared/components/button';
 
 const CommerceSectionStyles = styled('section')(props => ({
   padding: '8rem 16rem 4rem 16rem',

@@ -43,6 +43,14 @@ const EmotionGlobalStyles: React.FC = () => {
         figure: {
           margin: 0
         },
+        button: {
+          border: 'none',
+          backgroundColor: 'transparent',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer'
+        },
         '.ant-typography': {
           margin: 0
         },

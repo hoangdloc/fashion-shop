@@ -3,8 +3,8 @@ import { Modal, Typography } from 'antd';
 import React, { useState } from 'react';
 
 import logo from '../../../assets/images/logo.png';
-import MyButton from '../button';
 import { useDispatch } from 'react-redux';
+import { MyButton } from '../button';
 import { setShowContactPopup } from '../../../store/general/generalSlice';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../../config/route';

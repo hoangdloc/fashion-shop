@@ -16,6 +16,7 @@ const ShopPage = lazy(async () => await import('../pages/ShopPage'));
 const ClothesDetailsPage = lazy(
   async () => await import('../pages/ClothesDetailsPage')
 );
+const CartPage = lazy(async () => await import('../pages/CartPage'));
 const NotFoundPage = lazy(async () => await import('../pages/NotFoundPage'));
 
 export default createBrowserRouter([
@@ -88,7 +89,7 @@ export default createBrowserRouter([
           },
           {
             path: AppRoute.CART,
-            element: <div>Cart...</div>
+            element: <CartPage />
           },
           {
             path: '*',

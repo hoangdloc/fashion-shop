@@ -10,6 +10,9 @@ interface MyBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 const MyBadgeStyles = styled('span', {
   shouldForwardProp: prop => isPropValid(prop) && prop !== 'color'
 })(props => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
   padding: '0.4rem 1.2rem',
   backgroundColor: props.color,
   fontSize: '1.4rem',

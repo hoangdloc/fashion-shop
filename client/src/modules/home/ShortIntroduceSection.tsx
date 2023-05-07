@@ -3,7 +3,7 @@ import { Typography } from 'antd';
 import React from 'react';
 
 import { AppRoute } from '../../config/route';
-import MyLinkButton from '../../shared/components/link-button';
+import { MyLinkButton } from '../../shared/components/button';
 
 const ShortIntroduceSectionStyles = styled('section')(props => ({
   height: '46rem',

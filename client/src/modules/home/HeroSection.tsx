@@ -8,9 +8,8 @@ import hero2 from '../../assets/images/hero2.jpg';
 import hero3 from '../../assets/images/hero3.jpg';
 import hero4 from '../../assets/images/hero4.jpg';
 import { AppRoute, ShopRoute } from '../../config/route';
-import MyButton from '../../shared/components/button';
+import { MyButton, MyLinkButton } from '../../shared/components/button';
 import { LeftArrowIcon, RightArrowIcon } from '../../shared/components/icon';
-import MyLinkButton from '../../shared/components/link-button';
 
 const HeroSectionStyles = styled('div')(props => ({
   width: '100%',

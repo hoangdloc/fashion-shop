@@ -37,7 +37,7 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 
 app.use(globalErrorHandler);
 
-const port = 3000;
-app.listen(port, () => {
-  console.log(`App is running on port ${port}`);
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`App is running on port ${PORT}`);
 });

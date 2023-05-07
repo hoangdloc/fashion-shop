@@ -3,7 +3,7 @@ import { Typography } from 'antd';
 import React, { useState } from 'react';
 
 import { useDispatch } from 'react-redux';
-import MyButton from '../../shared/components/button';
+import { MyButton } from '../../shared/components/button';
 import {
   MyStandardInput,
   MyStandardTextarea

@@ -20,13 +20,15 @@ import clothesSlice from './clothes/clothesSlice';
 import { generalPersistConfig } from './general/generalPersistConfig';
 import generalSlice from './general/generalSlice';
 import { rtkQueryErrorLogger } from './middleware';
+import cartSlice from './cart/cartSlice';
 
 const rootReducer = combineReducers({
   general: persistReducer(generalPersistConfig, generalSlice),
   [authApi.reducerPath]: authApi.reducer,
   auth: persistReducer(authPersistConfig, authSlice),
   clothes: clothesSlice,
-  [clothesApi.reducerPath]: clothesApi.reducer
+  [clothesApi.reducerPath]: clothesApi.reducer,
+  cart: cartSlice
 });
 
 const persistConfig = {

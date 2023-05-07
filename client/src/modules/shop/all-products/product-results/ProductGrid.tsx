@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { ListCards } from '../../../../shared/components/list-cards';
 import { useFetchClothingQuery } from '../../../../store/clothes/clothesService';
 import { Sorting } from '../../../../shared/@types/sorting';
-import { calcActualPrice } from '../../../../shared/utils/calcActualPrice';
+import { calcActualPrice } from '../../../../shared/utils/renderPrice';
 import { NextBtnIcon, PrevBtnIcon } from '../../../../shared/components/icon';
 import type { RootState } from '../../../../store/store';
 import type { Clothes } from '../../../../shared/@types/clothes';

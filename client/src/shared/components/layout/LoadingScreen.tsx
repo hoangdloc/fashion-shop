@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { Spinner } from '../loader';
 
-const LoadingScreenStyles = styled('section')(props => ({
+const LoadingScreenStyles = styled('section')(() => ({
   height: 'calc(100vh - 14.2rem - 31.5rem)',
   display: 'flex',
   flexDirection: 'column',

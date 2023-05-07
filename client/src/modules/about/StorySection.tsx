@@ -4,7 +4,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AppRoute } from '../../config/route';
-import MyButton from '../../shared/components/button';
+import { MyButton } from '../../shared/components/button';
 
 const StorySectionStyles = styled('section')`
   padding: 6rem 16rem;

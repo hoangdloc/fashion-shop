@@ -10,7 +10,7 @@ import * as yup from 'yup';
 
 import logo from '../assets/images/logo-full.png';
 import { AppRoute } from '../config/route';
-import MyButton from '../shared/components/button';
+import { MyButton } from '../shared/components/button';
 import MyFormItem from '../shared/components/form-item';
 import { useUserSignupMutation } from '../store/auth/authService';
 import type { UserSignup } from '../shared/@types/user';

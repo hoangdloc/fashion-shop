@@ -2,8 +2,11 @@ import React, { Fragment } from 'react';
 import MyBreadcrump from '../shared/components/breadcrumb';
 import { useLocation, useParams } from 'react-router-dom';
 import { useGetCurrentClothesQuery } from '../store/clothes/clothesService';
-import LoadingScreen from '../shared/components/layout/LoadingScreen';
-import { ClothesDetailSection, NotFoundProduct } from '../modules/clothes';
+import {
+  ClothesDetailSection,
+  ClothesDetailSectionSkeleton,
+  NotFoundProduct
+} from '../modules/clothes';
 import type { Clothes } from '../shared/@types/clothes';
 
 const ClothesDetailsPage: React.FC = () => {
@@ -14,7 +17,7 @@ const ClothesDetailsPage: React.FC = () => {
   const { data, isFetching, isSuccess } = useGetCurrentClothesQuery(slug);
 
   if (currentClothes == null && isFetching) {
-    return <LoadingScreen />;
+    return <ClothesDetailSectionSkeleton />;
   }
 
   if (currentClothes == null && data == null && isSuccess) {

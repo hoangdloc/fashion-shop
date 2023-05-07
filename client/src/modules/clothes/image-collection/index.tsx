@@ -7,7 +7,7 @@ import { v4 } from 'uuid';
 
 import ImageBox from '../../../shared/components/image-box';
 import type { RootState } from '../../../store/store';
-import { Skeleton } from 'antd';
+import ImageCollectionSkeleton from './ImageCollectionSkeleton';
 
 const ImageCollectionContainer = styled.div`
   display: flex;
@@ -66,57 +66,46 @@ const ImageCollection: React.FC = () => {
     }
   }, [currentClothes]);
 
+  if (currentClothes == null) return <ImageCollectionSkeleton />;
+
   return (
     <ImageCollectionContainer>
       <ImageBoxListContainer>
-        {currentClothes != null
-          ? currentClothes.images.map((image, index) => (
-            <ImageBox
-              key={v4()}
-              src={image}
-              alt={`${currentClothes.name} photo ${index + 1}`}
-              className={classNames('img-box', {
-                active: image === currentImage
-              })}
-              onClick={() => {
-                setCurrentImage(image);
-              }}
-            />
-          ))
-          : new Array(4).fill(0).map((_, index) => (
-            <Skeleton.Image
-              key={index}
-              style={{ width: '8rem', height: '8rem' }}
-              active
-            />
-          ))}
+        {currentClothes.images.map((image, index) => (
+          <ImageBox
+            key={v4()}
+            src={image}
+            alt={`${currentClothes.name} photo ${index + 1}`}
+            className={classNames('img-box', {
+              active: image === currentImage
+            })}
+            onClick={() => {
+              setCurrentImage(image);
+            }}
+          />
+        ))}
       </ImageBoxListContainer>
       <CurrentImageBox>
-        {currentClothes != null
-          ? (
-            <ReactImageMagnify
-              {...{
-                smallImage: {
-                  alt: currentClothes.name,
-                  isFluidWidth: false,
-                  width: 363,
-                  height: 550,
-                  src: currentImage ?? currentClothes.images[0]
-                },
-                largeImage: {
-                  src: currentImage ?? currentClothes.images[0],
-                  width: 1200,
-                  height: 1600
-                },
-                className: 'magnify',
-                imageClassName: 'small-image'
-              }}
-            />)
-          : (
-            <Skeleton.Image
-              style={{ width: '36.3rem', height: '55rem' }}
-              active
-            />)}
+        {
+          <ReactImageMagnify
+            {...{
+              smallImage: {
+                alt: currentClothes.name,
+                isFluidWidth: false,
+                width: 363,
+                height: 550,
+                src: currentImage ?? currentClothes.images[0]
+              },
+              largeImage: {
+                src: currentImage ?? currentClothes.images[0],
+                width: 1200,
+                height: 1600
+              },
+              imageClassName: 'small-image',
+              style: { zIndex: 9999 }
+            }}
+          />
+        }
       </CurrentImageBox>
     </ImageCollectionContainer>
   );
