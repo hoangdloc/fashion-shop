@@ -1,18 +1,24 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React from 'react';
 
 import QuantityBox from '../../../shared/components/quantity-box';
 import CartProductItem from './CartProductItem';
 
 import type { CartItem } from '../../../shared/@types/cart';
-import { PlusIcon, SubstractIcon } from '../../../shared/components/icon';
+import {
+  PlusIcon,
+  SubstractIcon,
+  TrashIcon
+} from '../../../shared/components/icon';
 import { renderPrice } from '../../../shared/utils/renderPrice';
+import { useCart } from '../../../contexts/cart-context';
 
 interface CartProductTableRowProps {
   cartItem: CartItem
 }
 
 const TableRow = styled.tr`
+  position: relative;
   .subtotal {
     text-align: right;
     font-size: 1.6rem;
@@ -37,20 +43,50 @@ const TableRow = styled.tr`
       }
     }
   }
+  & > .delete-btn {
+    position: absolute;
+    left: -4.4rem;
+    transform: translateX(-100%);
+    color: #eaeaeb;
+    transition: all 0.1s ease-in-out;
+    &:hover {
+      color: ${props => props.theme.colors.secondaryRed};
+    }
+    &:active {
+      transform: translateX(-100%) scale(1.2);
+    }
+  }
 `;
 
 const CartProductTableRow: React.FC<CartProductTableRowProps> = ({
   cartItem
 }) => {
-  const [quantity, setQuantity] = useState<number>(cartItem.quantity);
+  const { cart, setCart } = useCart();
   const { price, salePercent, status, images, name } = cartItem.clothes;
   const { actualPrice } = renderPrice(price, salePercent, status);
 
   const handlePlus = (): void => {
-    setQuantity(prev => prev + 1);
+    setCart(cart.map(item => {
+      if (item.clothes.id === cartItem.clothes.id) {
+        return { ...item, quantity: cartItem.quantity + 1 };
+      }
+      return item;
+    }));
   };
+
   const handleSubstract = (): void => {
-    if (quantity > 1) setQuantity(prev => prev - 1);
+    if (cartItem.quantity > 1) {
+      setCart(cart.map(item => {
+        if (item.clothes.id === cartItem.clothes.id) {
+          return { ...item, quantity: cartItem.quantity - 1 };
+        }
+        return item;
+      }));
+    }
+  };
+
+  const handleDeleteProduct = (): void => {
+    setCart(cart.filter(item => item.clothes.id !== cartItem.clothes.id));
   };
 
   return (
@@ -68,7 +104,7 @@ const CartProductTableRow: React.FC<CartProductTableRowProps> = ({
         <QuantityBox
           plusIcon={<PlusIcon size="small" />}
           substractIcon={<SubstractIcon size="small" />}
-          initialValue={quantity}
+          initialValue={cartItem.quantity}
           quantityClassName="quantity"
           containerClassName="quantity-box"
           btnClassName="quantity-btn"
@@ -76,7 +112,12 @@ const CartProductTableRow: React.FC<CartProductTableRowProps> = ({
           handleSubtract={handleSubstract}
         />
       </td>
-      <td className="subtotal">{(+actualPrice * quantity).toFixed(2)} $</td>
+      <td className="subtotal">{(+actualPrice * cartItem.quantity).toFixed(2)} $</td>
+      <td className="delete-btn">
+        <button onClick={handleDeleteProduct}>
+          <TrashIcon />
+        </button>
+      </td>
     </TableRow>
   );
 };

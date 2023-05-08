@@ -21,8 +21,8 @@ const EmotionGlobalStyles: React.FC = () => {
           fontWeight: 400,
           color: theme.colors.primaryBlack,
           textRendering: 'optimizeLegibility',
-          '-webkit-font-smoothing': 'antialiased',
-          '-moz-osx-font-smoothing': 'grayscale',
+          WebkitFontSmoothing: 'antialiased',
+          MozOsxFontSmoothing: 'grayscale',
           maxWidth: '144rem'
         },
         'a, a:link, a:visited': {
