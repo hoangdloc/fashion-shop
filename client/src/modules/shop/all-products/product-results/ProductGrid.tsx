@@ -1,17 +1,18 @@
 import styled from '@emotion/styled';
+import React, { useEffect, useMemo, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ListCards } from '../../../../shared/components/list-cards';
-import { useFetchClothingQuery } from '../../../../store/clothes/clothesService';
-import { Sorting } from '../../../../shared/@types/sorting';
-import { calcActualPrice } from '../../../../shared/utils/renderPrice';
-import { NextBtnIcon, PrevBtnIcon } from '../../../../shared/components/icon';
-import type { RootState } from '../../../../store/store';
-import type { Clothes } from '../../../../shared/@types/clothes';
 import { useLocation } from 'react-router-dom';
-import { ShopPathname } from '../../../../config/route';
-import { Gender } from '../../../../shared/@types/category';
+
+import { ShopPathname } from '~/config/route';
+import { Gender } from '~/shared/@types/category';
+import type { Clothes } from '~/shared/@types/clothes';
+import { Sorting } from '~/shared/@types/sorting';
+import { NextBtnIcon, PrevBtnIcon } from '~/shared/components/icon';
+import { ListCards } from '~/shared/components/list-cards';
+import { calcActualPrice } from '~/shared/utils/renderPrice';
+import { useFetchClothingQuery } from '~/store/clothes/clothesService';
+import type { RootState } from '~/store/store';
 
 const ITEM_PER_PAGE = 9;
 
@@ -134,10 +135,6 @@ const ProductGrid: React.FC = () => {
     filterBySize,
     sortedClothings
   ]);
-
-  useLayoutEffect(() => {
-    window.scroll({ behavior: 'instant', top: 350 });
-  }, [itemOffset]);
 
   useEffect(() => {
     const endOffset = itemOffset + ITEM_PER_PAGE;

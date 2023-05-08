@@ -1,23 +1,24 @@
-import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
+import styled from '@emotion/styled';
 import { Typography } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-import MyBadge from '../../../shared/components/badge';
-import { renderBadge } from '../../../shared/utils/renderBadge';
-import { renderPrice } from '../../../shared/utils/renderPrice';
-import QuantityBox from '../../../shared/components/quantity-box';
-import { PlusIcon, SubstractIcon } from '../../../shared/components/icon';
-import { MyButton } from '../../../shared/components/button';
-import ClothesInformationSkeleton from './ClothesInformationSkeleton';
-import ClothesDetails from './ClothesDetails';
+import Swal from 'sweetalert2';
 
-import type { RootState } from '../../../store/store';
-import { addProductToCart } from '../../../store/cart/cartSlice';
-import { AppRoute } from '../../../config/route';
-import { Status } from '../../../shared/@types/status';
+import MyBadge from '~/shared/components/badge';
+import { MyButton } from '~/shared/components/button';
+import { PlusIcon, SubstractIcon } from '~/shared/components/icon';
+import QuantityBox from '~/shared/components/quantity-box';
+import { renderBadge } from '~/shared/utils/renderBadge';
+import { renderPrice } from '~/shared/utils/renderPrice';
+import ClothesDetails from './ClothesDetails';
+import ClothesInformationSkeleton from './ClothesInformationSkeleton';
+
+import { AppRoute } from '~/config/route';
+import { Status } from '~/shared/@types/status';
+import { addProductToCart } from '~/store/cart/cartSlice';
+import type { RootState } from '~/store/store';
 
 const ClothesInformationContainer = styled.div`
   display: flex;

@@ -1,13 +1,14 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { DecoratedHeading } from '../../../../shared/components/heading';
-import MyRadioGroup from '../../../../shared/components/radio-group';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleFilterByType } from '../../../../store/clothes/clothesSlice';
 
-import { Type } from '../../../../shared/@types/category';
-import type { RadioItems } from '../../../../shared/components/radio-group';
-import type { RootState } from '../../../../store/store';
+import { DecoratedHeading } from '~/shared/components/heading';
+import MyRadioGroup from '~/shared/components/radio-group';
+import { toggleFilterByType } from '~/store/clothes/clothesSlice';
+
+import { Type } from '~/shared/@types/category';
+import type { RadioItems } from '~/shared/components/radio-group';
+import type { RootState } from '~/store/store';
 
 const ProductCategoryFilterContainer = styled.div`
   display: flex;

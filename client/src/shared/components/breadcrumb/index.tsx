@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Breadcrumb } from 'antd';
 import React from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { AppRoute } from '../../../config/route';
+import { AppRoute } from '~/config/route';
 
 interface MyBreadcrumpProps {
   productName?: string

@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
-import { DecoratedHeading } from '../../../../shared/components/heading';
 import { InputNumber, Slider } from 'antd';
-import { MyButton } from '../../../../shared/components/button';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilterByPrice } from '../../../../store/clothes/clothesSlice';
-import type { RootState } from '../../../../store/store';
+
+import { MyButton } from '~/shared/components/button';
+import { DecoratedHeading } from '~/shared/components/heading';
+import { setFilterByPrice } from '~/store/clothes/clothesSlice';
+import type { RootState } from '~/store/store';
 
 enum ProductPrice {
   MAX = 1000,

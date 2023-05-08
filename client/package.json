@@ -17,6 +17,7 @@
     "@fontsource/oxygen": "^4.5.9",
     "@fontsource/playfair-display": "^4.5.13",
     "@fontsource/rufina": "^4.5.9",
+    "@formkit/auto-animate": "^1.0.0-beta.6",
     "@hookform/resolvers": "^3.1.0",
     "@reduxjs/toolkit": "^1.9.5",
     "antd": "^5.4.2",
@@ -58,6 +59,7 @@
     "eslint-plugin-react": "^7.32.2",
     "typescript": "^4.9.5",
     "vite": "^4.2.0",
+    "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^0.30.1"
   }
 }

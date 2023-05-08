@@ -5,11 +5,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { v4 } from 'uuid';
 
-import CashSVG from '../../../assets/svg/cash.svg';
-import PaypalSVG from '../../../assets/svg/paypal.svg';
-import VisaSVG from '../../../assets/svg/visa.svg';
-import { AppRoute } from '../../../config/route';
-import { MyButton } from '../button';
+import CashSVG from '~/assets/svg/cash.svg';
+import PaypalSVG from '~/assets/svg/paypal.svg';
+import VisaSVG from '~/assets/svg/visa.svg';
+import { AppRoute } from '~/config/route';
+import { MyButton } from '~/shared/components/button';
 import {
   FacebookIcon,
   InstagramIcon,
@@ -17,9 +17,9 @@ import {
   MailIcon,
   MapMarkerIcon,
   PhoneIcon
-} from '../icon';
-import { MyOutlinedInput } from '../input';
-import { useFakeLoading } from '../../hooks/useFakeLoading';
+} from '~/shared/components/icon';
+import { MyOutlinedInput } from '~/shared/components/input';
+import { useFakeLoading } from '~/shared/hooks/useFakeLoading';
 
 const LayoutFooter = styled(Layout.Footer)(props => ({
   backgroundColor: props.theme.colors.footerBg,

@@ -3,9 +3,10 @@ import { Col, Row } from 'antd';
 import React from 'react';
 import { v4 } from 'uuid';
 
-import type { Clothes } from '../../@types/clothes';
-import { chunkArray } from '../../utils/chunkArray';
-import { ClothesCard, ClothesSkeletonCard } from '../clothes-card';
+import { ClothesCard, ClothesSkeletonCard } from '~/shared/components/clothes-card';
+
+import type { Clothes } from '~/shared/@types/clothes';
+import { chunkArray } from '~/shared/utils/chunkArray';
 
 interface ListCardsProps {
   columnCount: number

@@ -8,13 +8,13 @@ import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
-import logo from '../assets/images/logo-full.png';
-import { AppRoute } from '../config/route';
-import { MyButton } from '../shared/components/button';
-import MyFormItem from '../shared/components/form-item';
-import { useUserSignupMutation } from '../store/auth/authService';
-import type { UserSignup } from '../shared/@types/user';
-import type { RootState } from '../store/store';
+import logo from '~/assets/images/logo-full.png';
+import { AppRoute } from '~/config/route';
+import { MyButton } from '~/shared/components/button';
+import MyFormItem from '~/shared/components/form-item';
+import { useUserSignupMutation } from '~/store/auth/authService';
+import type { UserSignup } from '~/shared/@types/user';
+import type { RootState } from '~/store/store';
 
 const SignupPageStyles = styled('main')(props => ({
   display: 'flex',

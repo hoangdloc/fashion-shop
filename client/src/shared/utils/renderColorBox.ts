@@ -1,4 +1,4 @@
-import { Color } from '../@types/category';
+import { Color } from '~/shared/@types/category';
 
 export function renderColorBox (type: Color): string {
   switch (type) {

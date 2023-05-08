@@ -1,6 +1,6 @@
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { authApi } from '../auth/authService';
+import { authApi } from '~/store/auth/authService';
 
 interface GeneralState {
   showSubcribePopupAgain: boolean

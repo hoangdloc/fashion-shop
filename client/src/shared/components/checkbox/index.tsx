@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Typography } from 'antd';
 import React from 'react';
 
-import { CheckIcon } from '../icon';
+import { CheckIcon } from '~/shared/components/icon';
 
 interface MyCheckboxProps extends React.ComponentPropsWithRef<'input'> {
   children?: React.ReactNode

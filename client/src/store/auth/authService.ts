@@ -4,12 +4,12 @@ import Cookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
 import { toast } from 'react-toastify';
 
-import { axiosBaseQuery } from '../../config/axios';
-import type { JWTDecoded } from '../../shared/@types/jwtDecoded';
-import type { UserLogin, UserResponse, UserSignup } from '../../shared/@types/user';
+import { axiosBaseQuery } from '~/config/axios';
+import type { JWTDecoded } from '~/shared/@types/jwtDecoded';
+import type { UserLogin, UserResponse, UserSignup } from '~/shared/@types/user';
 import {
   convertTimestampToDays
-} from '../../shared/utils/convertTimestampToDays';
+} from '~/shared/utils/convertTimestampToDays';
 import { setAccessToken, setCurrentUserInfo } from './authSlice';
 
 export const authApi = createApi({

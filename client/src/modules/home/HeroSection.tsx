@@ -4,13 +4,13 @@ import { Carousel, Typography } from 'antd';
 import type { CarouselRef } from 'antd/es/carousel';
 import React, { useRef } from 'react';
 
-import hero1 from '../../assets/images/hero1.png';
-import hero2 from '../../assets/images/hero2.jpg';
-import hero3 from '../../assets/images/hero3.jpg';
-import hero4 from '../../assets/images/hero4.jpg';
-import { AppRoute, ShopRoute } from '../../config/route';
-import { MyButton, MyLinkButton } from '../../shared/components/button';
-import { LeftArrowIcon, RightArrowIcon } from '../../shared/components/icon';
+import hero1 from '~/assets/images/hero1.png';
+import hero2 from '~/assets/images/hero2.jpg';
+import hero3 from '~/assets/images/hero3.jpg';
+import hero4 from '~/assets/images/hero4.jpg';
+import { AppRoute, ShopRoute } from '~/config/route';
+import { MyButton, MyLinkButton } from '~/shared/components/button';
+import { LeftArrowIcon, RightArrowIcon } from '~/shared/components/icon';
 
 const HeroSectionStyles = styled('div')(props => ({
   width: '100%',

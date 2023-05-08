@@ -2,20 +2,20 @@ import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ConfigProvider, Typography } from 'antd';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
-import { AppRoute } from '../../../config/route';
-import { setCurrentClothes } from '../../../store/clothes/clothesSlice';
-import { renderBadge } from '../../utils/renderBadge';
-import { renderPrice } from '../../utils/renderPrice';
+import { AppRoute } from '~/config/route';
+import { renderBadge } from '~/shared/utils/renderBadge';
+import { renderPrice } from '~/shared/utils/renderPrice';
+import { setCurrentClothes } from '~/store/clothes/clothesSlice';
 import MyBadge from '../badge';
 import { MyButton } from '../button';
 import { ShoppingBagIcon } from '../icon';
 import ClothesSkeletonCard from './ClothesSkeletonCard';
 
-import type { Gender } from '../../@types/category';
-import type { Clothes } from '../../@types/clothes';
+import type { Gender } from '~/shared/@types/category';
+import type { Clothes } from '~/shared/@types/clothes';
 
 export interface ClothesCardProps {
   clothes?: Clothes

@@ -1,16 +1,17 @@
 import React, { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 
-import {
+import
+{
   BannerSection,
   ContactUsSection,
   GallerySection,
   StorySection,
   TestimonialsSection
-} from '../modules/about';
-import PartnerRibbon from '../shared/components/layout/PartnerRibbon';
-import ThanksPopup from '../shared/components/thanks-popup';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../store/store';
+} from '~/modules/about';
+import PartnerRibbon from '~/shared/components/layout/PartnerRibbon';
+import ThanksPopup from '~/shared/components/thanks-popup';
+import type { RootState } from '~/store/store';
 
 const AboutPage: React.FC = () => {
   const showContactPopup = useSelector(

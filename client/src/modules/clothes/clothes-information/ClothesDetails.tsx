@@ -1,10 +1,11 @@
-import React from 'react';
-import { Collapse, Typography } from 'antd';
-import { PlusIcon, SubstractIcon } from '../../../shared/components/icon';
 import styled from '@emotion/styled';
+import { Collapse, Typography } from 'antd';
+import React from 'react';
 
-import type { Size } from '../../../shared/@types/size';
-import type { Category } from '../../../shared/@types/category';
+import { PlusIcon, SubstractIcon } from '~/shared/components/icon';
+
+import type { Category } from '~/shared/@types/category';
+import type { Size } from '~/shared/@types/size';
 
 interface ClothesDetailsProps {
   description: string[]

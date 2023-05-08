@@ -3,13 +3,13 @@ import { Typography } from 'antd';
 import React, { useState } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { MyButton } from '../../shared/components/button';
+import { MyButton } from '~/shared/components/button';
 import {
   MyStandardInput,
   MyStandardTextarea
-} from '../../shared/components/input';
-import { fakeDelay } from '../../shared/utils/fakeDelay';
-import { setShowContactPopup } from '../../store/general/generalSlice';
+} from '~/shared/components/input';
+import { fakeDelay } from '~/shared/utils/fakeDelay';
+import { setShowContactPopup } from '~/store/general/generalSlice';
 
 const ContactUsSectionStyles = styled.section`
   height: 72rem;

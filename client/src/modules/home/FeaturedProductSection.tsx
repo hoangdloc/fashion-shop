@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import { Tabs, Typography } from 'antd';
 import React from 'react';
 
-import { Gender } from '../../shared/@types/category';
-import CarouselCards from '../../shared/components/carousel-cards';
-import { useFetchClothingQuery } from '../../store/clothes/clothesService';
+import { Gender } from '~/shared/@types/category';
+import CarouselCards from '~/shared/components/carousel-cards';
+import { useFetchClothingQuery } from '~/store/clothes/clothesService';
 
 const FeaturedProductSectionStyles = styled('section')(props => ({
   padding: '6rem 16rem 7rem 16rem',

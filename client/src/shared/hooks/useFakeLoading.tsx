@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { fakeDelay } from '../utils/fakeDelay';
+import { fakeDelay } from '~/shared/utils/fakeDelay';
 
 interface IUserFakeLoading {
   loading: boolean

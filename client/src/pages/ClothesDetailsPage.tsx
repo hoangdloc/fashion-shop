@@ -1,13 +1,16 @@
 import React, { Fragment } from 'react';
-import MyBreadcrump from '../shared/components/breadcrumb';
 import { useLocation, useParams } from 'react-router-dom';
-import { useGetCurrentClothesQuery } from '../store/clothes/clothesService';
-import {
+
+import
+{
   ClothesDetailSection,
   ClothesDetailSectionSkeleton,
   NotFoundProduct
-} from '../modules/clothes';
-import type { Clothes } from '../shared/@types/clothes';
+} from '~/modules/clothes';
+import MyBreadcrump from '~/shared/components/breadcrumb';
+import { useGetCurrentClothesQuery } from '~/store/clothes/clothesService';
+
+import type { Clothes } from '~/shared/@types/clothes';
 
 const ClothesDetailsPage: React.FC = () => {
   const params = useParams();

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import background from '../../assets/images/break-section-bg.png';
+import background from '~/assets/images/break-section-bg.png';
 
 const BreakSectionStyles = styled('section')(() => ({
   height: '46rem',

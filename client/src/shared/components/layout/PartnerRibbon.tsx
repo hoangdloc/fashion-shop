@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import hausLogo from '../../../assets/svg/haus-logo.svg';
-import loremipsum2Logo from '../../../assets/svg/logoipsum-logo-2.svg';
-import loremipsumLogo from '../../../assets/svg/logoipsum-logo.svg';
-import startupVenturelogo from '../../../assets/svg/startup-venture-logo.svg';
+import hausLogo from '~/assets/svg/haus-logo.svg';
+import loremipsum2Logo from '~/assets/svg/logoipsum-logo-2.svg';
+import loremipsumLogo from '~/assets/svg/logoipsum-logo.svg';
+import startupVenturelogo from '~/assets/svg/startup-venture-logo.svg';
 
 const PartnerRibbonStyles = styled.div`
   width: 100%;

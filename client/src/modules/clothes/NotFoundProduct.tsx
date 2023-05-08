@@ -3,7 +3,8 @@ import styled from '@emotion/styled';
 import { Typography } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../config/route';
+
+import { AppRoute } from '~/config/route';
 
 const NotFoundProductStyles = styled('section')(props => ({
   height: 'calc(100vh - 14.2rem - 31.5rem)',

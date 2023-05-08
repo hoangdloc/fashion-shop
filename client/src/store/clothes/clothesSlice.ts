@@ -1,12 +1,12 @@
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { clothesApi } from './clothesService';
-import { Sorting } from '../../shared/@types/sorting';
+import { Sorting } from '~/shared/@types/sorting';
 
-import { Color, Type } from '../../shared/@types/category';
-import { Size } from '../../shared/@types/size';
-import type { Clothes } from '../../shared/@types/clothes';
-import type { PriceRange } from '../../shared/@types/priceRange';
+import { Color, Type } from '~/shared/@types/category';
+import { Size } from '~/shared/@types/size';
+import type { Clothes } from '~/shared/@types/clothes';
+import type { PriceRange } from '~/shared/@types/priceRange';
 
 interface ClothesState {
   clothings?: Clothes[]

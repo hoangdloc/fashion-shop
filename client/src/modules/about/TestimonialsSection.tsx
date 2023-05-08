@@ -3,7 +3,7 @@ import { Carousel, Typography } from 'antd';
 import type { CarouselRef } from 'antd/es/carousel';
 import React, { useRef } from 'react';
 
-import { LeftArrowIcon, RightArrowIcon } from '../../shared/components/icon';
+import { LeftArrowIcon, RightArrowIcon } from '~/shared/components/icon';
 
 const TestimonialsSectionStyles = styled('section')`
   width: 100vw;

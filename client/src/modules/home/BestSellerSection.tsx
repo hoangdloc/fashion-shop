@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import { Typography } from 'antd';
 import React from 'react';
 
-import { ListCards } from '../../shared/components/list-cards';
-import { useFetchClothingQuery } from '../../store/clothes/clothesService';
+import { ListCards } from '~/shared/components/list-cards';
+import { useFetchClothingQuery } from '~/store/clothes/clothesService';
 
 const BestSellerSectionStyles = styled('section')(props => ({
   padding: '8rem 16rem 6rem 16rem',

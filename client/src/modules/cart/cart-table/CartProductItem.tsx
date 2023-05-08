@@ -1,10 +1,11 @@
 import React from 'react';
-import ImageBox from '../../../shared/components/image-box';
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Typography } from 'antd';
-import { useTheme } from '@emotion/react';
-import { type Status } from '../../../shared/@types/status';
-import { renderPrice } from '../../../shared/utils/renderPrice';
+import { renderPrice } from '~/shared/utils/renderPrice';
+import ImageBox from '~/shared/components/image-box';
+
+import type { Status } from '~/shared/@types/status';
 
 interface CartProductItemProps {
   imageSrc: string

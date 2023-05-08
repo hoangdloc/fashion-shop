@@ -3,8 +3,8 @@ import {
   createSlice,
   createSelector
 } from '@reduxjs/toolkit';
-import type { Cart, CartItem } from '../../shared/@types/cart';
-import type { RootState } from '../store';
+import type { Cart, CartItem } from '~/shared/@types/cart';
+import type { RootState } from '~/store/store';
 
 interface CartState {
   cart: Cart
@@ -31,6 +31,9 @@ export const cartSlice = createSlice({
           return item;
         });
       } else state.cart.push(action.payload);
+    },
+    updateProductToCart: (state, action: PayloadAction<Cart>) => {
+      state.cart = action.payload;
     }
   }
 });
@@ -41,5 +44,5 @@ export const getCartItemsSelector = createSelector(
     state.cart.cart.filter(item => item.userId === state.auth.userInfo?.id)
 );
 
-export const { addProductToCart } = cartSlice.actions;
+export const { addProductToCart, updateProductToCart } = cartSlice.actions;
 export default cartSlice.reducer;

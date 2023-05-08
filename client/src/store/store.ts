@@ -19,7 +19,7 @@ import { clothesApi } from './clothes/clothesService';
 import clothesSlice from './clothes/clothesSlice';
 import { generalPersistConfig } from './general/generalPersistConfig';
 import generalSlice from './general/generalSlice';
-import { rtkQueryErrorLogger } from './middleware';
+import { cartMiddleware, rtkQueryErrorLogger } from './middleware';
 import cartSlice from './cart/cartSlice';
 
 const rootReducer = combineReducers({
@@ -47,12 +47,17 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
       }
-    }).concat(authApi.middleware, clothesApi.middleware, rtkQueryErrorLogger)
+    }).concat(
+      authApi.middleware,
+      clothesApi.middleware,
+      rtkQueryErrorLogger,
+      cartMiddleware
+    )
 });
 
 setupListeners(store.dispatch);
 
 export const persistor = persistStore(store);
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;

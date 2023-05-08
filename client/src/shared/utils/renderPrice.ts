@@ -1,4 +1,4 @@
-import { Status } from '../@types/status';
+import { Status } from '~/shared/@types/status';
 
 interface RenderPrice {
   originalPrice: string

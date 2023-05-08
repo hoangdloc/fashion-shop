@@ -5,8 +5,9 @@ import { ConfigProvider, Select } from 'antd';
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
-import { Sorting } from '../../../../shared/@types/sorting';
-import { toggleSorting } from '../../../../store/clothes/clothesSlice';
+
+import { Sorting } from '~/shared/@types/sorting';
+import { toggleSorting } from '~/store/clothes/clothesSlice';
 
 import type { DefaultOptionType } from 'antd/es/select';
 

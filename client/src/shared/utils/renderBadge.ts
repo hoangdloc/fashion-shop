@@ -1,5 +1,5 @@
-import { theme } from '../../config/theme';
-import { Status } from '../@types/status';
+import { theme } from '~/config/theme';
+import { Status } from '~/shared/@types/status';
 
 interface BadgeType {
   label: string

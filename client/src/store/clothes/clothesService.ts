@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { createApi } from '@reduxjs/toolkit/query/react';
+import { toast } from 'react-toastify';
 
-import { axiosBaseQuery } from '../../config/axios';
-import type { Color, Gender, Type } from '../../shared/@types/category';
+import { axiosBaseQuery } from '~/config/axios';
+import type { Color, Gender, Type } from '~/shared/@types/category';
 import type {
   Clothes,
   ClothesResponse,
   ClothingsResponse
-} from '../../shared/@types/clothes';
-import type { Size } from '../../shared/@types/size';
-import { toast } from 'react-toastify';
+} from '~/shared/@types/clothes';
+import type { Size } from '~/shared/@types/size';
 
 interface FetchClothingParams {
   gender?: Gender

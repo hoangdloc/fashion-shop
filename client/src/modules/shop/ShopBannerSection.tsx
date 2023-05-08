@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { AppRoute, ShopRoute } from '../../config/route';
 
-import bannerWomen from '../../assets/images/banner-women.png';
-import bannerMen from '../../assets/images/banner-men.png';
-import bannerUnisex from '../../assets/images/banner-unisex.png';
+import { AppRoute, ShopRoute } from '~/config/route';
+
+import bannerWomen from '~/assets/images/banner-women.png';
+import bannerMen from '~/assets/images/banner-men.png';
+import bannerUnisex from '~/assets/images/banner-unisex.png';
 
 enum ShopLocation {
   WOMEN = `${AppRoute.SHOP}/${ShopRoute.WOMEN}`,

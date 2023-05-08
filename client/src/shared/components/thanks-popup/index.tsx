@@ -2,12 +2,12 @@ import styled from '@emotion/styled';
 import { Modal, Typography } from 'antd';
 import React, { useState } from 'react';
 
-import logo from '../../../assets/images/logo.png';
 import { useDispatch } from 'react-redux';
-import { MyButton } from '../button';
-import { setShowContactPopup } from '../../../store/general/generalSlice';
 import { useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../../config/route';
+import logo from '~/assets/images/logo.png';
+import { AppRoute } from '~/config/route';
+import { MyButton } from '~/shared/components/button';
+import { setShowContactPopup } from '~/store/general/generalSlice';
 
 interface ThanksPopupProps {
   children?: React.ReactNode

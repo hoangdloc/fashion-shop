@@ -1,14 +1,14 @@
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import React from 'react';
-import { DecoratedHeading } from '../../../../shared/components/heading';
-import MyRadioGroup, {
-  type RadioItems
-} from '../../../../shared/components/radio-group';
-import { Size } from '../../../../shared/@types/size';
-import { useTheme } from '@emotion/react';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '../../../../store/store';
-import { toggleFilterBySize } from '../../../../store/clothes/clothesSlice';
+import { DecoratedHeading } from '~/shared/components/heading';
+
+import MyRadioGroup, { type RadioItems } from '~/shared/components/radio-group';
+import { toggleFilterBySize } from '~/store/clothes/clothesSlice';
+
+import { Size } from '~/shared/@types/size';
+import type { RootState } from '~/store/store';
 
 const ProductSizeFilterContainer = styled.div`
   display: flex;

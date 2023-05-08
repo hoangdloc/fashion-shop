@@ -13,7 +13,7 @@ import
 } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 
-import MyCheckbox from '../checkbox';
+import MyCheckbox from '~/shared/components/checkbox';
 
 interface MyFormItemProps<TFieldValues extends FieldValues, TContext = any> {
   id: Path<TFieldValues>

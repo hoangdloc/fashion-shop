@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { CartProvider } from '../../../contexts/cart-context';
+import { CartProvider } from '~/contexts/cart-context';
 import CartTableContainer from './CartTableContainer';
 
 const CartProductTableSection = styled.section`

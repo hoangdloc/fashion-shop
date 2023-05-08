@@ -1,16 +1,14 @@
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import React from 'react';
-import { DecoratedHeading } from '../../../../shared/components/heading';
-import MyRadioGroup, {
-  type RadioItems
-} from '../../../../shared/components/radio-group';
-
-import { Color } from '../../../../shared/@types/category';
-import { renderColorBox } from '../../../../shared/utils/renderColorBox';
-import { useTheme } from '@emotion/react';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '../../../../store/store';
-import { toggleFilterByColor } from '../../../../store/clothes/clothesSlice';
+
+import { Color } from '~/shared/@types/category';
+import { DecoratedHeading } from '~/shared/components/heading';
+import MyRadioGroup, { type RadioItems } from '~/shared/components/radio-group';
+import { renderColorBox } from '~/shared/utils/renderColorBox';
+import { toggleFilterByColor } from '~/store/clothes/clothesSlice';
+import type { RootState } from '~/store/store';
 
 const ProductColorFilterContainer = styled.div`
   display: flex;

@@ -1,11 +1,20 @@
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import React, { useMemo } from 'react';
-import CartProductTableRow from './CartProductTableRow';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Empty, Typography } from 'antd';
+import React, { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { v4 } from 'uuid';
 
-import { useCart } from '../../../contexts/cart-context';
-import { renderPrice } from '../../../shared/utils/renderPrice';
+import { CartRoute } from '~/config/route';
+import { useCart } from '~/contexts/cart-context';
+import { MyButton } from '~/shared/components/button';
+import { useFakeLoading } from '~/shared/hooks/useFakeLoading';
+import { renderPrice } from '~/shared/utils/renderPrice';
+import { updateProductToCart } from '~/store/cart/cartSlice';
+import CartProductTableRow from './CartProductTableRow';
 
 const CartTableContainerStyles = styled.div`
   min-width: 100%;
@@ -72,7 +81,34 @@ const Table = styled.table`
   }
 `;
 
+const ActionBox = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 1.5rem;
+  & > .ant-btn {
+    height: 5.2rem;
+    text-transform: uppercase;
+    font-size: 1.6rem;
+    font-weight: 700;
+    &.update-btn {
+      padding: 1.5rem 3.4rem;
+      border: 0.15rem solid ${props => props.theme.colors.primaryBlack};
+      &:hover {
+        color: ${props => props.theme.colors.textWhite};
+        background-color: ${props => props.theme.colors.primaryBlack};
+      }
+    }
+  }
+`;
+
 const CartTableContainer: React.FC = () => {
+  const emotionTheme = useTheme();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [parent, enableAnimations] = useAutoAnimate();
+  const { loading, fakeLoading } = useFakeLoading();
   const { cart } = useCart();
   const cartTotal = useMemo(() => {
     return cart.reduce((total, current) => {
@@ -86,6 +122,22 @@ const CartTableContainer: React.FC = () => {
     }, 0);
   }, [cart]);
 
+  const handleUpdateCart = async (): Promise<void> => {
+    await fakeLoading();
+    dispatch(updateProductToCart(cart));
+    await Swal.fire({
+      title: 'Success!',
+      text: 'Updated cart successfully!',
+      icon: 'success',
+      confirmButtonText: 'OK',
+      confirmButtonColor: emotionTheme.colors.primaryBlack
+    });
+  };
+
+  const handleProceesToCheckout = (): void => {
+    navigate(CartRoute.CHECKOUT);
+  };
+
   return (
     <CartTableContainerStyles>
       {cart.length > 0 && (
@@ -97,11 +149,12 @@ const CartTableContainer: React.FC = () => {
               <th className="subtotal">Subtotal</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody ref={parent}>
             {cart.map(item => (
               <CartProductTableRow
                 key={v4()}
                 cartItem={item}
+                enableAnimations={enableAnimations}
               />
             ))}
           </tbody>
@@ -122,6 +175,23 @@ const CartTableContainer: React.FC = () => {
         </Table>
       )}
       {cart.length <= 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+      <ActionBox>
+        <MyButton
+          onClick={() => {
+            void handleUpdateCart();
+          }}
+          loading={loading}
+          className="update-btn"
+        >
+          Update cart
+        </MyButton>
+        <MyButton
+          onClick={handleProceesToCheckout}
+          type="primary"
+        >
+          Process to checkout
+        </MyButton>
+      </ActionBox>
     </CartTableContainerStyles>
   );
 };

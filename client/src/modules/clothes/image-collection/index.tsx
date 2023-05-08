@@ -5,8 +5,8 @@ import ReactImageMagnify from 'react-image-magnify';
 import { useSelector } from 'react-redux';
 import { v4 } from 'uuid';
 
-import ImageBox from '../../../shared/components/image-box';
-import type { RootState } from '../../../store/store';
+import ImageBox from '~/shared/components/image-box';
+import type { RootState } from '~/store/store';
 import ImageCollectionSkeleton from './ImageCollectionSkeleton';
 
 const ImageCollectionContainer = styled.div`

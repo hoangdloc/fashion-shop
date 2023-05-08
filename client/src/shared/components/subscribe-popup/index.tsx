@@ -3,14 +3,14 @@ import { Modal, Typography } from 'antd';
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import subcribeImg from '../../../assets/images/subcribe.png';
-import { toggleShowPopupAgain } from '../../../store/general/generalSlice';
-import type { RootState } from '../../../store/store';
-import MyCheckbox from '../checkbox';
-import { MyButton } from '../button';
-import { CloseIcon } from '../icon';
-import { MyOutlinedInput } from '../input';
-import { useFakeLoading } from '../../hooks/useFakeLoading';
+import subcribeImg from '~/assets/images/subcribe.png';
+import { MyButton } from '~/shared/components/button';
+import MyCheckbox from '~/shared/components/checkbox';
+import { CloseIcon } from '~/shared/components/icon';
+import { MyOutlinedInput } from '~/shared/components/input';
+import { useFakeLoading } from '~/shared/hooks/useFakeLoading';
+import { toggleShowPopupAgain } from '~/store/general/generalSlice';
+import type { RootState } from '~/store/store';
 
 const SubcribePopupStyles = styled(Modal)`
   .ant-modal-content {

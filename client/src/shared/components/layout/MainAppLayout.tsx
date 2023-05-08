@@ -4,9 +4,9 @@ import React, { Suspense, lazy } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { AppRoute } from '../../../config/route';
-import type { RootState } from '../../../store/store';
-import SubcribePopup from '../subscribe-popup';
+import { AppRoute } from '~/config/route';
+import type { RootState } from '~/store/store';
+import SubcribePopup from '~/shared/components/subscribe-popup';
 import LoadingScreen from './LoadingScreen';
 
 const AppFooter = lazy(async () => await import('./AppFooter'));

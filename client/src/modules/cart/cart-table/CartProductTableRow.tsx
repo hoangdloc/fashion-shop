@@ -1,20 +1,21 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import QuantityBox from '../../../shared/components/quantity-box';
+import QuantityBox from '~/shared/components/quantity-box';
 import CartProductItem from './CartProductItem';
 
-import type { CartItem } from '../../../shared/@types/cart';
+import type { CartItem } from '~/shared/@types/cart';
 import {
   PlusIcon,
   SubstractIcon,
   TrashIcon
-} from '../../../shared/components/icon';
-import { renderPrice } from '../../../shared/utils/renderPrice';
-import { useCart } from '../../../contexts/cart-context';
+} from '~/shared/components/icon';
+import { renderPrice } from '~/shared/utils/renderPrice';
+import { useCart } from '~/contexts/cart-context';
 
 interface CartProductTableRowProps {
   cartItem: CartItem
+  enableAnimations: (enable: boolean) => void
 }
 
 const TableRow = styled.tr`
@@ -59,13 +60,15 @@ const TableRow = styled.tr`
 `;
 
 const CartProductTableRow: React.FC<CartProductTableRowProps> = ({
-  cartItem
+  cartItem,
+  enableAnimations
 }) => {
   const { cart, setCart } = useCart();
   const { price, salePercent, status, images, name } = cartItem.clothes;
   const { actualPrice } = renderPrice(price, salePercent, status);
 
   const handlePlus = (): void => {
+    enableAnimations(false);
     setCart(cart.map(item => {
       if (item.clothes.id === cartItem.clothes.id) {
         return { ...item, quantity: cartItem.quantity + 1 };
@@ -75,6 +78,7 @@ const CartProductTableRow: React.FC<CartProductTableRowProps> = ({
   };
 
   const handleSubstract = (): void => {
+    enableAnimations(false);
     if (cartItem.quantity > 1) {
       setCart(cart.map(item => {
         if (item.clothes.id === cartItem.clothes.id) {
@@ -86,6 +90,7 @@ const CartProductTableRow: React.FC<CartProductTableRowProps> = ({
   };
 
   const handleDeleteProduct = (): void => {
+    enableAnimations(true);
     setCart(cart.filter(item => item.clothes.id !== cartItem.clothes.id));
   };
 

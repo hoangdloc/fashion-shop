@@ -2,7 +2,7 @@ import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 
 import { authApi } from './authService';
-import type { User } from '../../shared/@types/user';
+import type { User } from '~/shared/@types/user';
 
 interface IAuthState {
   accessToken?: string

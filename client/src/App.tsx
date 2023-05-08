@@ -3,8 +3,8 @@ import { ConfigProvider as AntdGlobalConfigProvider } from 'antd';
 import React, { Suspense } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router-dom';
 
-import LoadingPage from './pages/LoadingPage';
-import EmotionGlobalStyles from './shared/components/global-style';
+import LoadingPage from '~/pages/LoadingPage';
+import EmotionGlobalStyles from '~/shared/components/global-style';
 
 const App: React.FC = () => {
   const emotionTheme = useTheme();

@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getCartItemsSelector } from '../store/cart/cartSlice';
 
-import type { Cart } from '../shared/@types/cart';
+import { getCartItemsSelector } from '~/store/cart/cartSlice';
+
+import type { Cart } from '~/shared/@types/cart';
 
 interface ICartContext {
   cart: Cart
