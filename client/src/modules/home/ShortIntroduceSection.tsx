@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useTheme } from '@emotion/react';
 import { Typography } from 'antd';
 import React from 'react';
 
@@ -32,12 +33,14 @@ const ShortIntroduceSectionStyles = styled('section')(props => ({
 }));
 
 const ShortIntroduceSection: React.FC = () => {
+  const emotionTheme = useTheme();
+
   return (
     <ShortIntroduceSectionStyles>
       <div className="intro-box">
         <Typography.Title
           style={{
-            fontFamily: "'Rufina', san-serif",
+            fontFamily: emotionTheme.fontFamily.Rufina,
             textTransform: 'uppercase',
             fontWeight: 700,
             letterSpacing: '10%',

@@ -28,7 +28,7 @@ const TestimonialsSectionStyles = styled('section')`
     }
     &.testimonial-title {
       margin: 0;
-      font-family: 'Playfair Display', sans-serif;
+      font-family: ${props => props.theme.fontFamily.PlayfairDisplay};
       font-size: 3.2rem;
       text-transform: uppercase;
       letter-spacing: 0.2rem;

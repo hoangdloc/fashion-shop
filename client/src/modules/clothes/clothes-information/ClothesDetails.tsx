@@ -30,7 +30,7 @@ const CollapseContainer = styled(Collapse)`
   }
   .ant-typography {
     margin: 0;
-    font-family: 'DM Sans', sans-serif;
+    font-family: ${props => props.theme.fontFamily.DmSans};
   }
   hr {
     border: none;
@@ -41,7 +41,7 @@ const CollapseContainer = styled(Collapse)`
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: ${props => props.theme.fontFamily.DmSans};
     font-size: 1.6rem;
     list-style: square inside;
     color: ${props => props.theme.colors.textSubtitle};

@@ -22,7 +22,7 @@ const BestSellerSection: React.FC = () => {
     <BestSellerSectionStyles>
       <Typography.Title
         style={{
-          fontFamily: "'Rufina', san-serif",
+          fontFamily: emotionTheme.fontFamily.Rufina,
           fontSize: '3.2rem',
           fontWeight: 700,
           lineHeight: '3.952rem',

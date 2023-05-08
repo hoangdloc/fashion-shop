@@ -13,7 +13,7 @@ const ErrorPageStyles = styled.main`
   align-items: center;
   gap: 3rem;
   .ant-typography {
-    font-family: 'Oxygen', sans-serif;
+    font-family: ${props => props.theme.fontFamily.Oxygen};
   }
 `;
 

@@ -1,11 +1,18 @@
 import type { Theme } from '@emotion/react';
 
 export const theme: Theme = {
+  fontFamily: {
+    PlayfairDisplay: "'Playfair Display', serif",
+    Rufina: "'Rufina', serif",
+    Oxygen: "'Oxygen', san-serif",
+    DmSans: "'DM Sans', san-serif"
+  },
   colors: {
     primaryBlack: '#2B2F32',
     // primaryBlack: 'green',
     secondaryRed: '#C97178',
     bgWhite: '#FCFCFC',
+    bgGray: '#F9F9F9',
     textWhite: '#FFFFFF',
     textGrayLight: '#B5B6B7',
     textGray: '#AAACAD',

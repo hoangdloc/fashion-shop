@@ -91,7 +91,7 @@ const FeaturedProductSection: React.FC = () => {
     <FeaturedProductSectionStyles>
       <Typography.Title
         style={{
-          fontFamily: "'Rufina', san-serif",
+          fontFamily: emotionTheme.fontFamily.Rufina,
           fontSize: '3.2rem',
           fontWeight: 700,
           lineHeight: '3.952rem',
@@ -124,7 +124,7 @@ const FeaturedProductSection: React.FC = () => {
         animated={{ inkBar: true, tabPane: true }}
         tabBarStyle={{
           fontSize: '1.6rem',
-          fontFamily: "'Playfair Display', san-serif",
+          fontFamily: emotionTheme.fontFamily.PlayfairDisplay,
           lineHeight: '2.24rem',
           fontWeight: 400,
           textTransform: 'uppercase'

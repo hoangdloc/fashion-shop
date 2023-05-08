@@ -10,7 +10,7 @@ interface MyInputProps extends InputProps {
 const MyOutlinedInputStyles = styled(Input, {
   shouldForwardProp: prop => isPropValid(prop) && prop !== 'placeholderColor'
 })<MyInputProps>(props => ({
-  fontFamily: "'Oxygen', san-serif",
+  fontFamily: props.theme.fontFamily.Oxygen,
   padding: '1rem 1.2rem',
   fontSize: '1.4rem',
   '&::placeholder': {

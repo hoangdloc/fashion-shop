@@ -35,7 +35,7 @@ const PopupContainer = styled.div`
     text-align: center;
     margin: 0;
     &.popup-title {
-      font-family: 'Playfair Display', sans-serif;
+      font-family: ${props => props.theme.fontFamily.PlayfairDisplay};
       font-weight: 700;
       font-size: 3.2rem;
       text-transform: uppercase;

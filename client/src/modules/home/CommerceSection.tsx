@@ -83,7 +83,7 @@ const CommerceSection: React.FC = () => {
         </Typography.Title>
         <Typography.Title
           style={{
-            fontFamily: "'Playfair Display', san-serif",
+            fontFamily: emotionTheme.fontFamily.PlayfairDisplay,
             fontSize: '2.8rem',
             textTransform: 'uppercase',
             marginBottom: '2.4rem',

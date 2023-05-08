@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useTheme } from '@emotion/react';
 import { Carousel, Typography } from 'antd';
 import type { CarouselRef } from 'antd/es/carousel';
 import React, { useRef } from 'react';
@@ -100,6 +101,7 @@ const heroContentItems = [
 ];
 
 const HeroSection: React.FC = () => {
+  const emotionTheme = useTheme();
   const carouselRef = useRef<CarouselRef>(null);
 
   const handlePrevSlide = (): void => {
@@ -133,7 +135,7 @@ const HeroSection: React.FC = () => {
               <Typography.Title
                 style={{
                   fontSize: '5.2rem',
-                  fontFamily: "'Playfair Display', sans-serif",
+                  fontFamily: emotionTheme.fontFamily.PlayfairDisplay,
                   fontWeight: 700,
                   letterSpacing: '0.2rem',
                   textTransform: 'uppercase',
@@ -145,7 +147,7 @@ const HeroSection: React.FC = () => {
               </Typography.Title>
               <Typography.Text
                 style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: emotionTheme.fontFamily.DmSans,
                   fontSize: '1.8rem',
                   marginBottom: '4rem'
                 }}

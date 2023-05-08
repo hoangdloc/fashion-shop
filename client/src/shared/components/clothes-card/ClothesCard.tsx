@@ -21,7 +21,7 @@ export interface ClothesCardProps {
   clothes?: Clothes
 }
 
-const ClothesCardStyles = styled('div')(() => ({
+const ClothesCardStyles = styled('div')((props) => ({
   '.img-box': {
     display: 'block',
     // width: '26.8rem',
@@ -58,7 +58,7 @@ const ClothesCardStyles = styled('div')(() => ({
       marginTop: '2rem',
       lineHeight: '2.4rem',
       letterSpacing: 1.05,
-      fontFamily: "'Playfair Display', san-serif",
+      fontFamily: props.theme.fontFamily.PlayfairDisplay,
       fontSize: '1.8rem',
       fontWeight: 600,
       textTransform: 'uppercase',

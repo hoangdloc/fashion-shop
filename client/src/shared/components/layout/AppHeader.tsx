@@ -26,7 +26,7 @@ import { getCartItemsSelector } from '../../../store/cart/cartSlice';
 const LayoutHeader = styled(Layout.Header)(props => ({
   position: 'sticky',
   top: 0,
-  zIndex: 999999,
+  zIndex: 10,
   width: '100%',
   height: '14.2rem',
   backgroundColor: props.theme.colors.bgWhite,
@@ -48,7 +48,7 @@ const LayoutHeader = styled(Layout.Header)(props => ({
     '& .ant-typography': {
       color: 'inherit',
       fontSize: '1.4rem',
-      fontFamily: "'Oxygen', san-serif"
+      fontFamily: props.theme.fontFamily.Oxygen
     }
   },
   '.main-nav': {
@@ -66,7 +66,7 @@ const LayoutHeader = styled(Layout.Header)(props => ({
       display: 'flex',
       alignItems: 'center',
       gap: '5.2rem',
-      fontFamily: "'Playfair Display', san-serif",
+      fontFamily: props.theme.fontFamily.PlayfairDisplay,
       fontSize: '1.6rem',
       textTransform: 'uppercase',
       color: props.theme.colors.primaryBlack,

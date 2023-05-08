@@ -3,7 +3,7 @@ import type { HeadingProps } from '.';
 import styled from '@emotion/styled';
 
 const DecoratedHeadingStyles = styled.div`
-  font-family: 'Playfair Display', sans-serif;
+  font-family: ${props => props.theme.fontFamily.PlayfairDisplay};
   font-weight: 700;
   font-size: 1.8rem;
   letter-spacing: 0.1rem;

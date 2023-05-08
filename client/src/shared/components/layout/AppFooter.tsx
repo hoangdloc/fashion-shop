@@ -259,7 +259,10 @@ const AppFooter: React.FC = () => {
       <hr />
       <div className="copyright">
         <Typography.Text
-          style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '1.2rem' }}
+          style={{
+            fontFamily: emotionTheme.fontFamily.DmSans,
+            fontSize: '1.2rem'
+          }}
         >
           &copy;2022 Fashion Designer, Adamo Software
         </Typography.Text>

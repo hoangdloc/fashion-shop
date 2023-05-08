@@ -102,7 +102,7 @@ const ImageCollection: React.FC = () => {
                 height: 1600
               },
               imageClassName: 'small-image',
-              style: { zIndex: 9999 }
+              style: { zIndex: 1 }
             }}
           />
         }

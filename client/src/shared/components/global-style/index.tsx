@@ -16,10 +16,14 @@ const EmotionGlobalStyles: React.FC = () => {
           fontSize: '62.5%'
         },
         body: {
-          fontFamily: "'Oxygen', sans-serif",
+          fontFamily: theme.fontFamily.Oxygen,
           lineHeight: 1,
           fontWeight: 400,
-          color: theme.colors.primaryBlack
+          color: theme.colors.primaryBlack,
+          textRendering: 'optimizeLegibility',
+          '-webkit-font-smoothing': 'antialiased',
+          '-moz-osx-font-smoothing': 'grayscale',
+          maxWidth: '144rem'
         },
         'a, a:link, a:visited': {
           color: 'inherit'
@@ -50,6 +54,9 @@ const EmotionGlobalStyles: React.FC = () => {
           alignItems: 'center',
           justifyContent: 'center',
           cursor: 'pointer'
+        },
+        '.swal2-container': {
+          zoom: 1.5
         },
         '.ant-typography': {
           margin: 0

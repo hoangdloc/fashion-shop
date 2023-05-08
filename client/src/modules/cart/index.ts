@@ -1,4 +1,4 @@
 import CartBannerSection from './CartBannerSection';
-import CartProductTable from './CartProductTable';
+import CartProductTable from './cart-table';
 
 export { CartBannerSection, CartProductTable };

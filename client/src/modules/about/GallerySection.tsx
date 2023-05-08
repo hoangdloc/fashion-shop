@@ -18,7 +18,7 @@ const GallerySectionStyles = styled('section')`
   gap: 4rem;
   & .story-title {
     font-weight: 700;
-    font-family: 'Playfair Display', sans-serif;
+    font-family: ${props => props.theme.fontFamily.PlayfairDisplay};
     text-transform: uppercase;
     font-size: 3.2rem;
     line-height: 4.3rem;

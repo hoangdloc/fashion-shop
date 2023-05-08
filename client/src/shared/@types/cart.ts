@@ -1,6 +1,8 @@
+import { type Clothes } from './clothes';
+
 export interface CartItem {
-  clothesId: number
   userId: number
+  clothes: Clothes
   quantity: number
 }
 

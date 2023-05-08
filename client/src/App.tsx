@@ -17,8 +17,8 @@ const App: React.FC = () => {
           token: {
             colorPrimary: emotionTheme.colors.primaryBlack,
             colorTextBase: emotionTheme.colors.primaryBlack,
-            borderRadius: 0,
-            fontFamily: "'Oxygen', san-serif"
+            fontFamily: emotionTheme.fontFamily.Oxygen,
+            borderRadius: 0
           }
         }}
       >

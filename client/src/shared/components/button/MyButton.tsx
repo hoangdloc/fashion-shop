@@ -3,7 +3,7 @@ import { Button, type ButtonProps } from 'antd';
 import React from 'react';
 
 const ButtonStyles = styled(Button)(props => ({
-  fontFamily: "'Oxygen', san-serif",
+  fontFamily: props.theme.fontFamily.Oxygen,
   boxShadow: 'none',
   display: 'flex',
   justifyContent: 'center',

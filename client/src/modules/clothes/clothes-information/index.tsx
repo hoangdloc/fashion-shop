@@ -3,6 +3,8 @@ import { useTheme } from '@emotion/react';
 import { Typography } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 import MyBadge from '../../../shared/components/badge';
 import { renderBadge } from '../../../shared/utils/renderBadge';
 import { renderPrice } from '../../../shared/utils/renderPrice';
@@ -14,8 +16,8 @@ import ClothesDetails from './ClothesDetails';
 
 import type { RootState } from '../../../store/store';
 import { addProductToCart } from '../../../store/cart/cartSlice';
-import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../../config/route';
+import { Status } from '../../../shared/@types/status';
 
 const ClothesInformationContainer = styled.div`
   display: flex;
@@ -35,7 +37,7 @@ const ClothesTitle = styled.div`
   & > .product-name {
     margin: 0;
     font-weight: 400;
-    font-family: 'Playfair Display', sans-serif;
+    font-family: ${props => props.theme.fontFamily.PlayfairDisplay};
     font-size: 2.8rem;
     letter-spacing: 0.2rem;
     text-transform: uppercase;
@@ -113,11 +115,21 @@ const ClothesInformation: React.FC = () => {
 
   const handleAddToCart = (): void => {
     if (currentUser == null || currentClothes == null) return;
+    if (currentClothes.status === Status.SOLD_OUT) {
+      void Swal.fire({
+        title: 'Sold out!',
+        text: 'Please select other available products',
+        icon: 'warning',
+        confirmButtonText: 'OK',
+        confirmButtonColor: emotionTheme.colors.primaryBlack
+      });
+      return;
+    }
     dispatch(
       addProductToCart({
         quantity,
         userId: currentUser.id,
-        clothesId: currentClothes.id
+        clothes: currentClothes
       })
     );
     navigate(AppRoute.CART);

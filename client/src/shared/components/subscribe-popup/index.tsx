@@ -26,7 +26,7 @@ const SubcribePopupStyles = styled(Modal)`
           padding: 8rem 2rem;
           .title {
             font-size: 2.4rem;
-            font-family: 'Playfair Display', san-serif;
+            font-family: ${props => props.theme.fontFamily.PlayfairDisplay};
             font-weight: 700;
             width: 29.5rem;
             line-height: 3.36rem;
