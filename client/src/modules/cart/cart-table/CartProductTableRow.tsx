@@ -5,11 +5,7 @@ import QuantityBox from '~/shared/components/quantity-box';
 import CartProductItem from './CartProductItem';
 
 import type { CartItem } from '~/shared/@types/cart';
-import {
-  PlusIcon,
-  SubstractIcon,
-  TrashIcon
-} from '~/shared/components/icon';
+import { PlusIcon, SubstractIcon, TrashIcon } from '~/shared/components/icon';
 import { renderPrice } from '~/shared/utils/renderPrice';
 import { useCart } from '~/contexts/cart-context';
 
@@ -64,34 +60,39 @@ const CartProductTableRow: React.FC<CartProductTableRowProps> = ({
   enableAnimations
 }) => {
   const { cart, setCart } = useCart();
-  const { price, salePercent, status, images, name } = cartItem.clothes;
+  const { price, salePercent, status, images, name, category, slug } =
+    cartItem.clothes;
   const { actualPrice } = renderPrice(price, salePercent, status);
 
   const handlePlus = (): void => {
     enableAnimations(false);
-    setCart(cart.map(item => {
-      if (item.clothes.id === cartItem.clothes.id) {
-        return { ...item, quantity: cartItem.quantity + 1 };
-      }
-      return item;
-    }));
+    setCart(
+      cart.map(item => {
+        if (item.clothes.id === cartItem.clothes.id) {
+          return { ...item, quantity: cartItem.quantity + 1 };
+        }
+        return item;
+      })
+    );
   };
 
   const handleSubstract = (): void => {
     enableAnimations(false);
     if (cartItem.quantity > 1) {
-      setCart(cart.map(item => {
-        if (item.clothes.id === cartItem.clothes.id) {
-          return { ...item, quantity: cartItem.quantity - 1 };
-        }
-        return item;
-      }));
+      setCart(
+        cart.map(item => {
+          if (item.clothes.id === cartItem.clothes.id) {
+            return { ...item, quantity: cartItem.quantity - 1 };
+          }
+          return item;
+        })
+      );
     }
   };
 
   const handleDeleteProduct = (): void => {
     enableAnimations(true);
-    setCart(cart.filter(item => item.clothes.id !== cartItem.clothes.id));
+    setCart(cart.filter(item => item.id !== cartItem.id));
   };
 
   return (
@@ -103,6 +104,10 @@ const CartProductTableRow: React.FC<CartProductTableRowProps> = ({
           price={price}
           salePercent={salePercent}
           status={status}
+          gender={category[0]}
+          slug={slug}
+          pickedSize={cartItem.size}
+          pickedColor={cartItem.color}
         />
       </td>
       <td className="quantity">
@@ -117,7 +122,9 @@ const CartProductTableRow: React.FC<CartProductTableRowProps> = ({
           handleSubtract={handleSubstract}
         />
       </td>
-      <td className="subtotal">{(+actualPrice * cartItem.quantity).toFixed(2)} $</td>
+      <td className="subtotal">
+        {(+actualPrice * cartItem.quantity).toFixed(2)} $
+      </td>
       <td className="delete-btn">
         <button onClick={handleDeleteProduct}>
           <TrashIcon />

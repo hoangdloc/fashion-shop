@@ -22,8 +22,7 @@ const EmotionGlobalStyles: React.FC = () => {
           color: theme.colors.primaryBlack,
           textRendering: 'optimizeLegibility',
           WebkitFontSmoothing: 'antialiased',
-          MozOsxFontSmoothing: 'grayscale',
-          maxWidth: '144rem'
+          MozOsxFontSmoothing: 'grayscale'
         },
         'a, a:link, a:visited': {
           color: 'inherit'

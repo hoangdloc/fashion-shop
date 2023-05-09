@@ -2,11 +2,10 @@ import styled from '@emotion/styled';
 import classNames from 'classnames';
 import React, { useLayoutEffect, useState } from 'react';
 import ReactImageMagnify from 'react-image-magnify';
-import { useSelector } from 'react-redux';
 import { v4 } from 'uuid';
 
+import { useClothesDetails } from '~/contexts/clothes-details-context';
 import ImageBox from '~/shared/components/image-box';
-import type { RootState } from '~/store/store';
 import ImageCollectionSkeleton from './ImageCollectionSkeleton';
 
 const ImageCollectionContainer = styled.div`
@@ -53,9 +52,7 @@ const CurrentImageBox = styled.figure`
 `;
 
 const ImageCollection: React.FC = () => {
-  const currentClothes = useSelector(
-    (state: RootState) => state.clothes.currentClothes
-  );
+  const { currentClothes } = useClothesDetails();
   const [currentImage, setCurrentImage] = useState<string | undefined>(
     currentClothes?.images[0]
   );

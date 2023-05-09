@@ -22,9 +22,9 @@ export const rtkQueryErrorLogger: Middleware =
 
 export const cartMiddleware: Middleware<{}, RootState> =
   store => next => action => {
-    if (action.type === updateProductToCart.type) {
-      const userId = store.getState().auth.userInfo?.id;
-      const cart = store.getState().cart.cart;
+    const userId = store.getState().auth.userInfo?.id;
+    const cart = store.getState().cart.cart;
+    if (updateProductToCart.match(action)) {
       const newCart = cart
         .filter(item => item.userId !== userId)
         .concat(action.payload);

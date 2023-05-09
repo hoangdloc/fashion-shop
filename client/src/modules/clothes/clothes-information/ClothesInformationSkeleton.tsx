@@ -5,13 +5,21 @@ import React from 'react';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 3.2rem;
 `;
 
 const ActionContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 2.4rem;
+`;
+
+const SelectContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1.8rem;
+  margin-bottom: 2.8rem;
 `;
 
 const ClothesInformationSkeleton: React.FC = () => {
@@ -31,6 +39,18 @@ const ClothesInformationSkeleton: React.FC = () => {
           />
         ))}
       </ActionContainer>
+      <SelectContainer>
+        <Skeleton.Input
+          size="small"
+          active
+          style={{ width: '10vw' }}
+        />
+        <Skeleton.Input
+          size="large"
+          active
+          style={{ width: '20vw' }}
+        />
+      </SelectContainer>
       {new Array(3).fill(0).map((_, index) => (
         <Skeleton.Button
           block

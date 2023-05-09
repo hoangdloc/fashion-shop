@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import ImageCollection from './image-collection';
+import { ClothesDetailsProvider } from '~/contexts/clothes-details-context';
 import ClothesInformation from './clothes-information';
+import ImageCollection from './image-collection';
 
 const ClothesDetailSectionContainer = styled.section`
   width: 100%;
@@ -13,10 +14,12 @@ const ClothesDetailSectionContainer = styled.section`
 
 const ClothesDetailSection: React.FC = () => {
   return (
-    <ClothesDetailSectionContainer>
-      <ImageCollection />
-      <ClothesInformation />
-    </ClothesDetailSectionContainer>
+    <ClothesDetailsProvider>
+      <ClothesDetailSectionContainer>
+        <ImageCollection />
+        <ClothesInformation />
+      </ClothesDetailSectionContainer>
+    </ClothesDetailsProvider>
   );
 };
 

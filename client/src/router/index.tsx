@@ -17,6 +17,7 @@ const ClothesDetailsPage = lazy(
   async () => await import('~/pages/ClothesDetailsPage')
 );
 const CartPage = lazy(async () => await import('~/pages/CartPage'));
+const CheckoutPage = lazy(async () => await import('~/pages/CheckoutPage'));
 const NotFoundPage = lazy(async () => await import('~/pages/NotFoundPage'));
 
 export default createBrowserRouter([
@@ -97,7 +98,7 @@ export default createBrowserRouter([
               },
               {
                 path: CartRoute.CHECKOUT,
-                element: <div>Checkout</div>
+                element: <CheckoutPage />
               }
             ]
           },

@@ -1,6 +1,7 @@
 import React from 'react';
-import type { HeadingProps } from '.';
 import styled from '@emotion/styled';
+
+import type { HeadingProps } from '.';
 
 const DecoratedHeadingStyles = styled.div`
   font-family: ${props => props.theme.fontFamily.PlayfairDisplay};

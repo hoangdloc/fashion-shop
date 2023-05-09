@@ -17,9 +17,9 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const cartItems = useSelector(getCartItemsSelector);
   const [cart, setCart] = useState<Cart>(cartItems);
-  const value = { cart, setCart };
+  const values = { cart, setCart };
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+  return <CartContext.Provider value={values}>{children}</CartContext.Provider>;
 };
 
 function useCart (): ICartContext {

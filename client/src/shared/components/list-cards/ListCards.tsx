@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Col, Row } from 'antd';
 import React from 'react';
 import { v4 } from 'uuid';
@@ -25,6 +26,7 @@ const ListCardsStyles = styled('div')(() => ({
 
 const ListCards: React.FC<ListCardsProps> = props => {
   const { data, columnCount, loading = false } = props;
+  const [parent] = useAutoAnimate({ duration: 500 });
 
   const renderSkeletonList = (): JSX.Element[] => {
     return new Array(2).fill(0).map(() => (
@@ -66,7 +68,7 @@ const ListCards: React.FC<ListCardsProps> = props => {
   };
 
   return (
-    <ListCardsStyles>
+    <ListCardsStyles ref={parent}>
       {loading && data === undefined ? renderSkeletonList() : renderList()}
     </ListCardsStyles>
   );

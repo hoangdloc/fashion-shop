@@ -17,6 +17,7 @@ export const theme: Theme = {
     textGrayLight: '#B5B6B7',
     textGray: '#AAACAD',
     grayDark: '#909293',
+    grayDarker: '#808284',
     textSubtitle: '#55595B',
     footerBg: '#F3F3F3',
     horizontalColor: '#D5D5D6'

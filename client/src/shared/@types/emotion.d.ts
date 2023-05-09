@@ -17,6 +17,7 @@ declare module '@emotion/react' {
       textGrayLight: string
       textGray: string
       grayDark: string
+      grayDarker: string
       textSubtitle: string
       footerBg: string
       horizontalColor: string

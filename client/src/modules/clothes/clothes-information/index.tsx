@@ -3,19 +3,23 @@ import styled from '@emotion/styled';
 import { Typography } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
+import { v4 } from 'uuid';
 
 import MyBadge from '~/shared/components/badge';
 import { MyButton } from '~/shared/components/button';
 import { PlusIcon, SubstractIcon } from '~/shared/components/icon';
 import QuantityBox from '~/shared/components/quantity-box';
+import { useFakeLoading } from '~/shared/hooks/useFakeLoading';
 import { renderBadge } from '~/shared/utils/renderBadge';
 import { renderPrice } from '~/shared/utils/renderPrice';
 import ClothesDetails from './ClothesDetails';
 import ClothesInformationSkeleton from './ClothesInformationSkeleton';
+import ClothesSelectCategory from './clothes-select-category';
 
-import { AppRoute } from '~/config/route';
+import { useClothesDetails } from '~/contexts/clothes-details-context';
+import type { Color } from '~/shared/@types/category';
 import { Status } from '~/shared/@types/status';
 import { addProductToCart } from '~/store/cart/cartSlice';
 import type { RootState } from '~/store/store';
@@ -93,18 +97,16 @@ const AddToCartBox = styled.div`
     font-size: 1.6rem;
     font-weight: 700;
   }
-  margin-bottom: 5.6rem;
+  margin-bottom: 2.8rem;
 `;
 
 const ClothesInformation: React.FC = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const emotionTheme = useTheme();
-  const currentClothes = useSelector(
-    (state: RootState) => state.clothes.currentClothes
-  );
   const currentUser = useSelector((state: RootState) => state.auth.userInfo);
+  const { currentClothes, pickedSize, pickedColor } = useClothesDetails();
   const [quantity, setQuantity] = useState<number>(1);
+  const { loading, fakeLoading } = useFakeLoading();
 
   const handleAddQuantity = (): void => {
     setQuantity(prev => prev + 1);
@@ -114,7 +116,7 @@ const ClothesInformation: React.FC = () => {
     if (quantity > 1) setQuantity(prev => prev - 1);
   };
 
-  const handleAddToCart = (): void => {
+  const handleAddToCart = async (): Promise<void> => {
     if (currentUser == null || currentClothes == null) return;
     if (currentClothes.status === Status.SOLD_OUT) {
       void Swal.fire({
@@ -126,14 +128,18 @@ const ClothesInformation: React.FC = () => {
       });
       return;
     }
+    await fakeLoading();
     dispatch(
       addProductToCart({
+        id: v4(),
         quantity,
         userId: currentUser.id,
-        clothes: currentClothes
+        clothes: currentClothes,
+        color: pickedColor ?? (currentClothes.category.slice(2)[0] as Color),
+        size: pickedSize ?? currentClothes.sizes[0]
       })
     );
-    navigate(AppRoute.CART);
+    toast.success(`${quantity}x ${currentClothes.name} added to cart`);
   };
 
   if (currentClothes == null) return <ClothesInformationSkeleton />;
@@ -197,11 +203,18 @@ const ClothesInformation: React.FC = () => {
         <MyButton
           className="action-btn"
           type="primary"
-          onClick={handleAddToCart}
+          onClick={() => {
+            void handleAddToCart();
+          }}
+          loading={loading}
         >
           Add to cart
         </MyButton>
       </AddToCartBox>
+      <ClothesSelectCategory
+        sizes={sizes}
+        colors={category.slice(2) as Color[]}
+      />
       <ClothesDetails
         description={description}
         sizes={sizes}

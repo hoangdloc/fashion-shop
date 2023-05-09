@@ -1,8 +1,8 @@
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { Empty, Typography } from 'antd';
-import React, { useMemo } from 'react';
+import { Divider, Empty, Typography } from 'antd';
+import React, { Fragment, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -174,7 +174,12 @@ const CartTableContainer: React.FC = () => {
           </tfoot>
         </Table>
       )}
-      {cart.length <= 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+      {cart.length <= 0 && (
+        <Fragment>
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          <Divider />
+        </Fragment>
+      )}
       <ActionBox>
         <MyButton
           onClick={() => {
