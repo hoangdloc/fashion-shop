@@ -8,7 +8,6 @@ const ClothesDetailSectionContainer = styled.section`
   padding: 4rem 16rem 5rem 16rem;
   display: flex;
   gap: 4rem;
-  justify-content: space-between;
 `;
 
 const ClothesDetailSectionSkeleton: React.FC = () => {

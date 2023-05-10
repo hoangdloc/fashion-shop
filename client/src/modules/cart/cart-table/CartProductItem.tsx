@@ -62,7 +62,17 @@ const ProductInfoContainer = styled.div`
 
 const CartProductItem: React.FC<CartProductItemProps> = props => {
   const emotionTheme = useTheme();
-  const { imageSrc, title, price, salePercent, status, gender, slug, pickedColor, pickedSize } = props;
+  const {
+    imageSrc,
+    title,
+    price,
+    salePercent,
+    status,
+    gender,
+    slug,
+    pickedColor,
+    pickedSize
+  } = props;
   const { actualPrice, originalPrice, isSale } = renderPrice(
     price,
     salePercent,
@@ -86,6 +96,9 @@ const CartProductItem: React.FC<CartProductItemProps> = props => {
         >
           <Link to={linkToProduct}>{title}</Link>
         </Typography.Title>
+        <Typography.Text className="size-color">
+          {sizeColorProdcut}
+        </Typography.Text>
         <div className="product-price">
           <Typography.Text
             style={{
@@ -105,7 +118,6 @@ const CartProductItem: React.FC<CartProductItemProps> = props => {
             </Typography.Text>
           )}
         </div>
-        <Typography.Text className='size-color'>{sizeColorProdcut}</Typography.Text>
       </ProductInfoContainer>
     </CartProductItemContainer>
   );

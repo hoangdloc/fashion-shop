@@ -12,7 +12,7 @@ import { CartRoute } from '~/config/route';
 import { useCart } from '~/contexts/cart-context';
 import { MyButton } from '~/shared/components/button';
 import { useFakeLoading } from '~/shared/hooks/useFakeLoading';
-import { renderPrice } from '~/shared/utils/renderPrice';
+import { localePrice, renderPrice } from '~/shared/utils/renderPrice';
 import { updateProductToCart } from '~/store/cart/cartSlice';
 import CartProductTableRow from './CartProductTableRow';
 
@@ -108,7 +108,10 @@ const CartTableContainer: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [parent, enableAnimations] = useAutoAnimate();
-  const { loading, fakeLoading } = useFakeLoading();
+  const { loading: updateLoading, fakeLoading: fakeUpdateLoading } =
+    useFakeLoading();
+  const { loading: checkoutLoading, fakeLoading: fakeCheckoutLoading } =
+    useFakeLoading();
   const { cart } = useCart();
   const cartTotal = useMemo(() => {
     return cart.reduce((total, current) => {
@@ -123,7 +126,7 @@ const CartTableContainer: React.FC = () => {
   }, [cart]);
 
   const handleUpdateCart = async (): Promise<void> => {
-    await fakeLoading();
+    await fakeUpdateLoading();
     dispatch(updateProductToCart(cart));
     await Swal.fire({
       title: 'Success!',
@@ -134,7 +137,9 @@ const CartTableContainer: React.FC = () => {
     });
   };
 
-  const handleProceesToCheckout = (): void => {
+  const handleProceesToCheckout = async (): Promise<void> => {
+    await fakeCheckoutLoading();
+    dispatch(updateProductToCart(cart));
     navigate(CartRoute.CHECKOUT);
   };
 
@@ -167,7 +172,7 @@ const CartTableContainer: React.FC = () => {
               </td>
               <td>
                 <Typography.Text className="total">
-                  {cartTotal.toFixed(2)} $
+                  {localePrice(cartTotal.toFixed(2))} $
                 </Typography.Text>
               </td>
             </tr>
@@ -185,14 +190,17 @@ const CartTableContainer: React.FC = () => {
           onClick={() => {
             void handleUpdateCart();
           }}
-          loading={loading}
+          loading={updateLoading}
           className="update-btn"
         >
           Update cart
         </MyButton>
         <MyButton
-          onClick={handleProceesToCheckout}
+          onClick={() => {
+            void handleProceesToCheckout();
+          }}
           type="primary"
+          loading={checkoutLoading}
         >
           Process to checkout
         </MyButton>

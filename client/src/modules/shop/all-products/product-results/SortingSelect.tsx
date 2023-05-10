@@ -66,7 +66,7 @@ const SortingSelect: React.FC = () => {
         }}
       >
         <Select
-          defaultValue={0}
+          defaultValue={Sorting.DEFAULT}
           style={{ width: '17.3rem' }}
           size="large"
           suffixIcon={

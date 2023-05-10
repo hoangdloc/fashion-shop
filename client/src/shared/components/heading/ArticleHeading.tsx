@@ -13,6 +13,9 @@ const ArticleHeadingStyles = styled.div`
   display: flex;
   align-items: center;
   gap: 1.6rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 const DecoratedLine = styled.div`

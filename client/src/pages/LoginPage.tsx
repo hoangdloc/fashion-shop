@@ -46,6 +46,10 @@ const LoginPageStyles = styled('main')(props => ({
       display: 'flex',
       flexDirection: 'column',
       gap: '1rem'
+    },
+    '.field-label': {
+      fontWeight: 700,
+      fontSize: '1.4rem'
     }
   },
   a: {
@@ -59,14 +63,17 @@ const LoginPageStyles = styled('main')(props => ({
 }));
 
 const EllipseBgStyles = styled('div')`
-  background-image:
-      linear-gradient(0deg, rgba(200, 200, 200, 0.1), rgba(200, 200, 200, 0.1));
-    width: 200rem;
-    height: 200rem;
-    border-radius: 100%;
-    position: absolute;
-    top: 50%;
-    z-index: 1;
+  background-image: linear-gradient(
+    0deg,
+    rgba(200, 200, 200, 0.1),
+    rgba(200, 200, 200, 0.1)
+  );
+  width: 200rem;
+  height: 200rem;
+  border-radius: 100%;
+  position: absolute;
+  top: 50%;
+  z-index: 1;
 `;
 
 const schema = yup
@@ -81,15 +88,16 @@ const schema = yup
   .required();
 type FormData = yup.InferType<typeof schema>;
 
+const initialValues: FormData = {
+  email: '',
+  password: ''
+};
+
 const LoginPage: React.FC = () => {
   const emotionTime = useTheme();
   const [login, { isLoading }] = useUserLoginMutation();
   const navigate = useNavigate();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
-  const initialValues: FormData = {
-    email: '',
-    password: ''
-  };
 
   const {
     control,
@@ -156,9 +164,7 @@ const LoginPage: React.FC = () => {
           <MyFormItem
             id="email"
             label={
-              <Typography.Text style={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Email
-              </Typography.Text>
+              <Typography.Text className="field-label">Email</Typography.Text>
             }
             control={control}
             hasError={errors.email != null}
@@ -169,7 +175,7 @@ const LoginPage: React.FC = () => {
           <MyFormItem
             id="password"
             label={
-              <Typography.Text style={{ fontWeight: 700, fontSize: '1.4rem' }}>
+              <Typography.Text className="field-label">
                 Password
               </Typography.Text>
             }

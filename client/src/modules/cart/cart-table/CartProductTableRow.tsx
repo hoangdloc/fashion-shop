@@ -6,7 +6,7 @@ import CartProductItem from './CartProductItem';
 
 import type { CartItem } from '~/shared/@types/cart';
 import { PlusIcon, SubstractIcon, TrashIcon } from '~/shared/components/icon';
-import { renderPrice } from '~/shared/utils/renderPrice';
+import { localePrice, renderPrice } from '~/shared/utils/renderPrice';
 import { useCart } from '~/contexts/cart-context';
 
 interface CartProductTableRowProps {
@@ -63,6 +63,7 @@ const CartProductTableRow: React.FC<CartProductTableRowProps> = ({
   const { price, salePercent, status, images, name, category, slug } =
     cartItem.clothes;
   const { actualPrice } = renderPrice(price, salePercent, status);
+  const subtotal = localePrice((+actualPrice * cartItem.quantity).toFixed(2));
 
   const handlePlus = (): void => {
     enableAnimations(false);
@@ -122,9 +123,7 @@ const CartProductTableRow: React.FC<CartProductTableRowProps> = ({
           handleSubtract={handleSubstract}
         />
       </td>
-      <td className="subtotal">
-        {(+actualPrice * cartItem.quantity).toFixed(2)} $
-      </td>
+      <td className="subtotal">{subtotal} $</td>
       <td className="delete-btn">
         <button onClick={handleDeleteProduct}>
           <TrashIcon />

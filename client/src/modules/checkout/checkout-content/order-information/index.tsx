@@ -1,14 +1,16 @@
 import styled from '@emotion/styled';
 import { Typography } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
+import { AppRoute } from '~/config/route';
+import { MyButton } from '~/shared/components/button';
 import { ArticleHeading } from '~/shared/components/heading';
+import { localePrice, renderPrice } from '~/shared/utils/renderPrice';
 import { getCartItemsSelector } from '~/store/cart/cartSlice';
 import OrderItem from './OrderItem';
-import { useNavigate } from 'react-router-dom';
-import { AppRoute } from '~/config/route';
-import { toast } from 'react-toastify';
 
 const Container = styled.aside`
   width: 36.3rem;
@@ -16,26 +18,89 @@ const Container = styled.aside`
   box-shadow: 0px 10.786210060119629px 18.783418655395508px 0px #00000009,
     0px 47px 113px 0px #00000012;
   padding: 3.2rem 4rem 4rem 4rem;
+  & > .order-btn {
+    text-transform: uppercase;
+    font-size: 1.6rem;
+    font-weight: 700;
+    padding: 1.5rem 0;
+    height: 5.2rem;
+  }
 `;
 
-const ProductContainerStyles = styled.div`
+const OrderInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-width: 100%;
+  margin-bottom: 3.7rem;
+`;
+
+const OrderContainerStyles = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
   .ant-typography {
     margin: 0;
+    &.title {
+      font-size: 1.6rem;
+    }
   }
 `;
 
-const ProductListStyles = styled.div`
+const OrderListStyles = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
 `;
 
+const SummaryContainerStyles = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  & > .ant-typography {
+    margin: 0;
+  }
+  & > li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    & > .ant-typography {
+      font-size: 1.4rem;
+    }
+  }
+`;
+
+const Divider = styled.div`
+  border-bottom: 0.15rem dashed ${props => props.theme.colors.horizontalColor};
+`;
+
+const TotalPrice = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  & > .ant-typography {
+    font-weight: 700;
+    font-size: 2rem;
+    text-transform: uppercase;
+  }
+`;
+
+const SHIPPING_COST = 25;
+
 const OrderInformation: React.FC = () => {
   const navigate = useNavigate();
   const cartItems = useSelector(getCartItemsSelector);
+  const orderSubtotal = useMemo(() => {
+    return cartItems.reduce((total, current) => {
+      const { quantity, clothes } = current;
+      const { actualPrice } = renderPrice(
+        clothes.price,
+        clothes.salePercent,
+        clothes.status
+      );
+      return total + quantity * +actualPrice;
+    }, 0);
+  }, []);
 
   useEffect(() => {
     if (cartItems.length <= 0) {
@@ -54,26 +119,72 @@ const OrderInformation: React.FC = () => {
       >
         Your order
       </ArticleHeading>
-      <ProductContainerStyles>
-        <Typography.Title level={5}>Products</Typography.Title>
-        <ProductListStyles>
-          {cartItems.map((item, index) => (
-            <OrderItem
-              key={index}
-              imageSrc={item.clothes.images[0]}
-              title={item.clothes.name}
-              price={item.clothes.price}
-              salePercent={item.clothes.salePercent}
-              status={item.clothes.status}
-              gender={item.clothes.category[0]}
-              slug={item.clothes.slug}
-              quantity={item.quantity}
-              pickedColor={item.color}
-              pickedSize={item.size}
-            />
-          ))}
-        </ProductListStyles>
-      </ProductContainerStyles>
+      <OrderInfoContainer>
+        <OrderContainerStyles>
+          <Typography.Title
+            className="title"
+            level={4}
+          >
+            Products
+          </Typography.Title>
+          <OrderListStyles>
+            {cartItems.map((item, index) => (
+              <OrderItem
+                key={index}
+                imageSrc={item.clothes.images[0]}
+                title={item.clothes.name}
+                price={item.clothes.price}
+                salePercent={item.clothes.salePercent}
+                status={item.clothes.status}
+                gender={item.clothes.category[0]}
+                slug={item.clothes.slug}
+                quantity={item.quantity}
+                pickedColor={item.color}
+                pickedSize={item.size}
+              />
+            ))}
+          </OrderListStyles>
+        </OrderContainerStyles>
+        <Divider />
+        <OrderContainerStyles>
+          <Typography.Title
+            className="title"
+            level={4}
+          >
+            Order summary
+          </Typography.Title>
+          <SummaryContainerStyles>
+            <li>
+              <Typography.Text>Subtotal</Typography.Text>
+              <Typography.Text>
+                {localePrice(orderSubtotal.toFixed(2))} $
+              </Typography.Text>
+            </li>
+            <li>
+              <Typography.Text>Shipping</Typography.Text>
+              <Typography.Text>
+                {localePrice(SHIPPING_COST.toFixed(2))} $
+              </Typography.Text>
+            </li>
+          </SummaryContainerStyles>
+        </OrderContainerStyles>
+        <Divider />
+        <TotalPrice>
+          <Typography.Text>Total</Typography.Text>
+          <Typography.Text>
+            {localePrice((orderSubtotal + 25).toFixed(2))} $
+          </Typography.Text>
+        </TotalPrice>
+      </OrderInfoContainer>
+      <MyButton
+        block
+        type="primary"
+        className="order-btn"
+        form='checkout-form'
+        htmlType='submit'
+      >
+        Confirm order
+      </MyButton>
     </Container>
   );
 };

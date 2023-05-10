@@ -62,7 +62,7 @@ const OrderItemInfo = styled.div`
   & > .order-item-price {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.4rem;
     font-size: 1.6rem;
   }
 `;
