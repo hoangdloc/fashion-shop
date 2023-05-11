@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { v4 } from 'uuid';
 
-import { CartRoute } from '~/config/route';
+import { AppRoute, CartRoute } from '~/config/route';
 import { useCart } from '~/contexts/cart-context';
 import { MyButton } from '~/shared/components/button';
 import { useFakeLoading } from '~/shared/hooks/useFakeLoading';
@@ -100,6 +100,9 @@ const ActionBox = styled.div`
         background-color: ${props => props.theme.colors.primaryBlack};
       }
     }
+    &.checkout-btn, &.back-btn {
+      padding: 1.5rem 4rem;
+    }
   }
 `;
 
@@ -141,6 +144,10 @@ const CartTableContainer: React.FC = () => {
     await fakeCheckoutLoading();
     dispatch(updateProductToCart(cart));
     navigate(CartRoute.CHECKOUT);
+  };
+
+  const handlebackToShopping = (): void => {
+    navigate(AppRoute.SHOP);
   };
 
   return (
@@ -195,15 +202,27 @@ const CartTableContainer: React.FC = () => {
         >
           Update cart
         </MyButton>
-        <MyButton
-          onClick={() => {
-            void handleProceesToCheckout();
-          }}
-          type="primary"
-          loading={checkoutLoading}
-        >
-          Process to checkout
-        </MyButton>
+        {cart.length > 0 && (
+          <MyButton
+            onClick={() => {
+              void handleProceesToCheckout();
+            }}
+            type="primary"
+            loading={checkoutLoading}
+            className='checkout-btn'
+          >
+            Process to checkout
+          </MyButton>
+        )}
+        {cart.length <= 0 && (
+          <MyButton
+            onClick={handlebackToShopping}
+            type="primary"
+            className='back-btn'
+          >
+            Keep shoping
+          </MyButton>
+        )}
       </ActionBox>
     </CartTableContainerStyles>
   );

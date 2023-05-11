@@ -147,6 +147,7 @@ const MyFormItem = <T extends FieldValues>(
             render={({ field }) => (
               <MyCheckbox
                 id={id}
+                checked={field.value}
                 {...field}
               >
                 {children}

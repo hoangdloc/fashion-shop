@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
-import { Typography } from 'antd';
-import React, { useEffect, useMemo } from 'react';
+import { Empty, Typography } from 'antd';
+import React, { Fragment, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { AppRoute } from '~/config/route';
+import { useCheckout } from '~/contexts/checkout-context';
 import { MyButton } from '~/shared/components/button';
 import { ArticleHeading } from '~/shared/components/heading';
 import { localePrice, renderPrice } from '~/shared/utils/renderPrice';
@@ -18,7 +19,8 @@ const Container = styled.aside`
   box-shadow: 0px 10.786210060119629px 18.783418655395508px 0px #00000009,
     0px 47px 113px 0px #00000012;
   padding: 3.2rem 4rem 4rem 4rem;
-  & > .order-btn {
+  & > .order-btn,
+  .back-btn {
     text-transform: uppercase;
     font-size: 1.6rem;
     font-weight: 700;
@@ -89,6 +91,7 @@ const SHIPPING_COST = 25;
 
 const OrderInformation: React.FC = () => {
   const navigate = useNavigate();
+  const { loading } = useCheckout();
   const cartItems = useSelector(getCartItemsSelector);
   const orderSubtotal = useMemo(() => {
     return cartItems.reduce((total, current) => {
@@ -109,7 +112,11 @@ const OrderInformation: React.FC = () => {
       });
       navigate(AppRoute.SHOP);
     }
-  }, [cartItems]);
+  }, []);
+
+  const handleBackToShopClick = (): void => {
+    navigate(AppRoute.SHOP);
+  };
 
   return (
     <Container>
@@ -119,72 +126,90 @@ const OrderInformation: React.FC = () => {
       >
         Your order
       </ArticleHeading>
-      <OrderInfoContainer>
-        <OrderContainerStyles>
-          <Typography.Title
-            className="title"
-            level={4}
-          >
-            Products
-          </Typography.Title>
-          <OrderListStyles>
-            {cartItems.map((item, index) => (
-              <OrderItem
-                key={index}
-                imageSrc={item.clothes.images[0]}
-                title={item.clothes.name}
-                price={item.clothes.price}
-                salePercent={item.clothes.salePercent}
-                status={item.clothes.status}
-                gender={item.clothes.category[0]}
-                slug={item.clothes.slug}
-                quantity={item.quantity}
-                pickedColor={item.color}
-                pickedSize={item.size}
-              />
-            ))}
-          </OrderListStyles>
-        </OrderContainerStyles>
-        <Divider />
-        <OrderContainerStyles>
-          <Typography.Title
-            className="title"
-            level={4}
-          >
-            Order summary
-          </Typography.Title>
-          <SummaryContainerStyles>
-            <li>
-              <Typography.Text>Subtotal</Typography.Text>
+      {cartItems.length > 0 && (
+        <Fragment>
+          <OrderInfoContainer>
+            <OrderContainerStyles>
+              <Typography.Title
+                className="title"
+                level={4}
+              >
+                Products
+              </Typography.Title>
+              <OrderListStyles>
+                {cartItems.map((item, index) => (
+                  <OrderItem
+                    key={index}
+                    imageSrc={item.clothes.images[0]}
+                    title={item.clothes.name}
+                    price={item.clothes.price}
+                    salePercent={item.clothes.salePercent}
+                    status={item.clothes.status}
+                    gender={item.clothes.category[0]}
+                    slug={item.clothes.slug}
+                    quantity={item.quantity}
+                    pickedColor={item.color}
+                    pickedSize={item.size}
+                  />
+                ))}
+              </OrderListStyles>
+            </OrderContainerStyles>
+            <Divider />
+            <OrderContainerStyles>
+              <Typography.Title
+                className="title"
+                level={4}
+              >
+                Order summary
+              </Typography.Title>
+              <SummaryContainerStyles>
+                <li>
+                  <Typography.Text>Subtotal</Typography.Text>
+                  <Typography.Text>
+                    {localePrice(orderSubtotal.toFixed(2))} $
+                  </Typography.Text>
+                </li>
+                <li>
+                  <Typography.Text>Shipping</Typography.Text>
+                  <Typography.Text>
+                    {localePrice(SHIPPING_COST.toFixed(2))} $
+                  </Typography.Text>
+                </li>
+              </SummaryContainerStyles>
+            </OrderContainerStyles>
+            <Divider />
+            <TotalPrice>
+              <Typography.Text>Total</Typography.Text>
               <Typography.Text>
-                {localePrice(orderSubtotal.toFixed(2))} $
+                {localePrice((orderSubtotal + 25).toFixed(2))} $
               </Typography.Text>
-            </li>
-            <li>
-              <Typography.Text>Shipping</Typography.Text>
-              <Typography.Text>
-                {localePrice(SHIPPING_COST.toFixed(2))} $
-              </Typography.Text>
-            </li>
-          </SummaryContainerStyles>
-        </OrderContainerStyles>
-        <Divider />
-        <TotalPrice>
-          <Typography.Text>Total</Typography.Text>
-          <Typography.Text>
-            {localePrice((orderSubtotal + 25).toFixed(2))} $
-          </Typography.Text>
-        </TotalPrice>
-      </OrderInfoContainer>
-      <MyButton
-        block
-        type="primary"
-        className="order-btn"
-        form='checkout-form'
-        htmlType='submit'
-      >
-        Confirm order
-      </MyButton>
+            </TotalPrice>
+          </OrderInfoContainer>
+          <MyButton
+            block
+            type="primary"
+            className="order-btn"
+            form="checkout-form"
+            htmlType="submit"
+            loading={loading}
+          >
+            Confirm order
+          </MyButton>
+        </Fragment>
+      )}
+      {cartItems.length <= 0 && (
+        <Fragment>
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          <MyButton
+            block
+            type="primary"
+            className="back-btn"
+            onClick={handleBackToShopClick}
+          >
+            Back to shop
+          </MyButton>
+        </Fragment>
+      )}
     </Container>
   );
 };

@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
+
+import { CheckoutProvider } from '~/contexts/checkout-context';
 import OrderInformation from './order-information';
 import PaymentInformation from './payment-information';
 import PersonalInformation from './personal-information';
@@ -22,13 +24,15 @@ const Container = styled.section`
 
 const CheckoutContentSection: React.FC = () => {
   return (
-    <Container>
-      <main>
-        <PersonalInformation />
-        <PaymentInformation />
-      </main>
-      <OrderInformation />
-    </Container>
+    <CheckoutProvider>
+      <Container>
+        <main>
+          <PersonalInformation />
+          <PaymentInformation />
+        </main>
+        <OrderInformation />
+      </Container>
+    </CheckoutProvider>
   );
 };
 

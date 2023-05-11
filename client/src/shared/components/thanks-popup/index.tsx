@@ -2,12 +2,17 @@ import styled from '@emotion/styled';
 import { Modal, Typography } from 'antd';
 import React, { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import logo from '~/assets/images/logo.png';
 import { AppRoute } from '~/config/route';
 import { MyButton } from '~/shared/components/button';
-import { setShowContactPopup } from '~/store/general/generalSlice';
+import {
+  setShowContactPopup,
+  setShowOrderingPopup
+} from '~/store/general/generalSlice';
+
+import { type RootState } from '~/store/store';
 
 interface ThanksPopupProps {
   children?: React.ReactNode
@@ -47,6 +52,13 @@ const PopupContainer = styled.div`
       font-size: 1.6rem;
       line-height: 140%;
       margin-bottom: 6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      & > * {
+        margin: 0;
+      }
     }
   }
   & > img {
@@ -67,10 +79,21 @@ const ThanksPopup: React.FC<ThanksPopupProps> = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
+  const showContactPopup = useSelector(
+    (state: RootState) => state.general.showContactPopup
+  );
+  const showOrderingPopup = useSelector(
+    (state: RootState) => state.general.showOrderingPopup
+  );
 
   const handleCancel = (): void => {
     setIsModalOpen(false);
-    dispatch(setShowContactPopup(false));
+    if (showContactPopup) {
+      dispatch(setShowContactPopup(false));
+    }
+    if (showOrderingPopup) {
+      dispatch(setShowOrderingPopup(false));
+    }
   };
 
   const handleClickBackToHomepage = (): void => {

@@ -43,6 +43,11 @@ export const cartSlice = createSlice({
     },
     updateProductToCart: (state, action: PayloadAction<Cart>) => {
       state.cart = action.payload;
+    },
+    orderingSuccess: (state, action: PayloadAction<{ userId: number }>) => {
+      state.cart = state.cart.filter(
+        item => item.userId !== action.payload.userId
+      );
     }
   }
 });
@@ -53,5 +58,6 @@ export const getCartItemsSelector = createSelector(
     state.cart.cart.filter(item => item.userId === state.auth.userInfo?.id)
 );
 
-export const { addProductToCart, updateProductToCart } = cartSlice.actions;
+export const { addProductToCart, updateProductToCart, orderingSuccess } =
+  cartSlice.actions;
 export default cartSlice.reducer;

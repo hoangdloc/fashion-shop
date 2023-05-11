@@ -1,13 +1,19 @@
 import styled from '@emotion/styled';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Typography } from 'antd';
+import type { DefaultOptionType } from 'antd/es/select';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import type { DefaultOptionType } from 'antd/es/select';
 
+import { useDispatch, useSelector } from 'react-redux';
 import MyFormItem from '~/shared/components/form-item';
 import { ArticleHeading } from '~/shared/components/heading';
+import { orderingSuccess } from '~/store/cart/cartSlice';
+import { setShowOrderingPopup } from '~/store/general/generalSlice';
+
+import { type RootState } from '~/store/store';
+import { useCheckout } from '~/contexts/checkout-context';
 
 const Container = styled.div`
   background-color: ${props => props.theme.colors.textWhite};
@@ -61,11 +67,30 @@ const schema = yup
       .matches(/(^\d{5}$)|(^\d{5}-\d{4}$)/, 'Invalid zip code!'),
     address: yup.string().required('Please enter your address!'),
     deliveryType: yup.string().default('Home').oneOf(['Home', 'Office']),
-    deliveryTime: yup.bool().oneOf([true]).required('Must have at least one delivery time!'),
+    deliveryTime: yup
+      .object({
+        office_hour: yup.boolean(),
+        everytime: yup.boolean()
+      })
+      .test('deliveryTime_test', 'Select at least 1 checkbox', obj => {
+        if (obj.office_hour === true || obj.everytime === true) {
+          return true;
+        }
+        return new yup.ValidationError(
+          'Please choose at least a delivery time',
+          null,
+          'deliveryTime'
+        );
+      }),
     note: yup.string()
   })
   .required();
 type FormData = yup.InferType<typeof schema>;
+
+enum DeliveryType {
+  HOME = 'Home',
+  OFFICE = 'Office'
+}
 
 const initialValues: FormData = {
   fullname: '',
@@ -73,17 +98,25 @@ const initialValues: FormData = {
   city: '',
   zipCode: '',
   address: '',
-  deliveryType: 'Home',
-  deliveryTime: false,
+  deliveryType: DeliveryType.HOME,
+  deliveryTime: {
+    office_hour: false,
+    everytime: false
+  },
   note: ''
 };
 
-const selectDeliveryType: DefaultOptionType[] = [
-  { value: 'Home', label: 'Home' },
-  { value: 'Office', label: 'Office' }
-];
+const selectDeliveryType: DefaultOptionType[] = Object.values(DeliveryType).map(
+  type => ({
+    value: type,
+    label: type
+  })
+);
 
 const PersonalInformation: React.FC = () => {
+  const dispatch = useDispatch();
+  const userId = useSelector((state: RootState) => state.auth.userInfo?.id);
+  const { fakeLoading } = useCheckout();
   const {
     control,
     handleSubmit,
@@ -95,10 +128,13 @@ const PersonalInformation: React.FC = () => {
     defaultValues: initialValues
   });
 
-  const onSubmit = handleSubmit(async (data, event) => {
+  const onSubmit = handleSubmit(async (_, event) => {
     event?.preventDefault();
-    if (!isValid) return;
-    console.log(data);
+    if (!isValid || userId == null) return;
+    await fakeLoading();
+    dispatch(setShowOrderingPopup(true));
+    reset(initialValues);
+    dispatch(orderingSuccess({ userId }));
   });
 
   return (
@@ -109,6 +145,7 @@ const PersonalInformation: React.FC = () => {
         onSubmit={e => {
           void onSubmit(e);
         }}
+        autoComplete="off"
       >
         <GroupFormItems>
           <MyFormItem
@@ -192,7 +229,7 @@ const PersonalInformation: React.FC = () => {
         </GroupFormItems>
         <GroupCheckbox>
           <MyFormItem
-            id="deliveryTime"
+            id="deliveryTime.office_hour"
             type="checkbox"
             control={control}
             containerWidth="fit-content"
@@ -202,7 +239,7 @@ const PersonalInformation: React.FC = () => {
             Office hours only
           </MyFormItem>
           <MyFormItem
-            id="deliveryTime"
+            id="deliveryTime.everytime"
             type="checkbox"
             control={control}
             containerWidth="fit-content"
