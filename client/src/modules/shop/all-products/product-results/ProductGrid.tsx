@@ -14,7 +14,7 @@ import { calcActualPrice } from '~/shared/utils/renderPrice';
 import { useFetchClothingQuery } from '~/store/clothes/clothesService';
 import type { RootState } from '~/store/store';
 
-const ITEM_PER_PAGE = 9;
+const ITEM_PER_PAGE = 3;
 
 const ProductGridContainer = styled.div`
   width: 100%;

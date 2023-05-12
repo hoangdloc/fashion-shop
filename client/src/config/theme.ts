@@ -24,5 +24,8 @@ export const theme: Theme = {
   },
   keyframes: {
     pulse: 'pulse 0.2s ease-in-out'
+  },
+  devices: {
+    mobile: '(max-width: 37.5em)'
   }
 };

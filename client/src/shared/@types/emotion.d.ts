@@ -25,5 +25,8 @@ declare module '@emotion/react' {
     keyframes: {
       pulse: string
     }
+    devices: {
+      mobile: string
+    }
   }
 }

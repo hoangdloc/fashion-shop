@@ -12,58 +12,74 @@ import { AppRoute, ShopRoute } from '~/config/route';
 import { MyButton, MyLinkButton } from '~/shared/components/button';
 import { LeftArrowIcon, RightArrowIcon } from '~/shared/components/icon';
 
-const HeroSectionStyles = styled('div')(props => ({
-  width: '100%',
-  minHeight: '82rem',
-  position: 'relative',
-  '.slide-btn': {
-    position: 'absolute',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    zIndex: 10,
-    backgroundColor: 'rgba(256, 256, 256, 0.3)',
-    color: 'rgba(256, 256, 256, 0.6)',
-    border: 'none',
-    width: '4.8rem',
-    height: '4.8rem',
-    '&__left': {
-      left: '4rem'
-    },
-    '&__right': {
-      right: '4rem'
+const HeroSectionStyles = styled.div`
+  width: 100%;
+  min-height: 82rem;
+  position: relative;
+  .slide-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: rgba(256, 256, 256, 0.3);
+    color: rgba(256, 256, 256, 0.6);
+    border: none;
+    width: 4.8rem;
+    height: 4.8rem;
+    &__left {
+      left: 4rem;
     }
-  },
-  '.slide-item': {
-    position: 'relative',
-    height: '82rem',
-    width: '100%',
-    backgroundColor: 'black',
-    '.hero-img': {
-      opacity: '0.6',
-      width: '100%',
-      objectFit: 'cover'
-    },
-    '.hero-box': {
-      position: 'absolute',
-      top: '28rem',
-      left: '50%',
-      transform: 'translateX(-50%)',
-      color: props.theme.colors.textWhite,
-      zIndex: 10,
-      width: '93rem',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      textAlign: 'center',
-      '.ant-typography': {
-        margin: 0,
-        color: props.theme.colors.textWhite,
-        lineHeight: '140%'
+    &__right {
+      right: 4rem;
+    }
+  }
+  .slide-item {
+    position: relative;
+    height: 82rem;
+    width: 100%;
+    background-color: black;
+    .hero-img {
+      opacity: 0.6;
+      width: 100%;
+      object-fit: cover;
+    }
+    .hero-box {
+      position: absolute;
+      top: 28rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: ${props => props.theme.colors.textWhite};
+      z-index: 10;
+      width: 93rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      .ant-typography {
+        margin: 0;
+        color: ${props => props.theme.colors.textWhite};
+        line-height: 140%;
       }
     }
   }
-}));
+  @media ${props => props.theme.devices.mobile} {
+    min-height: 62rem;
+    .slide-btn {
+      display: none;
+    }
+    .slide-item {
+      height: 62rem;
+      .hero-img {
+        height: 100%;
+      }
+      .hero-box {
+        top: 22.2rem;
+        width: 32.7rem;
+      }
+    }
+  }
+`;
 
 const heroContentItems = [
   {
@@ -133,6 +149,7 @@ const HeroSection: React.FC = () => {
             />
             <div className="hero-box">
               <Typography.Title
+                className='hero-title'
                 style={{
                   fontSize: '5.2rem',
                   fontFamily: emotionTheme.fontFamily.PlayfairDisplay,
@@ -146,6 +163,7 @@ const HeroSection: React.FC = () => {
                 {item.title}
               </Typography.Title>
               <Typography.Text
+                className='hero-subtitle'
                 style={{
                   fontFamily: emotionTheme.fontFamily.DmSans,
                   fontSize: '1.8rem',
