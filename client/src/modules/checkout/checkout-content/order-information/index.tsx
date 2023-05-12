@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Empty, Typography } from 'antd';
-import React, { Fragment, useEffect, useMemo } from 'react';
+import React, { Fragment, useLayoutEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -105,7 +105,7 @@ const OrderInformation: React.FC = () => {
     }, 0);
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (cartItems.length <= 0) {
       toast.warning('You have no product to checkout 🤨', {
         toastId: 'order-empty'

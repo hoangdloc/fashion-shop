@@ -16,6 +16,7 @@ interface ClothesState {
   filterByPrice: PriceRange
   filterByColor: Color
   filterBySize: Size
+  searching: string
 }
 
 const initialState: ClothesState = {
@@ -28,7 +29,8 @@ const initialState: ClothesState = {
     to: 500
   },
   filterByColor: Color.WHITE,
-  filterBySize: Size.S
+  filterBySize: Size.S,
+  searching: ''
 };
 
 export const clothesSlice = createSlice({
@@ -52,6 +54,20 @@ export const clothesSlice = createSlice({
     },
     toggleFilterBySize: (state, action: PayloadAction<Size>) => {
       state.filterBySize = action.payload;
+    },
+    searchingClothes: (state, action: PayloadAction<string>) => {
+      state.searching = action.payload;
+    },
+    resetAllFilter: state => {
+      state.sorting = Sorting.DEFAULT;
+      state.filterByType = Type.CLOTHING;
+      state.filterByPrice = {
+        from: 0,
+        to: 500
+      };
+      state.filterByColor = Color.WHITE;
+      state.filterBySize = Size.S;
+      state.searching = '';
     }
   },
   extraReducers: builder => {
@@ -76,6 +92,8 @@ export const {
   toggleFilterByType,
   setFilterByPrice,
   toggleFilterByColor,
-  toggleFilterBySize
+  toggleFilterBySize,
+  searchingClothes,
+  resetAllFilter
 } = clothesSlice.actions;
 export default clothesSlice.reducer;

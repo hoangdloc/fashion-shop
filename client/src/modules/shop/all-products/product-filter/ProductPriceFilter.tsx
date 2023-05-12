@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { InputNumber, Slider } from 'antd';
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { MyButton } from '~/shared/components/button';
@@ -57,6 +57,11 @@ const ProductPriceFilter: React.FC = () => {
   const [priceFrom, setPriceFrom] = useState<number>(filterByPrice.from);
   const [priceTo, setPriceTo] = useState<number>(filterByPrice.to);
 
+  useLayoutEffect(() => {
+    setPriceFrom(filterByPrice.from);
+    setPriceTo(filterByPrice.to);
+  }, [filterByPrice]);
+
   const onPriceSliderChange = (value: [number, number]): void => {
     setPriceFrom(value[0]);
     setPriceTo(value[1]);
@@ -81,7 +86,6 @@ const ProductPriceFilter: React.FC = () => {
         range
         max={ProductPrice.MAX}
         min={ProductPrice.MIN}
-        defaultValue={[priceFrom, priceTo]}
         trackStyle={[{ backgroundColor: '#EAEAEA' }]}
         railStyle={{ backgroundColor: '#CECECE' }}
         onChange={onPriceSliderChange}

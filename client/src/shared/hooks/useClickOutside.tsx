@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 
 interface IUseClickOutside {
   show: boolean
@@ -10,7 +10,7 @@ export default function useClickOutside (): IUseClickOutside {
   const [show, setShow] = React.useState(false);
   const nodeRef = React.useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
+  useLayoutEffect(() => {
     function handleClickOutSide (e: MouseEvent): void {
       if (
         nodeRef.current != null &&

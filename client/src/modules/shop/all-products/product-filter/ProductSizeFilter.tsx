@@ -49,7 +49,7 @@ const ProductSizeFilter: React.FC = () => {
         direction="horizontal"
         type="box"
         data={sizeFilterItems}
-        defaultCheckedRadio={filterBySize}
+        checkedRadio={filterBySize}
         selectedStyle={{
           backgroundColor: emotionTheme.colors.secondaryRed,
           color: emotionTheme.colors.textWhite

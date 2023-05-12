@@ -17,6 +17,7 @@ interface MyRadioGroupProps
   selectedStyle?: React.CSSProperties
   hoverStyle?: React.CSSProperties
   defaultCheckedRadio?: string | number
+  checkedRadio?: string | number
 }
 
 const MyRadioContainer = styled.div<Pick<MyRadioGroupProps, 'direction'>>`
@@ -92,6 +93,7 @@ const MyRadioGroup: React.FC<MyRadioGroupProps> = ({
   selectedStyle = {},
   hoverStyle = {},
   defaultCheckedRadio,
+  checkedRadio,
   ...rest
 }) => {
   return (
@@ -113,7 +115,12 @@ const MyRadioGroup: React.FC<MyRadioGroupProps> = ({
             defaultChecked={
               defaultCheckedRadio != null
                 ? item.value === defaultCheckedRadio
-                : item.value === data[0].value
+                : undefined
+            }
+            checked={
+              checkedRadio != null
+                ? item.value === checkedRadio
+                : undefined
             }
             {...rest}
           />

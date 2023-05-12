@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useLayoutEffect, useMemo, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -14,7 +14,7 @@ import { calcActualPrice } from '~/shared/utils/renderPrice';
 import { useFetchClothingQuery } from '~/store/clothes/clothesService';
 import type { RootState } from '~/store/store';
 
-const ITEM_PER_PAGE = 3;
+const ITEM_PER_PAGE = 9;
 
 const ProductGridContainer = styled.div`
   width: 100%;
@@ -66,6 +66,7 @@ const ProductGrid: React.FC = () => {
     undefined
   );
   const [itemOffset, setItemOffset] = useState<number>(0);
+  const [forcePage, setForcePage] = useState<number>(0);
   const sorting = useSelector((state: RootState) => state.clothes.sorting);
   const filterByType = useSelector(
     (state: RootState) => state.clothes.filterByType
@@ -79,6 +80,7 @@ const ProductGrid: React.FC = () => {
   const filterBySize = useSelector(
     (state: RootState) => state.clothes.filterBySize
   );
+  const searching = useSelector((state: RootState) => state.clothes.searching);
   const clothings = useSelector((state: RootState) => state.clothes.clothings);
 
   const sortedClothings = useMemo(() => {
@@ -126,28 +128,49 @@ const ProductGrid: React.FC = () => {
         );
       })
       .filter(cloth => cloth.category.slice(2).includes(filterByColor))
-      .filter(cloth => cloth.sizes.includes(filterBySize));
+      .filter(cloth => cloth.sizes.includes(filterBySize))
+      .filter(cloth =>
+        cloth.name.toLowerCase().includes(searching.trim().toLowerCase())
+      );
   }, [
     pathname,
     filterByType,
     filterByPrice,
     filterByColor,
     filterBySize,
-    sortedClothings
+    sortedClothings,
+    searching
   ]);
 
-  useEffect(() => {
+  // INITIAL REACT-PAGINATE
+  useLayoutEffect(() => {
     const endOffset = itemOffset + ITEM_PER_PAGE;
     if (filteredClothings == null) return;
     setCurrentItems(filteredClothings.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(filteredClothings.length / ITEM_PER_PAGE));
   }, [filteredClothings, itemOffset]);
 
-  const handlePageClick = (event: { selected: number }): void => {
+  // WHEN FILTER APPLY, SET CURRENT PAGE TO 0
+  useLayoutEffect(() => {
+    if (pageCount > 0) {
+      setItemOffset(0);
+      setForcePage(0);
+    }
+  }, [filteredClothings]);
+
+  const onPageChange = (selectedItem: { selected: number }): void => {
     if (filteredClothings == null) return;
     const newOffset =
-      (event.selected * ITEM_PER_PAGE) % filteredClothings.length;
+      (selectedItem.selected * ITEM_PER_PAGE) % filteredClothings.length;
     setItemOffset(newOffset);
+  };
+
+  const onPageClick = (clickEvent: { selected: number, nextSelectedPage?: number }): void => {
+    if (clickEvent.nextSelectedPage == null) {
+      setForcePage(clickEvent.selected);
+      return;
+    }
+    setForcePage(clickEvent.nextSelectedPage);
   };
 
   return (
@@ -157,20 +180,24 @@ const ProductGrid: React.FC = () => {
         columnCount={3}
         data={currentItems}
       />
-      <ReactPaginate
-        breakLabel="..."
-        pageCount={pageCount}
-        pageRangeDisplayed={2}
-        nextLabel={<NextBtnIcon />}
-        previousLabel={<PrevBtnIcon />}
-        renderOnZeroPageCount={null}
-        onPageChange={handlePageClick}
-        className="pagination"
-        pageLinkClassName="page-num"
-        previousLinkClassName="prev-btn"
-        nextLinkClassName="next-btn"
-        activeLinkClassName="page-active"
-      />
+      {currentItems != null && (
+        <ReactPaginate
+          breakLabel="..."
+          pageCount={pageCount}
+          forcePage={forcePage}
+          pageRangeDisplayed={2}
+          nextLabel={<NextBtnIcon />}
+          previousLabel={<PrevBtnIcon />}
+          renderOnZeroPageCount={null}
+          onPageChange={onPageChange}
+          className="pagination"
+          pageLinkClassName="page-num"
+          previousLinkClassName="prev-btn"
+          nextLinkClassName="next-btn"
+          activeLinkClassName="page-active"
+          onClick={onPageClick}
+        />
+      )}
     </ProductGridContainer>
   );
 };

@@ -36,7 +36,7 @@ const ProductTypeFilter: React.FC = () => {
     <ProductCategoryFilterContainer>
       <DecoratedHeading level="h3">Products Category</DecoratedHeading>
       <MyRadioGroup
-        defaultCheckedRadio={filterByType}
+        checkedRadio={filterByType}
         name="category-filter"
         data={categoryFilterItems}
         onChange={onChange}

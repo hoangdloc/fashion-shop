@@ -2,7 +2,7 @@ import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Typography } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -120,7 +120,7 @@ const LoginPage: React.FC = () => {
       });
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (accessToken != null) navigate(AppRoute.HOME);
   }, [accessToken]);
 

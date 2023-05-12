@@ -1,10 +1,13 @@
 import styled from '@emotion/styled';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { Col, Row } from 'antd';
+import { Col, Empty, Row } from 'antd';
 import React from 'react';
 import { v4 } from 'uuid';
 
-import { ClothesCard, ClothesSkeletonCard } from '~/shared/components/clothes-card';
+import {
+  ClothesCard,
+  ClothesSkeletonCard
+} from '~/shared/components/clothes-card';
 
 import type { Clothes } from '~/shared/@types/clothes';
 import { chunkArray } from '~/shared/utils/chunkArray';
@@ -69,7 +72,11 @@ const ListCards: React.FC<ListCardsProps> = props => {
 
   return (
     <ListCardsStyles ref={parent}>
-      {loading && data === undefined ? renderSkeletonList() : renderList()}
+      {loading && data === undefined
+        ? renderSkeletonList()
+        : data != null && data.length > 0
+          ? renderList()
+          : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
     </ListCardsStyles>
   );
 };

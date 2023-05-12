@@ -1,7 +1,8 @@
 import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import {
+import
+{
   Badge,
   Dropdown,
   Layout,
@@ -9,7 +10,7 @@ import {
   Typography,
   type MenuProps
 } from 'antd';
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
@@ -18,11 +19,12 @@ import { v4 } from 'uuid';
 import fullLogo from '~/assets/images/logo-full.png';
 import { AppRoute, ShopRoute } from '~/config/route';
 import { Spinner } from '~/shared/components/loader';
+import { renderPrice } from '~/shared/utils/renderPrice';
 import { authApi } from '~/store/auth/authService';
 import { getCartItemsSelector } from '~/store/cart/cartSlice';
 import type { RootState } from '~/store/store';
-import { CartIcon, PhoneIcon } from '../icon';
 import { BurgerButton } from '../button';
+import { CartIcon, PhoneIcon } from '../icon';
 
 const LayoutHeader = styled(Layout.Header)`
   position: sticky;
@@ -173,6 +175,17 @@ const AppHeader: React.FC = () => {
     (state: RootState) => state.auth.isLoggingOut
   );
   const cartItems = useSelector(getCartItemsSelector);
+  const cardTotal = useMemo(() => {
+    return cartItems.reduce((total, current) => {
+      const { quantity, clothes } = current;
+      const { actualPrice } = renderPrice(
+        clothes.price,
+        clothes.salePercent,
+        clothes.status
+      );
+      return total + quantity * +actualPrice;
+    }, 0);
+  }, [cartItems]);
   const [trigger] = authApi.useLazyUserLogoutQuery();
 
   const detailItems: MenuProps['items'] = [
@@ -321,7 +334,7 @@ const AppHeader: React.FC = () => {
             </Link>
           </Badge>
           <Typography.Text style={{ fontSize: '1.6rem' }}>
-            $ 0.00
+            $ {cardTotal.toFixed(2)}
           </Typography.Text>
         </CutomerCart>
         <BurgerButton className="burger-btn" />

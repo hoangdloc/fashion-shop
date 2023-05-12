@@ -48,7 +48,7 @@ const ProductColorFilter: React.FC = () => {
         direction="horizontal"
         type="box"
         data={colorFilterItems}
-        defaultCheckedRadio={filterByColor}
+        checkedRadio={filterByColor}
         selectedStyle={{
           border: `0.2rem solid ${emotionTheme.colors.secondaryRed}`
         }}
