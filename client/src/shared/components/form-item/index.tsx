@@ -17,6 +17,7 @@ import { type DefaultOptionType } from 'antd/es/select';
 import MyCheckbox from '~/shared/components/checkbox';
 import { CheckIcon } from '../icon';
 import classNames from 'classnames';
+import { phoneNumberAutoFormat } from '~/shared/utils/phoneNumberAutoFormat';
 
 interface MyFormItemProps<TFieldValues extends FieldValues, TContext = any> {
   id: Path<TFieldValues>
@@ -26,11 +27,18 @@ interface MyFormItemProps<TFieldValues extends FieldValues, TContext = any> {
   control: Control<TFieldValues, TContext>
   hasError?: boolean
   errorMessage?: React.ReactNode
-  type?: 'text' | 'password' | 'checkbox' | 'select' | 'textarea'
+  type?:
+  | 'text'
+  | 'password'
+  | 'checkbox'
+  | 'select'
+  | 'textarea'
+  | 'phone_number'
   children?: React.ReactNode
   showSuccessStatus?: boolean
   selectBoxData?: DefaultOptionType[]
   containerClassName?: string
+  onBlur?: () => void
 }
 
 type MyFormItemStylesProps = Partial<Theme> &
@@ -120,7 +128,8 @@ const MyFormItem = <T extends FieldValues>(
     children,
     showSuccessStatus = false,
     selectBoxData,
-    containerClassName
+    containerClassName,
+    onBlur
   } = props;
   const errorRef = useRef(null);
   const successRef = useRef(null);
@@ -149,6 +158,7 @@ const MyFormItem = <T extends FieldValues>(
                 id={id}
                 checked={field.value}
                 {...field}
+                onBlur={onBlur}
               >
                 {children}
               </MyCheckbox>
@@ -191,6 +201,73 @@ const MyFormItem = <T extends FieldValues>(
                 placeholder={placeholder}
                 size="large"
                 status={hasError === true ? 'error' : undefined}
+                onBlur={onBlur}
+              />
+            )}
+          />
+          <CSSTransition
+            ref={errorRef}
+            in={hasError}
+            timeout={duration}
+            unmountOnExit
+          >
+            {state => (
+              <p
+                style={{
+                  ...defaultErrorStyles,
+                  ...transitionErrorStyle[state],
+                  color: '#ff4d4f',
+                  position: 'absolute'
+                }}
+                ref={errorRef}
+              >
+                <ExclamationCircleOutlined /> {errorMessage}
+              </p>
+            )}
+          </CSSTransition>
+          {showSuccessStatus && (
+            <CSSTransition
+              ref={successRef}
+              in={hasError === false && dirtyFields[id]}
+              timeout={duration}
+              unmountOnExit
+            >
+              {state => (
+                <span
+                  style={{
+                    ...defaultSuccessStyles,
+                    ...transitionSuccessStyles[state],
+                    position: 'absolute'
+                  }}
+                  ref={successRef}
+                >
+                  <CheckIcon size="medium" />
+                </span>
+              )}
+            </CSSTransition>
+          )}
+        </Fragment>
+      )}
+
+      {/* PHONE NUMBER */}
+      {type === 'phone_number' && (
+        <Fragment>
+          <label htmlFor={id}>{label}</label>
+          <Controller
+            name={id}
+            control={control}
+            render={({ field }) => (
+              <Input
+                id={id}
+                {...field}
+                placeholder={placeholder}
+                size="large"
+                status={hasError === true ? 'error' : undefined}
+                onBlur={onBlur}
+                onChange={e => {
+                  field.onChange(phoneNumberAutoFormat(e.target.value));
+                }}
+                maxLength={16}
               />
             )}
           />
@@ -252,6 +329,7 @@ const MyFormItem = <T extends FieldValues>(
                 placeholder={placeholder}
                 size="large"
                 status={hasError === true ? 'error' : undefined}
+                onBlur={onBlur}
               />
             )}
           />
@@ -341,6 +419,7 @@ const MyFormItem = <T extends FieldValues>(
                 placeholder={placeholder}
                 size="large"
                 style={{ resize: 'none', height: '8rem' }}
+                onBlur={onBlur}
               />
             )}
           />

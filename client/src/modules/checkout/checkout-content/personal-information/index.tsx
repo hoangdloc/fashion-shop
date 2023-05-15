@@ -56,10 +56,9 @@ const schema = yup
     fullname: yup.string().required('Please enter your full name!'),
     phoneNumber: yup
       .string()
-      .required('Please enter your phone number')
-      .matches(/^\d+$/, 'Phone number should have digits only!')
-      .min(10, 'Must be exactly 10 digits')
-      .max(10, 'Must be exactly 10 digits'),
+      .required('Please enter your phone number!')
+      .min(16, 'Invalid phone number!')
+      .max(16, 'Invalid phone number!'),
     city: yup.string().required('Please enter city name!'),
     zipCode: yup
       .string()
@@ -77,7 +76,7 @@ const schema = yup
           return true;
         }
         return new yup.ValidationError(
-          'Please choose at least a delivery time',
+          'Please choose at least a delivery time!',
           null,
           'deliveryTime'
         );
@@ -163,6 +162,7 @@ const PersonalInformation: React.FC = () => {
           <MyFormItem
             id="phoneNumber"
             control={control}
+            type='phone_number'
             placeholder="(84) 36 297 1924"
             label={
               <Typography.Text className="field-label">

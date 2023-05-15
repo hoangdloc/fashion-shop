@@ -11,8 +11,14 @@ const ClothesSkeletonCardStyles = styled('div')(() => ({
 const ClothesSkeletonCard: React.FC = () => {
   return (
     <ClothesSkeletonCardStyles>
-      <Skeleton.Image style={{ height: '40.4rem', width: '26.8rem' }} active />
-      <Skeleton paragraph={{ rows: 1 }} active />
+      <Skeleton.Image
+        style={{ height: '40.4rem', minWidth: '26.8rem', width: '90%' }}
+        active
+      />
+      <Skeleton
+        paragraph={{ rows: 1 }}
+        active
+      />
     </ClothesSkeletonCardStyles>
   );
 };
