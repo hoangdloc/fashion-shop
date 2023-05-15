@@ -4,11 +4,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DecoratedHeading } from '~/shared/components/heading';
 
-import MyRadioGroup, { type RadioItems } from '~/shared/components/radio-group';
+import { MyRadioGroup } from '~/shared/components/radio-group';
 import { toggleFilterBySize } from '~/store/clothes/clothesSlice';
 
 import { Size } from '~/shared/@types/size';
 import type { RootState } from '~/store/store';
+import type { RadioItems } from '~/shared/components/radio-group';
 
 const ProductSizeFilterContainer = styled.div`
   display: flex;

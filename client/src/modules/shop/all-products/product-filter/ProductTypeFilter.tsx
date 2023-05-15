@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { DecoratedHeading } from '~/shared/components/heading';
-import MyRadioGroup from '~/shared/components/radio-group';
+import { MyRadioGroup } from '~/shared/components/radio-group';
 import { toggleFilterByType } from '~/store/clothes/clothesSlice';
 
 import { Type } from '~/shared/@types/category';

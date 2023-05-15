@@ -5,9 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Color } from '~/shared/@types/category';
 import { DecoratedHeading } from '~/shared/components/heading';
-import MyRadioGroup, { type RadioItems } from '~/shared/components/radio-group';
+import { MyRadioGroup } from '~/shared/components/radio-group';
 import { renderColorBox } from '~/shared/utils/renderColorBox';
 import { toggleFilterByColor } from '~/store/clothes/clothesSlice';
+
+import type { RadioItems } from '~/shared/components/radio-group';
 import type { RootState } from '~/store/store';
 
 const ProductColorFilterContainer = styled.div`

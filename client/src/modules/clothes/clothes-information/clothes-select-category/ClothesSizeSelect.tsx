@@ -2,10 +2,12 @@ import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Typography } from 'antd';
 import React from 'react';
+
 import { useClothesDetails } from '~/contexts/clothes-details-context';
+import { MyRadioGroup } from '~/shared/components/radio-group';
 
 import { type Size } from '~/shared/@types/size';
-import MyRadioGroup, { type RadioItems } from '~/shared/components/radio-group';
+import { type RadioItems } from '~/shared/components/radio-group';
 
 interface ClothesSizeSelectProps {
   sizes: Size[]

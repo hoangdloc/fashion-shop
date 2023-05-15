@@ -2,22 +2,24 @@ import { CaretDownFilled, ExclamationCircleOutlined } from '@ant-design/icons';
 import isPropValid from '@emotion/is-prop-valid';
 import { useTheme, type Theme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { ConfigProvider, Input, Select } from 'antd';
+import { Input, Select } from 'antd';
 import React, { Fragment, useRef, useState } from 'react';
 import {
   Controller,
   useFormState,
   type Control,
   type FieldValues,
-  type Path
+  type Path,
+  useWatch
 } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
-import { type DefaultOptionType } from 'antd/es/select';
+import type { RefSelectProps, DefaultOptionType } from 'antd/es/select';
 
 import MyCheckbox from '~/shared/components/checkbox';
 import { CheckIcon } from '../icon';
 import classNames from 'classnames';
 import { phoneNumberAutoFormat } from '~/shared/utils/phoneNumberAutoFormat';
+import { RadioCheck } from '../radio-group';
 
 interface MyFormItemProps<TFieldValues extends FieldValues, TContext = any> {
   id: Path<TFieldValues>
@@ -27,6 +29,7 @@ interface MyFormItemProps<TFieldValues extends FieldValues, TContext = any> {
   control: Control<TFieldValues, TContext>
   hasError?: boolean
   errorMessage?: React.ReactNode
+  value?: string | number | readonly string[]
   type?:
   | 'text'
   | 'password'
@@ -34,6 +37,7 @@ interface MyFormItemProps<TFieldValues extends FieldValues, TContext = any> {
   | 'select'
   | 'textarea'
   | 'phone_number'
+  | 'radio'
   children?: React.ReactNode
   showSuccessStatus?: boolean
   selectBoxData?: DefaultOptionType[]
@@ -129,14 +133,22 @@ const MyFormItem = <T extends FieldValues>(
     showSuccessStatus = false,
     selectBoxData,
     containerClassName,
-    onBlur
+    onBlur,
+    value
   } = props;
   const errorRef = useRef(null);
   const successRef = useRef(null);
   const { dirtyFields } = useFormState({ control });
+  const radioWatcher = useWatch({ control, name: id });
   const emotionTheme = useTheme();
   const [open, setOpen] = useState<boolean>(false);
+  const selectRef = useRef<RefSelectProps>(null);
   const iconRef = useRef(null);
+
+  const onSelectLabelClick = (): void => {
+    if (selectRef.current == null) return;
+    selectRef.current.focus();
+  };
 
   const onDropdownVisibleChange = (open: boolean): void => {
     setOpen(open);
@@ -359,49 +371,47 @@ const MyFormItem = <T extends FieldValues>(
       {/* SELECT */}
       {type === 'select' && selectBoxData != null && (
         <Fragment>
-          <label htmlFor={id}>{label}</label>
-          <ConfigProvider
-            theme={{
-              token: {
-                colorPrimary: emotionTheme.colors.secondaryRed
-              }
-            }}
+          <label
+            htmlFor={id}
+            onClick={onSelectLabelClick}
           >
-            <Controller
-              name={id}
-              control={control}
-              render={({ field }) => (
-                <Select
-                  size="large"
-                  defaultValue={selectBoxData[0].value}
-                  options={selectBoxData}
-                  dropdownStyle={{ padding: 0 }}
-                  onDropdownVisibleChange={onDropdownVisibleChange}
-                  suffixIcon={
-                    <CSSTransition
-                      ref={iconRef}
-                      in={open}
-                      timeout={duration}
-                    >
-                      {state => (
-                        <CaretDownFilled
-                          style={{
-                            ...defaultCaretDownFilledStyle,
-                            ...transitionCaretDownFilledStyles[state],
-                            color: emotionTheme.colors.textSubtitle,
-                            fontSize: 16
-                          }}
-                          ref={iconRef}
-                        />
-                      )}
-                    </CSSTransition>
-                  }
-                  style={{ width: '100%' }}
-                  {...field}
-                />
-              )}
-            />
-          </ConfigProvider>
+            {label}
+          </label>
+          <Controller
+            name={id}
+            control={control}
+            render={({ field }) => (
+              <Select
+                size="large"
+                defaultValue={selectBoxData[0].value}
+                options={selectBoxData}
+                dropdownStyle={{ padding: 0 }}
+                onDropdownVisibleChange={onDropdownVisibleChange}
+                suffixIcon={
+                  <CSSTransition
+                    ref={iconRef}
+                    in={open}
+                    timeout={duration}
+                  >
+                    {state => (
+                      <CaretDownFilled
+                        style={{
+                          ...defaultCaretDownFilledStyle,
+                          ...transitionCaretDownFilledStyles[state],
+                          color: emotionTheme.colors.textSubtitle,
+                          fontSize: 16
+                        }}
+                        ref={iconRef}
+                      />
+                    )}
+                  </CSSTransition>
+                }
+                style={{ width: '100%' }}
+                {...field}
+                ref={selectRef}
+              />
+            )}
+          />
         </Fragment>
       )}
 
@@ -424,6 +434,25 @@ const MyFormItem = <T extends FieldValues>(
             )}
           />
         </Fragment>
+      )}
+
+      {/* RADIO */}
+      {type === 'radio' && value != null && (
+        <Controller
+          name={id}
+          control={control}
+          render={({ field }) => (
+            <RadioCheck
+              id={id}
+              checked={radioWatcher === value}
+              {...field}
+              onBlur={onBlur}
+              value={value}
+            >
+              {children}
+            </RadioCheck>
+          )}
+        />
       )}
     </MyFormItemStyles>
   );

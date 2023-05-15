@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Typography } from 'antd';
 import React from 'react';
 
-import MyRadioGroup from '~/shared/components/radio-group';
+import { MyRadioGroup } from '~/shared/components/radio-group';
 import { renderColorBox } from '~/shared/utils/renderColorBox';
 
 import type { Color } from '~/shared/@types/category';

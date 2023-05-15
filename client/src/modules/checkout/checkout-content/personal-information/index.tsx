@@ -44,7 +44,7 @@ const GroupFormItems = styled.div`
   gap: 2rem;
 `;
 
-const GroupCheckbox = styled.div`
+const GroupRadio = styled.div`
   display: flex;
   align-items: start;
   gap: 3rem;
@@ -67,20 +67,9 @@ const schema = yup
     address: yup.string().required('Please enter your address!'),
     deliveryType: yup.string().default('Home').oneOf(['Home', 'Office']),
     deliveryTime: yup
-      .object({
-        office_hour: yup.boolean(),
-        everytime: yup.boolean()
-      })
-      .test('deliveryTime_test', 'Select at least 1 checkbox', obj => {
-        if (obj.office_hour === true || obj.everytime === true) {
-          return true;
-        }
-        return new yup.ValidationError(
-          'Please choose at least a delivery time!',
-          null,
-          'deliveryTime'
-        );
-      }),
+      .string()
+      .required('Please choose at least a delivery time!')
+      .oneOf(['office_hour', 'everytime'], 'You can only choose 1 out of 2'),
     note: yup.string()
   })
   .required();
@@ -91,6 +80,11 @@ enum DeliveryType {
   OFFICE = 'Office'
 }
 
+enum DeliveryTime {
+  OFFICE_HOUR = 'office_hour',
+  EVERYTIME = 'everytime'
+}
+
 const initialValues: FormData = {
   fullname: '',
   phoneNumber: '',
@@ -98,10 +92,7 @@ const initialValues: FormData = {
   zipCode: '',
   address: '',
   deliveryType: DeliveryType.HOME,
-  deliveryTime: {
-    office_hour: false,
-    everytime: false
-  },
+  deliveryTime: DeliveryTime.OFFICE_HOUR,
   note: ''
 };
 
@@ -127,7 +118,7 @@ const PersonalInformation: React.FC = () => {
     defaultValues: initialValues
   });
 
-  const onSubmit = handleSubmit(async (_, event) => {
+  const onSubmit = handleSubmit(async (data, event) => {
     event?.preventDefault();
     if (!isValid || userId == null) return;
     await fakeLoading();
@@ -162,7 +153,7 @@ const PersonalInformation: React.FC = () => {
           <MyFormItem
             id="phoneNumber"
             control={control}
-            type='phone_number'
+            type="phone_number"
             placeholder="(84) 36 297 1924"
             label={
               <Typography.Text className="field-label">
@@ -227,26 +218,26 @@ const PersonalInformation: React.FC = () => {
             selectBoxData={selectDeliveryType}
           />
         </GroupFormItems>
-        <GroupCheckbox>
+        <GroupRadio>
           <MyFormItem
-            id="deliveryTime.office_hour"
-            type="checkbox"
+            id="deliveryTime"
+            type="radio"
             control={control}
             containerWidth="fit-content"
-            hasError={errors.deliveryTime != null}
-            errorMessage={errors.deliveryTime?.message}
+            value={DeliveryTime.OFFICE_HOUR}
           >
             Office hours only
           </MyFormItem>
           <MyFormItem
-            id="deliveryTime.everytime"
-            type="checkbox"
+            id="deliveryTime"
+            type="radio"
             control={control}
             containerWidth="fit-content"
+            value={DeliveryTime.EVERYTIME}
           >
             Every day of the week (matches home address)
           </MyFormItem>
-        </GroupCheckbox>
+        </GroupRadio>
         <MyFormItem
           id="note"
           control={control}
