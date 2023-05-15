@@ -5,6 +5,7 @@ export interface StandardInputProps extends React.ComponentProps<'input'> {
   id: string
   label: React.ReactNode
   type?: React.HTMLInputTypeAttribute
+  status?: 'normal' | 'error'
 }
 
 const StandardInputContainer = styled.div`
@@ -19,7 +20,7 @@ const StandardInputContainer = styled.div`
   }
 `;
 
-const StandardInputStyles = styled.input`
+const StandardInputStyles = styled.input<Pick<StandardInputProps, 'status'>>`
   padding: 0.8rem 2rem;
   color: ${props => props.theme.colors.textWhite};
   background-color: transparent;
@@ -33,24 +34,36 @@ const StandardInputStyles = styled.input`
   &:focus {
     border-bottom: 0.15rem solid ${props => props.theme.colors.textWhite};
   }
+  ${props =>
+    props.status === 'error' && {
+      color: 'rgb(255, 77, 79, 0.4)',
+      borderBottom: '0.15rem solid rgba(255, 77, 79, 0.4)',
+      '&::placeholder, &:-ms-input-placeholder, &::-ms-input-placeholder': {
+        color: 'rgb(255, 77, 79, 0.4)'
+      },
+      '&:focus': {
+        color: 'rgb(255, 77, 79)',
+        borderBottom: '0.15rem solid rgba(255, 77, 79)'
+      }
+    }};
 `;
 
-const MyStandardInput: React.FC<StandardInputProps> = ({
-  id,
-  label,
-  type = 'text',
-  ...rest
-}) => {
-  return (
-    <StandardInputContainer>
-      <label htmlFor={id}>{label}</label>
-      <StandardInputStyles
-        id={id}
-        type={type}
-        {...rest}
-      />
-    </StandardInputContainer>
-  );
-};
+const MyStandardInput = React.forwardRef<HTMLInputElement, StandardInputProps>(
+  ({ id, label, type = 'text', status = 'normal', ...rest }, ref) => {
+    return (
+      <StandardInputContainer>
+        <label htmlFor={id}>{label}</label>
+        <StandardInputStyles
+          id={id}
+          type={type}
+          status={status}
+          {...rest}
+        />
+      </StandardInputContainer>
+    );
+  }
+);
+
+MyStandardInput.displayName = 'MyStandardInput';
 
 export default MyStandardInput;

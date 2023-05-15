@@ -36,20 +36,22 @@ const StandardTextareaStyles = styled.textarea`
   }
 `;
 
-const MyStandardTextarea: React.FC<StandardTextareaProps> = ({
-  id,
-  label,
-  ...rest
-}) => {
+const MyStandardTextarea = React.forwardRef<
+HTMLTextAreaElement,
+StandardTextareaProps
+>(({ id, label, ...rest }, ref) => {
   return (
     <StandardTextareaContainer>
       <label htmlFor={id}>{label}</label>
       <StandardTextareaStyles
         id={id}
+        ref={ref}
         {...rest}
       />
     </StandardTextareaContainer>
   );
-};
+});
+
+MyStandardTextarea.displayName = 'MyStandardTextarea';
 
 export default MyStandardTextarea;

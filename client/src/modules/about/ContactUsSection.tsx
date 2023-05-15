@@ -1,14 +1,15 @@
 import styled from '@emotion/styled';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Typography } from 'antd';
-import React, { useState } from 'react';
-
+import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import * as yup from 'yup';
+
 import { MyButton } from '~/shared/components/button';
-import {
-  MyStandardInput,
-  MyStandardTextarea
-} from '~/shared/components/input';
-import { fakeDelay } from '~/shared/utils/fakeDelay';
+import { MyStandardInput, MyStandardTextarea } from '~/shared/components/input';
+import { useFakeLoading } from '~/shared/hooks/useFakeLoading';
+import { phoneNumberAutoFormat } from '~/shared/utils/phoneNumberAutoFormat';
 import { setShowContactPopup } from '~/store/general/generalSlice';
 
 const ContactUsSectionStyles = styled.section`
@@ -67,26 +68,56 @@ const ContactFormFieldsContainer = styled.div`
   gap: 1.6rem;
 `;
 
+const schema = yup.object().shape({
+  name: yup.string().required('Please enter your name!'),
+  phone: yup
+    .string()
+    .required('Please enter your phone number!')
+    .min(16, 'Invalid phone number!')
+    .max(16, 'Invalid phone number!'),
+  email: yup
+    .string()
+    .email('Please enter valid email!')
+    .required('Please enter your email!'),
+  note: yup.string()
+});
+type FormData = yup.InferType<typeof schema>;
+
+const initialValues: FormData = {
+  name: '',
+  phone: '',
+  email: '',
+  note: ''
+};
+
 const ContactUsSection: React.FC = () => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState<boolean>(false);
+  const { loading, fakeLoading } = useFakeLoading();
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    e.preventDefault();
-    setLoading(true);
-    await fakeDelay(3).then(() => {
-      setLoading(false);
-      dispatch(setShowContactPopup(true));
-    });
-  };
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { isValid, errors }
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+    mode: 'onChange',
+    defaultValues: initialValues
+  });
+
+  const onSubmit = handleSubmit(async (_, event) => {
+    event?.preventDefault();
+    if (!isValid) return;
+    await fakeLoading();
+    dispatch(setShowContactPopup(true));
+    reset(initialValues);
+  });
 
   return (
     <ContactUsSectionStyles>
       <ContactFormStyles
         onSubmit={e => {
-          void handleSubmit(e);
+          void onSubmit(e);
         }}
         autoComplete="off"
       >
@@ -99,30 +130,62 @@ const ContactUsSection: React.FC = () => {
           regards!
         </Typography.Text>
         <ContactFormFieldsContainer>
-          <MyStandardInput
-            id="name"
-            label="Your name"
-            placeholder="John Doe"
-            required
+          <Controller
+            name="name"
+            control={control}
+            render={({ field }) => (
+              <MyStandardInput
+                id="name"
+                label="Your name"
+                placeholder="John Doe"
+                status={errors.name != null ? 'error' : undefined}
+                {...field}
+              />
+            )}
           />
-          <MyStandardInput
-            id="phone"
-            label="Phone number"
-            type="tel"
-            pattern="\([0-9]{2}\) [0-9]{2} [0-9]{3} [0-9]{4}"
-            placeholder="(84) 36 297 1924"
-            required
+          <Controller
+            name="phone"
+            control={control}
+            render={({ field }) => (
+              <MyStandardInput
+                id="phone"
+                label="Phone number"
+                type="tel"
+                placeholder="(84) 36 297 1924"
+                status={errors.phone != null ? 'error' : undefined}
+                {...field}
+                onChange={e => {
+                  field.onChange(phoneNumberAutoFormat(e.target.value));
+                }}
+                maxLength={16}
+              />
+            )}
           />
-          <MyStandardInput
-            id="email"
-            label="Email"
-            type="email"
-            placeholder="youremail@gmail.com"
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <MyStandardInput
+                id="email"
+                label="Email"
+                type="email"
+                placeholder="youremail@gmail.com"
+                status={errors.email != null ? 'error' : undefined}
+                {...field}
+              />
+            )}
           />
-          <MyStandardTextarea
-            id="message"
-            label="Send us message"
-            placeholder="Type something here..."
+          <Controller
+            name="note"
+            control={control}
+            render={({ field }) => (
+              <MyStandardTextarea
+                id="message"
+                label="Send us message"
+                placeholder="Type something here..."
+                {...field}
+              />
+            )}
           />
         </ContactFormFieldsContainer>
         <MyButton
