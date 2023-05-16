@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { InputNumber, Slider } from 'antd';
 import React, { useLayoutEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 import { MyButton } from '~/shared/components/button';
 import { DecoratedHeading } from '~/shared/components/heading';
@@ -50,6 +51,7 @@ const DashSign = styled.div`
 `;
 
 const ProductPriceFilter: React.FC = () => {
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const filterByPrice = useSelector(
     (state: RootState) => state.clothes.filterByPrice
@@ -61,7 +63,7 @@ const ProductPriceFilter: React.FC = () => {
     setPriceFrom(filterByPrice.from);
     setPriceTo(filterByPrice.to);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(filterByPrice)]);
+  }, [JSON.stringify(filterByPrice), pathname]);
 
   const onPriceSliderChange = (value: [number, number]): void => {
     setPriceFrom(value[0]);

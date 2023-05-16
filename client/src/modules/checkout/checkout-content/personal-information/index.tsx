@@ -118,7 +118,7 @@ const PersonalInformation: React.FC = () => {
     defaultValues: initialValues
   });
 
-  const onSubmit = handleSubmit(async (data, event) => {
+  const onSubmit = handleSubmit(async (_, event) => {
     event?.preventDefault();
     if (!isValid || userId == null) return;
     await fakeLoading();
