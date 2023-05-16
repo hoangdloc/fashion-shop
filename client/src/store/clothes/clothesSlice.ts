@@ -17,6 +17,7 @@ interface ClothesState {
   filterByColor: Color
   filterBySize: Size
   searching: string
+  clothesPopup: boolean
 }
 
 const initialState: ClothesState = {
@@ -30,7 +31,8 @@ const initialState: ClothesState = {
   },
   filterByColor: Color.WHITE,
   filterBySize: Size.S,
-  searching: ''
+  searching: '',
+  clothesPopup: false
 };
 
 export const clothesSlice = createSlice({
@@ -68,6 +70,9 @@ export const clothesSlice = createSlice({
       state.filterByColor = Color.WHITE;
       state.filterBySize = Size.S;
       state.searching = '';
+    },
+    setClothesPopup: (state, action: PayloadAction<boolean>) => {
+      state.clothesPopup = action.payload;
     }
   },
   extraReducers: builder => {
@@ -94,6 +99,7 @@ export const {
   toggleFilterByColor,
   toggleFilterBySize,
   searchingClothes,
-  resetAllFilter
+  resetAllFilter,
+  setClothesPopup
 } = clothesSlice.actions;
 export default clothesSlice.reducer;

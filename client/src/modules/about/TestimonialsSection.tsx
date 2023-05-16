@@ -45,7 +45,7 @@ const CarouselContainer = styled('div')`
     position: absolute;
     top: 15%;
     transform: translateY(-50%);
-    z-index: 10;
+    z-index: 2;
     background-color: transparent;
     color: #999898;
     border: none;

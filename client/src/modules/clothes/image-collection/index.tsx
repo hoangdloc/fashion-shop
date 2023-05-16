@@ -61,7 +61,8 @@ const ImageCollection: React.FC = () => {
     if (currentClothes != null) {
       setCurrentImage(currentClothes.images[0]);
     }
-  }, [currentClothes]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(currentClothes)]);
 
   if (currentClothes == null) return <ImageCollectionSkeleton />;
 

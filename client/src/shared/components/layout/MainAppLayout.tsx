@@ -7,6 +7,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { AppRoute } from '~/config/route';
 import type { RootState } from '~/store/store';
 import SubcribePopup from '~/shared/components/subscribe-popup';
+import ClothesPopup from '~/shared/components/clothes-popup';
 import LoadingScreen from './LoadingScreen';
 
 const AppFooter = lazy(async () => await import('./AppFooter'));
@@ -35,6 +36,7 @@ const MainAppLayout: React.FC = () => {
       </Layout.Content>
       <AppFooter />
       <SubcribePopup />
+      <ClothesPopup />
     </Layout>
   );
 };

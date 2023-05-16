@@ -103,7 +103,7 @@ const OrderInformation: React.FC = () => {
       );
       return total + quantity * +actualPrice;
     }, 0);
-  }, []);
+  }, [cartItems]);
 
   useLayoutEffect(() => {
     if (cartItems.length <= 0) {
@@ -112,6 +112,7 @@ const OrderInformation: React.FC = () => {
       });
       navigate(AppRoute.SHOP);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleBackToShopClick = (): void => {

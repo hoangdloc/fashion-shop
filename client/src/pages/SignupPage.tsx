@@ -149,6 +149,7 @@ const SignupPage: React.FC = () => {
 
   useLayoutEffect(() => {
     if (accessToken != null) navigate(AppRoute.HOME);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
   return (

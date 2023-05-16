@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '~/config/route';
 import { renderBadge } from '~/shared/utils/renderBadge';
 import { renderPrice } from '~/shared/utils/renderPrice';
-import { setCurrentClothes } from '~/store/clothes/clothesSlice';
+import { setClothesPopup, setCurrentClothes } from '~/store/clothes/clothesSlice';
 import MyBadge from '../badge';
 import { MyButton } from '../button';
 import { ShoppingBagIcon } from '../icon';
@@ -21,66 +21,77 @@ export interface ClothesCardProps {
   clothes?: Clothes
 }
 
-const ClothesCardStyles = styled('div')((props) => ({
-  '.img-box': {
-    display: 'block',
+const ClothesCardStyles = styled.div`
+  .img-box {
+    display: block;
     // width: '26.8rem',
-    width: '100%',
-    height: '40.4rem',
-    position: 'relative',
-    overflow: 'hidden',
-    cursor: 'pointer',
-    '.overlay': {
-      width: '100%',
-      height: '100%',
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      zIndex: 1
-    },
-    '&:hover > .overlay': {
-      backgroundColor: 'black',
-      opacity: 0.4
-    },
-    '&:hover > img': {
-      transform: 'scale(1.2)'
-    },
-    img: {
-      width: '100%',
-      height: '100%',
-      objectFit: 'cover',
-      transition: 'transform 0.3s'
+    width: 100%;
+    height: 40.4rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    &:hover > .overlay {
+      background-color: black;
+      opacity: 0.4;
     }
-  },
-  '.info-box': {
-    '.product-name': {
-      marginBottom: '0.4rem',
-      marginTop: '2rem',
-      lineHeight: '2.4rem',
-      letterSpacing: 1.05,
-      fontFamily: props.theme.fontFamily.PlayfairDisplay,
-      fontSize: '1.8rem',
-      fontWeight: 600,
-      textTransform: 'uppercase',
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden'
-    },
-    '.product-price': {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '1.5rem',
-      '& > .ant-typography': {
-        fontSize: '1.6rem'
-      }
+    &:hover > img {
+      transform: scale(1.2);
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .add-to-cart-btn {
+      position: absolute;
+      right: 1.6rem;
+      bottom: 1.6rem;
+      width: 4rem;
+      height: 4rem;
+      z-index: 2;
+      color: ${props => props.theme.colors.primaryBlack};
     }
   }
-}));
+`;
+const Overlay = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+`;
+
+const InfoBox = styled.div`
+  .product-name {
+    margin-bottom: 0.4rem;
+    margin-top: 2rem;
+    line-height: 2.4rem;
+    letter-spacing: 1.05;
+    font-family: ${props => props.theme.fontFamily.PlayfairDisplay};
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+`;
+
+const ProductPrice = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  & > .ant-typography {
+    font-size: 1.6rem;
+  }
+`;
 
 const ClothesCard: React.FC<ClothesCardProps> = props => {
   const { clothes } = props;
   const emotionTheme = useTheme();
-  const disptach = useDispatch();
+  const dispatch = useDispatch();
 
   if (clothes == null) {
     return <ClothesSkeletonCard />;
@@ -97,7 +108,17 @@ const ClothesCard: React.FC<ClothesCardProps> = props => {
   );
 
   const handleSetCurrentClothes = (): void => {
-    disptach(setCurrentClothes(clothes));
+    dispatch(setCurrentClothes(clothes));
+  };
+
+  const onAddToCartBtnClick = (
+    event:
+    | React.MouseEvent<HTMLAnchorElement, MouseEvent>
+    | React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
+    event.preventDefault();
+    dispatch(setCurrentClothes(clothes));
+    dispatch(setClothesPopup(true));
   };
 
   return (
@@ -125,26 +146,19 @@ const ClothesCard: React.FC<ClothesCardProps> = props => {
           alt={name}
           draggable={false}
         />
-        <div className="overlay"></div>
+        <Overlay className="overlay" />
         <ConfigProvider
           theme={{ token: { colorPrimary: emotionTheme.colors.textWhite } }}
         >
           <MyButton
-            style={{
-              position: 'absolute',
-              right: '1.6rem',
-              bottom: '1.6rem',
-              width: '4rem',
-              height: '4rem',
-              zIndex: 2,
-              color: emotionTheme.colors.primaryBlack
-            }}
+            className="add-to-cart-btn"
             icon={<ShoppingBagIcon />}
             shape="circle"
+            onClick={onAddToCartBtnClick}
           />
         </ConfigProvider>
       </Link>
-      <div className="info-box">
+      <InfoBox>
         <Link to={linkToProduct}>
           <Typography.Title
             className="product-name"
@@ -153,7 +167,7 @@ const ClothesCard: React.FC<ClothesCardProps> = props => {
             {name}
           </Typography.Title>
         </Link>
-        <div className="product-price">
+        <ProductPrice>
           <Typography.Text
             style={{
               color: isSale
@@ -171,8 +185,8 @@ const ClothesCard: React.FC<ClothesCardProps> = props => {
               $ {actualPrice}
             </Typography.Text>
           )}
-        </div>
-      </div>
+        </ProductPrice>
+      </InfoBox>
     </ClothesCardStyles>
   );
 };
