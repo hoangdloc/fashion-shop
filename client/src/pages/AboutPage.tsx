@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import
-{
+import {
   BannerSection,
   ContactUsSection,
   GallerySection,
@@ -17,6 +16,10 @@ const AboutPage: React.FC = () => {
   const showContactPopup = useSelector(
     (state: RootState) => state.general.showContactPopup
   );
+
+  useLayoutEffect(() => {
+    document.title = 'Fashion | About us';
+  }, []);
 
   return (
     <Fragment>

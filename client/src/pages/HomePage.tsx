@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useLayoutEffect } from 'react';
 
 import {
   BestSellerSection,
@@ -11,6 +11,10 @@ import {
 import PartnerRibbon from '../shared/components/layout/PartnerRibbon';
 
 const HomePage: React.FC = () => {
+  useLayoutEffect(() => {
+    document.title = 'Fashion';
+  }, []);
+
   return (
     <Fragment>
       <HeroSection />

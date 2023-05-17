@@ -129,6 +129,7 @@ const CartTableContainer: React.FC = () => {
   }, [cart]);
 
   const handleUpdateCart = async (): Promise<void> => {
+    enableAnimations(false);
     await fakeUpdateLoading();
     dispatch(updateProductToCart(cart));
     await Swal.fire({
@@ -141,6 +142,7 @@ const CartTableContainer: React.FC = () => {
   };
 
   const handleProceesToCheckout = async (): Promise<void> => {
+    enableAnimations(false);
     await fakeCheckoutLoading();
     dispatch(updateProductToCart(cart));
     navigate(CartRoute.CHECKOUT);

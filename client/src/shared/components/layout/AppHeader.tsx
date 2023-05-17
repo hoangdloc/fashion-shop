@@ -1,8 +1,7 @@
 import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import
-{
+import {
   Badge,
   Dropdown,
   Layout,
@@ -19,6 +18,7 @@ import { v4 } from 'uuid';
 import fullLogo from '~/assets/images/logo-full.png';
 import { AppRoute, ShopRoute } from '~/config/route';
 import { Spinner } from '~/shared/components/loader';
+import { useScrollListener } from '~/shared/hooks/useScrollListener';
 import { renderPrice } from '~/shared/utils/renderPrice';
 import { authApi } from '~/store/auth/authService';
 import { getCartItemsSelector } from '~/store/cart/cartSlice';
@@ -35,6 +35,16 @@ const LayoutHeader = styled(Layout.Header)`
   background-color: ${props => props.theme.colors.bgWhite};
   padding: 0;
   border-bottom: 0.1rem solid ${props => props.theme.colors.horizontalColor};
+  transition: all 0.5s ease-in-out;
+  &[data-scroll='down'] {
+    visibility: visible;
+    opacity: 1;
+  }
+  &[data-scroll='up'] {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-100%);
+  }
   @media ${props => props.theme.devices.mobile} {
     height: 6.4rem;
     border-bottom: none;
@@ -187,6 +197,7 @@ const AppHeader: React.FC = () => {
     }, 0);
   }, [cartItems]);
   const [trigger] = authApi.useLazyUserLogoutQuery();
+  const { scrollDirection } = useScrollListener();
 
   const detailItems: MenuProps['items'] = [
     {
@@ -201,7 +212,7 @@ const AppHeader: React.FC = () => {
   ];
 
   return (
-    <LayoutHeader>
+    <LayoutHeader data-scroll={scrollDirection}>
       <HeaderBox>
         <a
           href="tel:+0123456789"

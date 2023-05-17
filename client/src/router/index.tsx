@@ -10,6 +10,9 @@ const MainAppLayout = lazy(
 );
 const LoginPage = lazy(async () => await import('~/pages/LoginPage'));
 const SignupPage = lazy(async () => await import('~/pages/SignupPage'));
+const ForgotPasswordPage = lazy(
+  async () => await import('~/pages/ForgotPasswordPage')
+);
 const HomePage = lazy(async () => await import('~/pages/HomePage'));
 const AboutPage = lazy(async () => await import('~/pages/AboutPage'));
 const ShopPage = lazy(async () => await import('~/pages/ShopPage'));
@@ -23,10 +26,10 @@ const NotFoundPage = lazy(async () => await import('~/pages/NotFoundPage'));
 export default createBrowserRouter([
   {
     element: <App />,
-    errorElement: <ErrorPage />,
     children: [
       {
         element: <MainAppLayout />,
+        errorElement: <ErrorPage />,
         children: [
           {
             index: true,
@@ -117,6 +120,11 @@ export default createBrowserRouter([
         element: <SignupPage />,
         errorElement: <ErrorPage />,
         path: AppRoute.SIGNUP
+      },
+      {
+        element: <ForgotPasswordPage />,
+        errorElement: <ErrorPage />,
+        path: AppRoute.FORGOT_PASSWORD
       }
     ]
   }

@@ -1,7 +1,7 @@
 export default class AppError extends Error {
-  public status: string;
+  public status?: string;
 
-  constructor(message: string, public statusCode: number) {
+  constructor(message: string, public statusCode?: number) {
     super(message);
 
     this.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';

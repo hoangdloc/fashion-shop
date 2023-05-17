@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useLayoutEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
 import
@@ -18,6 +18,10 @@ const ClothesDetailsPage: React.FC = () => {
   const slug = params.slug as string;
   const currentClothes: Clothes | null = location.state;
   const { data, isFetching, isSuccess } = useGetCurrentClothesQuery(slug);
+
+  useLayoutEffect(() => {
+    document.title = 'Fashion | Details Clothes';
+  }, []);
 
   if (currentClothes == null && isFetching) {
     return <ClothesDetailSectionSkeleton />;

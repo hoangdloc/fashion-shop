@@ -1,7 +1,7 @@
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Typography } from 'antd';
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { AppRoute } from '~/config/route';
@@ -18,6 +18,10 @@ const NotFoundPageStyles = styled('section')(props => ({
 
 const NotFoundPage: React.FC = () => {
   const emotionTheme = useTheme();
+
+  useLayoutEffect(() => {
+    document.title = 'Fashion | Not Found';
+  }, []);
 
   return (
     <NotFoundPageStyles>

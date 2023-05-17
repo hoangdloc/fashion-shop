@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { Color, Gender, Type } from '../@types/category';
-import { Clothes } from '../@types/clothes';
+import { Clothes } from '../models/clothes';
 import { Size } from '../@types/size';
 import AppError from '../utils/appError';
 

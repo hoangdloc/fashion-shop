@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
@@ -14,6 +14,10 @@ const CheckoutPage: React.FC = () => {
   const showOrderingPopup = useSelector(
     (state: RootState) => state.general.showOrderingPopup
   );
+
+  useLayoutEffect(() => {
+    document.title = 'Fashion | Checkout';
+  }, []);
 
   return (
     <Fragment>

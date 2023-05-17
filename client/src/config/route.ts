@@ -5,7 +5,8 @@ export enum AppRoute {
   SHOP = '/shop',
   CART = '/cart',
   LOGIN = '/login',
-  SIGNUP = '/signup'
+  SIGNUP = '/signup',
+  FORGOT_PASSWORD = '/forgot-password'
 }
 
 export enum ShopRoute {

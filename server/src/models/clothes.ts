@@ -1,6 +1,6 @@
-import { Category } from './category';
-import { Size } from './size';
-import { Status } from './status';
+import { Category } from '../@types/category';
+import { Size } from '../@types/size';
+import { Status } from '../@types/status';
 
 export interface Clothes {
   id: number

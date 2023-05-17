@@ -1,7 +1,7 @@
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Typography } from 'antd';
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 
 const ErrorPageStyles = styled.main`
   width: 100vw;
@@ -19,6 +19,10 @@ const ErrorPageStyles = styled.main`
 
 const ErrorPage: React.FC = () => {
   const theme = useTheme();
+
+  useLayoutEffect(() => {
+    document.title = 'Fashion | Error';
+  }, []);
 
   return (
     <ErrorPageStyles>

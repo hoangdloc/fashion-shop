@@ -121,6 +121,10 @@ const LoginPage: React.FC = () => {
   });
 
   useLayoutEffect(() => {
+    document.title = 'Fashion | Login';
+  }, []);
+
+  useLayoutEffect(() => {
     if (accessToken != null) navigate(AppRoute.HOME);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
@@ -195,7 +199,7 @@ const LoginPage: React.FC = () => {
             textDecoration: 'none',
             marginBottom: '2rem'
           }}
-          to="#"
+          to={AppRoute.FORGOT_PASSWORD}
         >
           Forgot password?
         </Link>

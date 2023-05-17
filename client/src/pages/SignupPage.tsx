@@ -148,6 +148,10 @@ const SignupPage: React.FC = () => {
   });
 
   useLayoutEffect(() => {
+    document.title = 'Fashion | Sign Up';
+  }, []);
+
+  useLayoutEffect(() => {
     if (accessToken != null) navigate(AppRoute.HOME);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);

@@ -3,13 +3,20 @@ import fs from 'fs';
 import jwt from 'jsonwebtoken';
 import path from 'path';
 
-import { User, UserRole } from '../@types/user';
+import { sendEmail } from './../utils/email';
 import AppError from './../utils/appError';
+
+import { OTP } from '../models/otp';
+import { User, UserRole } from '../models/user';
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
 const users: User[] = JSON.parse(
   fs.readFileSync(path.join('./src/data', 'users.json')).toString()
+);
+
+const otps: OTP[] = JSON.parse(
+  fs.readFileSync(path.join('./src/data', 'otp.json')).toString()
 );
 
 const signToken = (userInfo: Optional<User, 'password'>): string =>
@@ -44,13 +51,22 @@ const createSendToken = (
   });
 };
 
+const generateOTP = (): string => {
+  const digits = '0123456789';
+  let OTP = '';
+  for (let i = 0; i < 6; i++) {
+    OTP += digits[Math.floor(Math.random() * 10)];
+  }
+  return OTP;
+};
+
 const signup = (req: Request, res: Response, next: NextFunction): void => {
   const { email } = req.body;
 
   const existedUser = users.find(user => user.email === email);
 
   if (existedUser) {
-    return next(new AppError('User with this email existed!', 409))
+    return next(new AppError('User with this email existed!', 409));
   }
 
   const newId = users[users.length - 1].id + 1;
@@ -106,4 +122,52 @@ const logout = (req: Request, res: Response): void => {
   });
 };
 
-export default { signup, login, logout };
+const forgotPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  const { email } = req.body;
+
+  const user = users.find(user => user.email === email);
+
+  // Check if user existed
+  if (!user) {
+    return next(new AppError('There is no user with email address!', 404));
+  }
+
+  // Remove old existed OTP code
+  const newOTPs = otps.filter(otp => otp.email !== email);
+  fs.writeFileSync(
+    path.join('./src/data', 'otp.json'),
+    JSON.stringify(newOTPs)
+  );
+
+  // Generate new OTP code
+  const otpCode = generateOTP();
+  const generatedOTP = new OTP(
+    email,
+    otpCode,
+    new Date(),
+    new Date(+new Date() + 60 * 1000)
+  );
+  fs.writeFileSync(
+    path.join('./src/data', 'otp.json'),
+    JSON.stringify([])
+  );
+
+  // Send OTP through email
+  const message = `The secret OTP for reset password process is ${generateOTP}. Please do not share this OTP to anyone else`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: 'Your OTP (valid for 1 minute)',
+      message
+    });
+  } catch (error) {
+    return next(new AppError('Some thing went wrong!'));
+  }
+};
+
+export default { signup, login, logout, forgotPassword };
