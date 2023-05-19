@@ -1,10 +1,11 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response, response } from 'express';
 import fs from 'fs';
 import jwt from 'jsonwebtoken';
+import { MongoClient } from 'mongodb';
 import path from 'path';
 
-import { sendEmail } from './../utils/email';
 import AppError from './../utils/appError';
+import { sendEmail } from './../utils/email';
 
 import { OTP } from '../models/otp';
 import { User, UserRole } from '../models/user';
@@ -13,10 +14,6 @@ type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
 const users: User[] = JSON.parse(
   fs.readFileSync(path.join('./src/data', 'users.json')).toString()
-);
-
-const otps: OTP[] = JSON.parse(
-  fs.readFileSync(path.join('./src/data', 'otp.json')).toString()
 );
 
 const signToken = (userInfo: Optional<User, 'password'>): string =>
@@ -51,7 +48,7 @@ const createSendToken = (
   });
 };
 
-const generateOTP = (): string => {
+const createOTPCode = (): string => {
   const digits = '0123456789';
   let OTP = '';
   for (let i = 0; i < 6; i++) {
@@ -129,45 +126,89 @@ const forgotPassword = async (
 ): Promise<void> => {
   const { email } = req.body;
 
-  const user = users.find(user => user.email === email);
+  if (!email) {
+    return next(new AppError('Please provide an email!', 400));
+  }
 
   // Check if user existed
+  const user = users.find(user => user.email === email);
   if (!user) {
     return next(new AppError('There is no user with email address!', 404));
   }
 
-  // Remove old existed OTP code
-  const newOTPs = otps.filter(otp => otp.email !== email);
-  fs.writeFileSync(
-    path.join('./src/data', 'otp.json'),
-    JSON.stringify(newOTPs)
-  );
-
   // Generate new OTP code
-  const otpCode = generateOTP();
-  const generatedOTP = new OTP(
-    email,
-    otpCode,
-    new Date(),
-    new Date(+new Date() + 60 * 1000)
-  );
-  fs.writeFileSync(
-    path.join('./src/data', 'otp.json'),
-    JSON.stringify([])
-  );
+  const otpCode = createOTPCode();
 
-  // Send OTP through email
-  const message = `The secret OTP for reset password process is ${generateOTP}. Please do not share this OTP to anyone else`;
+  // Initialize connection to MongoDB
+  let client;
 
   try {
-    await sendEmail({
-      email: user.email,
-      subject: 'Your OTP (valid for 1 minute)',
-      message
-    });
-  } catch (error) {
-    return next(new AppError('Some thing went wrong!'));
+    client = await MongoClient.connect(process.env.OTP_DATABASE);
+  } catch (err) {
+    console.error(err);
+    return next(new AppError('Could not connect to database', 500));
   }
+
+  const db = client.db();
+
+  // Remove old existed OTP code and update new OTP code
+  try {
+    await db.collection('otp').deleteOne({ email });
+    const newOTP = new OTP(
+      email,
+      otpCode,
+      new Date(),
+      new Date(+new Date() + 60 * 1000)
+    );
+    await db.collection('otp').insertOne(newOTP);
+  } catch (err) {
+    client.close();
+    return next(new AppError('Storing to database failed', 500));
+  } finally {
+    client.close();
+  }
+
+  // Send OTP through email
+  const message = `The secret OTP for reset password process is ${otpCode}. Please DO NOT share this OTP code to anyone else.`;
+
+  sendEmail({
+    email,
+    subject: 'Your OTP (valid for 1 minute)',
+    message
+  });
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Email was sent successfully!'
+  });
 };
 
-export default { signup, login, logout, forgotPassword };
+const resetPassword = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  const { email, password } = req.body;
+
+  if (!email) {
+    return next(new AppError('Please provide an email!', 400));
+  }
+
+  const newUsers = users.map(user => {
+    if (user.email === email) {
+      return { ...user, password };
+    }
+    return user;
+  });
+
+  fs.writeFileSync(
+    path.join('./src/data', 'users.json'),
+    JSON.stringify(newUsers)
+  );
+
+  res.status(202).json({
+    status: 'success'
+  });
+};
+
+export default { signup, login, logout, forgotPassword, resetPassword };

@@ -25,3 +25,8 @@ export interface UserResponse {
   }
   status: number
 }
+
+export interface UserResetPassword {
+  email: string
+  password: string
+}

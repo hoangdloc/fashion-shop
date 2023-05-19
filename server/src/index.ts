@@ -3,11 +3,14 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
+import http from 'http';
+import { Server, Socket } from 'socket.io';
 
 import globalErrorHandler from './controllers/errorController';
 import clothesRouter from './routes/clothesRoute';
 import userRouter from './routes/userRoutes';
 import AppError from './utils/appError';
+import registerOtpHandler from './controllers/otpController';
 
 dotenv.config({ path: './config.env' });
 
@@ -37,7 +40,22 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 
 app.use(globalErrorHandler);
 
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: process.env.CLIENT_URL,
+    methods: ['GET', 'POST', 'PUT']
+  }
+});
+
+const onConnection = (socket: Socket) => {
+  registerOtpHandler(io, socket);
+};
+
+io.on('connection', onConnection);
+
 const PORT = 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);
 });

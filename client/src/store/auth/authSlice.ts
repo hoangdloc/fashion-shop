@@ -8,12 +8,14 @@ interface IAuthState {
   accessToken?: string
   userInfo: User | null
   isLoggingOut: boolean
+  forgotPasswordEmail: string
 }
 
 const initialState: IAuthState = {
   accessToken: Cookies.get('access_token'),
   userInfo: null,
-  isLoggingOut: false
+  isLoggingOut: false,
+  forgotPasswordEmail: ''
 };
 
 export const authSlice = createSlice({
@@ -25,6 +27,12 @@ export const authSlice = createSlice({
     },
     setAccessToken: (state, action: PayloadAction<string>) => {
       state.accessToken = action.payload;
+    },
+    saveForgotPasswordEmail: (state, action: PayloadAction<string>) => {
+      state.forgotPasswordEmail = action.payload;
+    },
+    resetForgotPasswordEmail: state => {
+      state.forgotPasswordEmail = '';
     }
   },
   extraReducers: builder => {
@@ -43,5 +51,10 @@ export const authSlice = createSlice({
   }
 });
 
-export const { setCurrentUserInfo, setAccessToken } = authSlice.actions;
+export const {
+  setCurrentUserInfo,
+  setAccessToken,
+  saveForgotPasswordEmail,
+  resetForgotPasswordEmail
+} = authSlice.actions;
 export default authSlice.reducer;

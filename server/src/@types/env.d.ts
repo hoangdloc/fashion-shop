@@ -6,6 +6,8 @@ export interface IProcessEnv {
   EMAIL_PORT: string;
   EMAIL_USERNAME: string;
   EMAIL_PASSWORD: string;
+  OTP_DATABASE: string;
+  CLIENT_URL: string;
 }
 
 declare global {

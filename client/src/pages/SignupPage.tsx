@@ -86,10 +86,10 @@ const schema = yup
     lastName: yup.string().required('Please enter your last name!'),
     phoneNumber: yup
       .string()
-      .required('Please enter your phone number')
+      .required('Please enter your phone number!')
       .matches(/^\d+$/, 'Phone number should have digits only!')
-      .min(10, 'Must be exactly 10 digits')
-      .max(10, 'Must be exactly 10 digits'),
+      .min(10, 'Must be exactly 10 digits!')
+      .max(10, 'Must be exactly 10 digits!'),
     email: yup
       .string()
       .email('Please enter valid email!')
@@ -97,8 +97,8 @@ const schema = yup
     password: yup
       .string()
       .required('Please enter your password!')
-      .min(8, 'Password must be at least 8 characters long')
-      .max(32, 'Password must be less than 32 characters long'),
+      .min(8, 'Password must be at least 8 characters long!')
+      .max(32, 'Password must be less than 32 characters long!'),
     term: yup.bool().oneOf([true]).required()
   })
   .required();

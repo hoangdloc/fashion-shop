@@ -6,10 +6,13 @@ import { toast } from 'react-toastify';
 
 import { axiosBaseQuery } from '~/config/axios';
 import type { JWTDecoded } from '~/shared/@types/jwtDecoded';
-import type { UserLogin, UserResponse, UserSignup } from '~/shared/@types/user';
-import {
-  convertTimestampToDays
-} from '~/shared/utils/convertTimestampToDays';
+import type {
+  UserLogin,
+  UserResetPassword,
+  UserResponse,
+  UserSignup
+} from '~/shared/@types/user';
+import { convertTimestampToDays } from '~/shared/utils/convertTimestampToDays';
 import { setAccessToken, setCurrentUserInfo } from './authSlice';
 
 export const authApi = createApi({
@@ -22,7 +25,9 @@ export const authApi = createApi({
         method: 'post',
         data: body
       }),
-      transformResponse: (response: UserResponse) => ({ token: response.data.token }),
+      transformResponse: (response: UserResponse) => ({
+        token: response.data.token
+      }),
       onQueryStarted: async (_, api) => {
         const payload = (await api.queryFulfilled).data.token;
         const decodedJwt: JWTDecoded = jwtDecode(payload);
@@ -45,7 +50,9 @@ export const authApi = createApi({
         method: 'post',
         data: body
       }),
-      transformResponse: (response: UserResponse) => ({ token: response.data.token }),
+      transformResponse: (response: UserResponse) => ({
+        token: response.data.token
+      }),
       onQueryStarted: async (_, api) => {
         const payload = (await api.queryFulfilled).data.token;
         const decodedJwt: JWTDecoded = jwtDecode(payload);
@@ -72,6 +79,20 @@ export const authApi = createApi({
         Cookies.remove('access_token');
         toast.info('Logged out successfully!');
       }
+    }),
+    forgotPassword: builder.mutation<void, { email: string }>({
+      query: body => ({
+        url: '/users/forgot-password',
+        method: 'post',
+        data: body
+      })
+    }),
+    resetPassword: builder.mutation<void, UserResetPassword>({
+      query: body => ({
+        url: '/users/reset-password',
+        method: 'put',
+        data: body
+      })
     })
   })
 });
@@ -79,5 +100,7 @@ export const authApi = createApi({
 export const {
   useUserLoginMutation,
   useUserSignupMutation,
-  useLazyUserLogoutQuery
+  useLazyUserLogoutQuery,
+  useForgotPasswordMutation,
+  useResetPasswordMutation
 } = authApi;

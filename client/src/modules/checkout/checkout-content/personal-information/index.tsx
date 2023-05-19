@@ -69,7 +69,7 @@ const schema = yup
     deliveryTime: yup
       .string()
       .required('Please choose at least a delivery time!')
-      .oneOf(['office_hour', 'everytime'], 'You can only choose 1 out of 2'),
+      .oneOf(['office_hour', 'everytime'], 'You can only choose 1 out of 2!'),
     note: yup.string()
   })
   .required();

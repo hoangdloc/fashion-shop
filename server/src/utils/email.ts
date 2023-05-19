@@ -7,16 +7,17 @@ export interface MailCustomOptions {
   message: string;
 }
 
-export const sendEmail = async (options: MailCustomOptions): Promise<void> => {
+export const sendEmail = (options: MailCustomOptions): void => {
   // Create a transporter
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
+    port: +process.env.EMAIL_PORT,
     auth: {
       user: process.env.EMAIL_USERNAME,
       pass: process.env.EMAIL_PASSWORD
-    }
-  } as TransportOptions);
+    },
+    logger: true
+  });
 
   // Define the email options
   const mailOptions: MailOptions = {
@@ -27,5 +28,5 @@ export const sendEmail = async (options: MailCustomOptions): Promise<void> => {
   };
 
   // Send the email
-  await transporter.sendMail(mailOptions);
+  transporter.sendMail(mailOptions);
 };
