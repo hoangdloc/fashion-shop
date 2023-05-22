@@ -1,13 +1,15 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import QuantityBox from '~/shared/components/quantity-box';
 import CartProductItem from './CartProductItem';
 
+import { useCart } from '~/contexts/cart-context';
 import type { CartItem } from '~/shared/@types/cart';
 import { PlusIcon, SubstractIcon, TrashIcon } from '~/shared/components/icon';
 import { localePrice, renderPrice } from '~/shared/utils/renderPrice';
-import { useCart } from '~/contexts/cart-context';
+import { plusProduct, substractProduct } from '~/store/cart/cartSlice';
 
 interface CartProductTableRowProps {
   cartItem: CartItem
@@ -59,6 +61,7 @@ const CartProductTableRow: React.FC<CartProductTableRowProps> = ({
   cartItem,
   enableAnimations
 }) => {
+  const dispatch = useDispatch();
   const { cart, setCart } = useCart();
   const { price, salePercent, status, images, name, category, slug } =
     cartItem.clothes;
@@ -67,28 +70,12 @@ const CartProductTableRow: React.FC<CartProductTableRowProps> = ({
 
   const handlePlus = (): void => {
     enableAnimations(false);
-    setCart(
-      cart.map(item => {
-        if (item.clothes.id === cartItem.clothes.id) {
-          return { ...item, quantity: cartItem.quantity + 1 };
-        }
-        return item;
-      })
-    );
+    dispatch(plusProduct(cartItem));
   };
 
   const handleSubstract = (): void => {
     enableAnimations(false);
-    if (cartItem.quantity > 1) {
-      setCart(
-        cart.map(item => {
-          if (item.clothes.id === cartItem.clothes.id) {
-            return { ...item, quantity: cartItem.quantity - 1 };
-          }
-          return item;
-        })
-      );
-    }
+    dispatch(substractProduct(cartItem));
   };
 
   const handleDeleteProduct = (): void => {

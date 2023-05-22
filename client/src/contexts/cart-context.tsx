@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useLayoutEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { getCartItemsSelector } from '~/store/cart/cartSlice';
@@ -17,6 +17,12 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const cartItems = useSelector(getCartItemsSelector);
   const [cart, setCart] = useState<Cart>(cartItems);
+
+  useLayoutEffect(() => {
+    setCart(cartItems);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(cartItems)]);
+
   const values = { cart, setCart };
 
   return <CartContext.Provider value={values}>{children}</CartContext.Provider>;

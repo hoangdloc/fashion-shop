@@ -41,6 +41,24 @@ export const cartSlice = createSlice({
         });
       } else state.cart.push(action.payload);
     },
+    plusProduct: (state, action: PayloadAction<CartItem>) => {
+      state.cart = state.cart.map(item => {
+        if (item.clothes.id === action.payload.clothes.id) {
+          return { ...item, quantity: item.quantity + 1 };
+        }
+        return item;
+      });
+    },
+    substractProduct: (state, action: PayloadAction<CartItem>) => {
+      if (action.payload.quantity > 1) {
+        state.cart = state.cart.map(item => {
+          if (item.clothes.id === action.payload.clothes.id) {
+            return { ...item, quantity: item.quantity - 1 };
+          }
+          return item;
+        });
+      }
+    },
     updateProductToCart: (state, action: PayloadAction<Cart>) => {
       state.cart = action.payload;
     },
@@ -58,6 +76,11 @@ export const getCartItemsSelector = createSelector(
     state.cart.cart.filter(item => item.userId === state.auth.userInfo?.id)
 );
 
-export const { addProductToCart, updateProductToCart, orderingSuccess } =
-  cartSlice.actions;
+export const {
+  addProductToCart,
+  updateProductToCart,
+  orderingSuccess,
+  plusProduct,
+  substractProduct
+} = cartSlice.actions;
 export default cartSlice.reducer;
