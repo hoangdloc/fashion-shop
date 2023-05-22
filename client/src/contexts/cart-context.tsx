@@ -20,8 +20,7 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useLayoutEffect(() => {
     setCart(cartItems);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(cartItems)]);
+  }, [cartItems]);
 
   const values = { cart, setCart };
 

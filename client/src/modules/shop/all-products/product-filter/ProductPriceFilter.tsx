@@ -62,8 +62,7 @@ const ProductPriceFilter: React.FC = () => {
   useLayoutEffect(() => {
     setPriceFrom(filterByPrice.from);
     setPriceTo(filterByPrice.to);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(filterByPrice), pathname]);
+  }, [filterByPrice, pathname]);
 
   const onPriceSliderChange = (value: [number, number]): void => {
     setPriceFrom(value[0]);

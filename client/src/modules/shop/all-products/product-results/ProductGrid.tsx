@@ -46,6 +46,13 @@ const ProductGridContainer = styled.div`
         color: ${props => props.theme.colors.secondaryRed};
       }
     }
+    & .disabled-btn,
+    .disabled-btn:hover {
+      cursor: not-allowed;
+      background-color: ${props => props.theme.colors.footerBg};
+      color: ${props => props.theme.colors.horizontalColor};
+      border: 0.1rem solid ${props => props.theme.colors.horizontalColor};
+    }
     & .page-active {
       background-color: ${props => props.theme.colors.primaryBlack};
       color: ${props => props.theme.colors.textWhite};
@@ -165,7 +172,10 @@ const ProductGrid: React.FC = () => {
     setItemOffset(newOffset);
   };
 
-  const onPageClick = (clickEvent: { selected: number, nextSelectedPage?: number }): void => {
+  const onPageClick = (clickEvent: {
+    selected: number
+    nextSelectedPage?: number
+  }): void => {
     if (clickEvent.nextSelectedPage == null) {
       setForcePage(clickEvent.selected);
       return;
@@ -180,7 +190,7 @@ const ProductGrid: React.FC = () => {
         columnCount={3}
         data={currentItems}
       />
-      {currentItems != null && (
+      {currentItems != null && pageCount > 1 && (
         <ReactPaginate
           breakLabel="..."
           pageCount={pageCount}
@@ -194,6 +204,7 @@ const ProductGrid: React.FC = () => {
           pageLinkClassName="page-num"
           previousLinkClassName="prev-btn"
           nextLinkClassName="next-btn"
+          disabledLinkClassName="disabled-btn"
           activeLinkClassName="page-active"
           onClick={onPageClick}
         />

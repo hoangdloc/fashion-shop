@@ -123,8 +123,8 @@ const ClothesPopup: React.FC = () => {
     if (availableSizes != null) {
       setPickedSize(availableSizes[0]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(currentClothes)]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentClothes]);
 
   const handleCancel = (): void => {
     dispatch(setClothesPopup(false));
