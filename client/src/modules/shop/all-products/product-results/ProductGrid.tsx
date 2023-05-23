@@ -2,19 +2,22 @@ import styled from '@emotion/styled';
 import React, { useLayoutEffect, useMemo, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 import { ShopPathname } from '~/config/route';
-import { Gender } from '~/shared/@types/category';
-import type { Clothes } from '~/shared/@types/clothes';
-import { Sorting } from '~/shared/@types/sorting';
 import { NextBtnIcon, PrevBtnIcon } from '~/shared/components/icon';
 import { ListCards } from '~/shared/components/list-cards';
 import { calcActualPrice } from '~/shared/utils/renderPrice';
 import { useFetchClothingQuery } from '~/store/clothes/clothesService';
+
+import { shopUrlParams } from '~/shared/@types/ShopURLParams';
+import { Color, Gender, Type } from '~/shared/@types/category';
+import type { Clothes } from '~/shared/@types/clothes';
+import { Size } from '~/shared/@types/size';
+import { Sorting } from '~/shared/@types/sorting';
 import type { RootState } from '~/store/store';
 
-const ITEM_PER_PAGE = 9;
+const ITEM_PER_PAGE = 3;
 
 const ProductGridContainer = styled.div`
   width: 100%;
@@ -66,6 +69,20 @@ const ProductGridContainer = styled.div`
 `;
 
 const ProductGrid: React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // EXTRACT SEARCH PARAMS
+  const colorParam = searchParams.get(shopUrlParams.COLOR) as Color;
+  const typeParam = searchParams.get(shopUrlParams.TYPE) as Type;
+  const sizeParam = searchParams.get(shopUrlParams.SIZE) as Size;
+  const keywordParam = searchParams.get(shopUrlParams.KEYWORD);
+  const sortByPriceParam = searchParams.get(
+    shopUrlParams.SORT_BY_PRICE
+  ) as Sorting;
+  const pageParam = Number(searchParams.get(shopUrlParams.PAGE));
+  const minPriceParam = Number(searchParams.get(shopUrlParams.MIN_PRICE));
+  const maxPriceParam = Number(searchParams.get(shopUrlParams.MAX_PRICE));
+
   const { isFetching } = useFetchClothingQuery();
   const { pathname } = useLocation();
   const [pageCount, setPageCount] = useState<number>(0);
@@ -73,26 +90,12 @@ const ProductGrid: React.FC = () => {
     undefined
   );
   const [itemOffset, setItemOffset] = useState<number>(0);
-  const [forcePage, setForcePage] = useState<number>(0);
-  const sorting = useSelector((state: RootState) => state.clothes.sorting);
-  const filterByType = useSelector(
-    (state: RootState) => state.clothes.filterByType
-  );
-  const filterByPrice = useSelector(
-    (state: RootState) => state.clothes.filterByPrice
-  );
-  const filterByColor = useSelector(
-    (state: RootState) => state.clothes.filterByColor
-  );
-  const filterBySize = useSelector(
-    (state: RootState) => state.clothes.filterBySize
-  );
-  const searching = useSelector((state: RootState) => state.clothes.searching);
+  const [forcePage, setForcePage] = useState<number>(pageParam);
   const clothings = useSelector((state: RootState) => state.clothes.clothings);
 
   const sortedClothings = useMemo(() => {
     if (clothings != null) {
-      switch (sorting) {
+      switch (sortByPriceParam) {
         case Sorting.LOW_TO_HIGH:
           return [...clothings].sort((a, b) => {
             return (
@@ -112,7 +115,7 @@ const ProductGrid: React.FC = () => {
       }
     }
     return clothings;
-  }, [clothings, sorting]);
+  }, [clothings, sortByPriceParam]);
 
   const filteredClothings = useMemo(() => {
     return sortedClothings
@@ -126,28 +129,25 @@ const ProductGrid: React.FC = () => {
             return cloth.category[0] === Gender.MEN;
         }
       })
-      .filter(cloth => cloth.category[1] === filterByType)
+      .filter(cloth => cloth.category[1] === (typeParam ?? Type.CLOTHING))
       .filter(cloth => {
         return (
-          calcActualPrice(cloth.price, cloth.salePercent) >=
-            filterByPrice.from &&
-          calcActualPrice(cloth.price, cloth.salePercent) <= filterByPrice.to
+          calcActualPrice(cloth.price, cloth.salePercent) >= minPriceParam &&
+          calcActualPrice(cloth.price, cloth.salePercent) <=
+            (searchParams.has(shopUrlParams.MAX_PRICE) ? maxPriceParam : 500)
         );
       })
-      .filter(cloth => cloth.category.slice(2).includes(filterByColor))
-      .filter(cloth => cloth.sizes.includes(filterBySize))
       .filter(cloth =>
-        cloth.name.toLowerCase().includes(searching.trim().toLowerCase())
+        cloth.category.slice(2).includes(colorParam ?? Color.WHITE)
+      )
+      .filter(cloth => cloth.sizes.includes(sizeParam ?? Size.S))
+      .filter(cloth =>
+        cloth.name
+          .toLowerCase()
+          .includes((keywordParam ?? '').trim().toLowerCase())
       );
-  }, [
-    pathname,
-    filterByType,
-    filterByPrice,
-    filterByColor,
-    filterBySize,
-    sortedClothings,
-    searching
-  ]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname, searchParams, sortedClothings]);
 
   // INITIAL REACT-PAGINATE
   useLayoutEffect(() => {
@@ -160,17 +160,34 @@ const ProductGrid: React.FC = () => {
   // WHEN FILTER APPLY, SET CURRENT PAGE TO 0
   useLayoutEffect(() => {
     if (pageCount > 0) {
-      setItemOffset(0);
-      setForcePage(0);
+      searchParams.delete(shopUrlParams.PAGE);
+      setSearchParams(searchParams);
     }
-  }, [filteredClothings, pageCount]);
+  }, [
+    pageCount,
+    colorParam,
+    sizeParam,
+    keywordParam,
+    typeParam,
+    minPriceParam,
+    maxPriceParam
+  ]);
 
-  const onPageChange = (selectedItem: { selected: number }): void => {
-    if (filteredClothings == null) return;
-    const newOffset =
-      (selectedItem.selected * ITEM_PER_PAGE) % filteredClothings.length;
-    setItemOffset(newOffset);
-  };
+  // HANDLE SYNCHRONISE BETWEEN PAGE PARAMS AND FORCE PAGE
+  useLayoutEffect(() => {
+    if (pageParam <= pageCount - 1) {
+      setForcePage(pageParam);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageCount, searchParams]);
+
+  // HANDLE PAGINATION CHANGE
+  useLayoutEffect(() => {
+    if (filteredClothings != null) {
+      const newOffset = (forcePage * ITEM_PER_PAGE) % filteredClothings.length;
+      setItemOffset(newOffset);
+    }
+  }, [filteredClothings, forcePage]);
 
   const onPageClick = (clickEvent: {
     selected: number
@@ -178,9 +195,16 @@ const ProductGrid: React.FC = () => {
   }): void => {
     if (clickEvent.nextSelectedPage == null) {
       setForcePage(clickEvent.selected);
+      searchParams.set(shopUrlParams.PAGE, clickEvent.selected.toString());
+      setSearchParams(searchParams);
       return;
     }
     setForcePage(clickEvent.nextSelectedPage);
+    searchParams.set(
+      shopUrlParams.PAGE,
+      clickEvent.nextSelectedPage.toString()
+    );
+    setSearchParams(searchParams);
   };
 
   return (
@@ -199,7 +223,6 @@ const ProductGrid: React.FC = () => {
           nextLabel={<NextBtnIcon />}
           previousLabel={<PrevBtnIcon />}
           renderOnZeroPageCount={null}
-          onPageChange={onPageChange}
           className="pagination"
           pageLinkClassName="page-num"
           previousLinkClassName="prev-btn"

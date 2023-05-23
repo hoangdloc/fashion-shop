@@ -1,14 +1,14 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 
 import { DecoratedHeading } from '~/shared/components/heading';
 import { MyRadioGroup } from '~/shared/components/radio-group';
-import { toggleFilterByType } from '~/store/clothes/clothesSlice';
 
 import { Type } from '~/shared/@types/category';
 import type { RadioItems } from '~/shared/components/radio-group';
-import type { RootState } from '~/store/store';
+
+import { shopUrlParams } from '~/shared/@types/ShopURLParams';
 
 const ProductCategoryFilterContainer = styled.div`
   display: flex;
@@ -23,20 +23,20 @@ const categoryFilterItems: RadioItems[] = Object.values(Type).map(type => ({
 }));
 
 const ProductTypeFilter: React.FC = () => {
-  const dispatch = useDispatch();
-  const filterByType = useSelector(
-    (state: RootState) => state.clothes.filterByType
-  );
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    dispatch(toggleFilterByType(e.target.value as Type));
+    searchParams.set(shopUrlParams.TYPE, e.target.value);
+    setSearchParams(searchParams);
   };
 
   return (
     <ProductCategoryFilterContainer>
       <DecoratedHeading level="h3">Products Category</DecoratedHeading>
       <MyRadioGroup
-        checkedRadio={filterByType}
+        checkedRadio={
+          (searchParams.get(shopUrlParams.TYPE) as Type) ?? categoryFilterItems[0].value
+        }
         name="category-filter"
         data={categoryFilterItems}
         onChange={onChange}

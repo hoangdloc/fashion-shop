@@ -1,5 +1,5 @@
 export enum Sorting {
-  DEFAULT,
-  LOW_TO_HIGH,
-  HIGH_TO_LOW
+  DEFAULT = 'default',
+  LOW_TO_HIGH = 'asc',
+  HIGH_TO_LOW = 'desc'
 }

@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { CartProvider } from '~/contexts/cart-context';
 import CartTableContainer from './CartTableContainer';
 
 const CartProductTableSection = styled.section`
@@ -11,11 +10,9 @@ const CartProductTableSection = styled.section`
 
 const CartProductTable: React.FC = () => {
   return (
-    <CartProvider>
-      <CartProductTableSection>
-        <CartTableContainer />
-      </CartProductTableSection>
-    </CartProvider>
+    <CartProductTableSection>
+      <CartTableContainer />
+    </CartProductTableSection>
   );
 };
 

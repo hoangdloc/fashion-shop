@@ -1,30 +1,34 @@
 import { useTheme } from '@emotion/react';
 import { ConfigProvider, Input } from 'antd';
 import React, { useLayoutEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
-import { searchingClothes } from '~/store/clothes/clothesSlice';
-
-import { type RootState } from '~/store/store';
+import { shopUrlParams } from '~/shared/@types/ShopURLParams';
 
 const SearchBar: React.FC = () => {
   const emotionTheme = useTheme();
   const { pathname } = useLocation();
-  const dispatch = useDispatch();
-  const searching = useSelector((state: RootState) => state.clothes.searching);
-  const [words, setWords] = useState<string>(searching);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [words, setWords] = useState<string>(
+    searchParams.get(shopUrlParams.KEYWORD) ?? ''
+  );
 
   useLayoutEffect(() => {
-    setWords(searching);
-  }, [searching, pathname]);
+    setWords(searchParams.get(shopUrlParams.KEYWORD) ?? '');
+  }, [pathname, searchParams]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setWords(e.target.value);
   };
 
   const onSearch = (value: string): void => {
-    dispatch(searchingClothes(value));
+    if (value === '') {
+      searchParams.delete(shopUrlParams.KEYWORD);
+      setSearchParams(searchParams);
+      return;
+    }
+    searchParams.set(shopUrlParams.KEYWORD, value);
+    setSearchParams(searchParams);
   };
 
   return (

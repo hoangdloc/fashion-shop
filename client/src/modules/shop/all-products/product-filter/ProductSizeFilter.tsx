@@ -1,15 +1,15 @@
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { DecoratedHeading } from '~/shared/components/heading';
 
 import { MyRadioGroup } from '~/shared/components/radio-group';
-import { toggleFilterBySize } from '~/store/clothes/clothesSlice';
 
 import { Size } from '~/shared/@types/size';
-import type { RootState } from '~/store/store';
 import type { RadioItems } from '~/shared/components/radio-group';
+
+import { shopUrlParams } from '~/shared/@types/ShopURLParams';
 
 const ProductSizeFilterContainer = styled.div`
   display: flex;
@@ -33,13 +33,11 @@ const sizeFilterItems: RadioItems[] = Object.values(Size).map(type => ({
 
 const ProductSizeFilter: React.FC = () => {
   const emotionTheme = useTheme();
-  const dispatch = useDispatch();
-  const filterBySize = useSelector(
-    (state: RootState) => state.clothes.filterBySize
-  );
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    dispatch(toggleFilterBySize(e.target.value as Size));
+    searchParams.set(shopUrlParams.SIZE, e.target.value);
+    setSearchParams(searchParams);
   };
 
   return (
@@ -50,7 +48,9 @@ const ProductSizeFilter: React.FC = () => {
         direction="horizontal"
         type="box"
         data={sizeFilterItems}
-        checkedRadio={filterBySize}
+        checkedRadio={
+          (searchParams.get(shopUrlParams.SIZE) as Size) ?? sizeFilterItems[0].value
+        }
         selectedStyle={{
           backgroundColor: emotionTheme.colors.secondaryRed,
           color: emotionTheme.colors.textWhite

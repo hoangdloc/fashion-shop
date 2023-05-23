@@ -1,10 +1,7 @@
 import styled from '@emotion/styled';
-import React, { useLayoutEffect } from 'react';
+import React from 'react';
 import SideToolbar from './product-filter';
 import ProductResults from './product-results';
-import { useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { resetAllFilter } from '~/store/clothes/clothesSlice';
 
 const AllProductSectionContaniner = styled.section`
   padding: 4.4rem 16rem 6rem 16rem;
@@ -13,14 +10,6 @@ const AllProductSectionContaniner = styled.section`
 `;
 
 const AllProductSection: React.FC = () => {
-  const { pathname } = useLocation();
-  const dispatch = useDispatch();
-
-  useLayoutEffect(() => {
-    dispatch(resetAllFilter());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
-
   return <AllProductSectionContaniner>
     <SideToolbar />
     <ProductResults />

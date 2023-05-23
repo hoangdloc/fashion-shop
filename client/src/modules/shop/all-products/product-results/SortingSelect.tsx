@@ -3,14 +3,13 @@ import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ConfigProvider, Select } from 'antd';
 import React, { useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
 import { Sorting } from '~/shared/@types/sorting';
-import { toggleSorting } from '~/store/clothes/clothesSlice';
 
 import type { DefaultOptionType } from 'antd/es/select';
-import type { RootState } from '~/store/store';
+import { shopUrlParams } from '~/shared/@types/ShopURLParams';
 
 const AntdSelectWrapper = styled.div`
   & .ant-select {
@@ -45,13 +44,14 @@ const selectOptions: DefaultOptionType[] = [
 
 const SortingSelect: React.FC = () => {
   const emotionTheme = useTheme();
-  const disptach = useDispatch();
   const [open, setOpen] = useState<boolean>(false);
-  const sorting = useSelector((state: RootState) => state.clothes.sorting);
   const iconRef = useRef(null);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const onChange = (value: Sorting): void => {
-    disptach(toggleSorting(value));
+    searchParams.set(shopUrlParams.SORT_BY_PRICE, value);
+    setSearchParams(searchParams);
   };
 
   const onDropdownVisibleChange = (open: boolean): void => {
@@ -68,7 +68,10 @@ const SortingSelect: React.FC = () => {
         }}
       >
         <Select
-          value={sorting}
+          value={
+            (searchParams.get(shopUrlParams.SORT_BY_PRICE) as Sorting) ??
+            Sorting.DEFAULT
+          }
           style={{ width: '17.3rem' }}
           size="large"
           suffixIcon={

@@ -5,49 +5,32 @@ export enum ScrollDirection {
   UP = 'up'
 }
 
-interface IUseScrollListener {
-  scrollY: number
-  scrollX: number
-  scrollDirection: ScrollDirection
-}
-
-export function useScrollListener (): IUseScrollListener {
-  const bodyOffset = document.body.getBoundingClientRect();
-  const [lastScrollTop, setLastScrollTop] = useState<number>(0);
-  const [scrollY, setScrollY] = useState<number>(bodyOffset.top);
-  const [scrollX, setScrollX] = useState<number>(bodyOffset.left);
+export function useScrollDirection (): ScrollDirection {
   const [scrollDirection, setScrollDirection] = useState<ScrollDirection>(
     ScrollDirection.DOWN
   );
 
   useLayoutEffect(() => {
-    const listener = (): void => {
-      setScrollY(-bodyOffset.top);
-      setScrollX(bodyOffset.left);
-      setScrollDirection(
-        lastScrollTop > -bodyOffset.top
-          ? ScrollDirection.DOWN
-          : ScrollDirection.UP
-      );
-      setLastScrollTop(-bodyOffset.top);
-    };
+    let lastScrollY = window.scrollY;
 
-    window.addEventListener('scroll', listener);
+    const updateScrollDirection = (): void => {
+      const scrollY = window.scrollY;
+      const direction =
+        scrollY > lastScrollY ? ScrollDirection.UP : ScrollDirection.DOWN;
+      if (
+        direction !== scrollDirection &&
+        Math.abs(scrollY - lastScrollY) > 20
+      ) {
+        setScrollDirection(direction);
+      }
+      lastScrollY = scrollY > 0 ? scrollY : 0;
+    };
+    window.addEventListener('scroll', updateScrollDirection);
+
     return () => {
-      window.removeEventListener('scroll', listener);
+      window.removeEventListener('scroll', updateScrollDirection);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lastScrollTop]);
+  }, [scrollDirection]);
 
-  useLayoutEffect(() => {
-    if (scrollY < 200) {
-      setScrollDirection(ScrollDirection.DOWN);
-    }
-  }, [scrollY]);
-
-  return {
-    scrollY,
-    scrollX,
-    scrollDirection
-  };
+  return scrollDirection;
 }

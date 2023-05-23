@@ -1,16 +1,15 @@
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 
 import { Color } from '~/shared/@types/category';
 import { DecoratedHeading } from '~/shared/components/heading';
 import { MyRadioGroup } from '~/shared/components/radio-group';
 import { renderColorBox } from '~/shared/utils/renderColorBox';
-import { toggleFilterByColor } from '~/store/clothes/clothesSlice';
 
 import type { RadioItems } from '~/shared/components/radio-group';
-import type { RootState } from '~/store/store';
+import { shopUrlParams } from '~/shared/@types/ShopURLParams';
 
 const ProductColorFilterContainer = styled.div`
   display: flex;
@@ -33,13 +32,11 @@ const colorFilterItems: RadioItems[] = Object.values(Color).map(type => ({
 
 const ProductColorFilter: React.FC = () => {
   const emotionTheme = useTheme();
-  const dispatch = useDispatch();
-  const filterByColor = useSelector(
-    (state: RootState) => state.clothes.filterByColor
-  );
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    dispatch(toggleFilterByColor(e.target.value as Color));
+    searchParams.set(shopUrlParams.COLOR, e.target.value);
+    setSearchParams(searchParams);
   };
 
   return (
@@ -50,7 +47,9 @@ const ProductColorFilter: React.FC = () => {
         direction="horizontal"
         type="box"
         data={colorFilterItems}
-        checkedRadio={filterByColor}
+        checkedRadio={
+          (searchParams.get(shopUrlParams.COLOR) as Color) ?? colorFilterItems[0].value
+        }
         selectedStyle={{
           border: `0.2rem solid ${emotionTheme.colors.secondaryRed}`
         }}

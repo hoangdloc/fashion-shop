@@ -5,6 +5,7 @@ import { Outlet, ScrollRestoration } from 'react-router-dom';
 
 import LoadingPage from '~/pages/LoadingPage';
 import EmotionGlobalStyles from '~/shared/components/global-style';
+import { AppRoute, ShopRoute } from './config/route';
 
 const App: React.FC = () => {
   const emotionTheme = useTheme();
@@ -24,7 +25,18 @@ const App: React.FC = () => {
       >
         <Outlet />
       </AntdGlobalConfigProvider>
-      <ScrollRestoration />
+      <ScrollRestoration
+        getKey={location => {
+          const paths = [
+            `${AppRoute.SHOP}/${ShopRoute.MEN}`,
+            `${AppRoute.SHOP}/${ShopRoute.WOMEN}`,
+            `${AppRoute.SHOP}/${ShopRoute.UNISEX}`
+          ];
+          return paths.includes(location.pathname)
+            ? location.pathname
+            : location.key;
+        }}
+      />
     </Suspense>
   );
 };

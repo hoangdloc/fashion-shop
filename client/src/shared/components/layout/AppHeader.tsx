@@ -1,7 +1,8 @@
 import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import {
+import
+{
   Badge,
   Dropdown,
   Layout,
@@ -17,11 +18,11 @@ import { v4 } from 'uuid';
 
 import fullLogo from '~/assets/images/logo-full.png';
 import { AppRoute, ShopRoute } from '~/config/route';
+import { useCart } from '~/contexts/cart-context';
 import { Spinner } from '~/shared/components/loader';
-import { useScrollListener } from '~/shared/hooks/useScrollListener';
+import { useScrollDirection } from '~/shared/hooks/useScrollListener';
 import { renderPrice } from '~/shared/utils/renderPrice';
 import { authApi } from '~/store/auth/authService';
-import { getCartItemsSelector } from '~/store/cart/cartSlice';
 import type { RootState } from '~/store/store';
 import { BurgerButton } from '../button';
 import { CartIcon, PhoneIcon } from '../icon';
@@ -184,9 +185,9 @@ const AppHeader: React.FC = () => {
   const isLoggingOut = useSelector(
     (state: RootState) => state.auth.isLoggingOut
   );
-  const cartItems = useSelector(getCartItemsSelector);
+  const { cart } = useCart();
   const cardTotal = useMemo(() => {
-    return cartItems.reduce((total, current) => {
+    return cart.reduce((total, current) => {
       const { quantity, clothes } = current;
       const { actualPrice } = renderPrice(
         clothes.price,
@@ -195,9 +196,9 @@ const AppHeader: React.FC = () => {
       );
       return total + quantity * +actualPrice;
     }, 0);
-  }, [cartItems]);
+  }, [cart]);
   const [trigger] = authApi.useLazyUserLogoutQuery();
-  const { scrollDirection } = useScrollListener();
+  const scrollDirection = useScrollDirection();
 
   const detailItems: MenuProps['items'] = [
     {
@@ -337,7 +338,7 @@ const AppHeader: React.FC = () => {
         <CutomerCart>
           <Badge
             color={emotionTheme.colors.secondaryRed}
-            count={cartItems.length}
+            count={cart.length}
             showZero
           >
             <Link to={AppRoute.CART}>

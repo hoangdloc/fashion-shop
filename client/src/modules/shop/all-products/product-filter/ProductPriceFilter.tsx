@@ -1,13 +1,12 @@
 import styled from '@emotion/styled';
 import { InputNumber, Slider } from 'antd';
 import React, { useLayoutEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 import { MyButton } from '~/shared/components/button';
 import { DecoratedHeading } from '~/shared/components/heading';
-import { setFilterByPrice } from '~/store/clothes/clothesSlice';
-import type { RootState } from '~/store/store';
+
+import { shopUrlParams } from '~/shared/@types/ShopURLParams';
 
 enum ProductPrice {
   MAX = 1000,
@@ -52,46 +51,55 @@ const DashSign = styled.div`
 
 const ProductPriceFilter: React.FC = () => {
   const { pathname } = useLocation();
-  const dispatch = useDispatch();
-  const filterByPrice = useSelector(
-    (state: RootState) => state.clothes.filterByPrice
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [minPrice, setMinPrice] = useState<number>(
+    Number(searchParams.get(shopUrlParams.MIN_PRICE))
   );
-  const [priceFrom, setPriceFrom] = useState<number>(filterByPrice.from);
-  const [priceTo, setPriceTo] = useState<number>(filterByPrice.to);
+  const [maxPrice, setMaxPrice] = useState<number>(
+    searchParams.has(shopUrlParams.MAX_PRICE)
+      ? Number(searchParams.get(shopUrlParams.MAX_PRICE))
+      : 500
+  );
 
   useLayoutEffect(() => {
-    setPriceFrom(filterByPrice.from);
-    setPriceTo(filterByPrice.to);
-  }, [filterByPrice, pathname]);
+    setMinPrice(Number(searchParams.get(shopUrlParams.MIN_PRICE)));
+    setMaxPrice(
+      searchParams.has(shopUrlParams.MAX_PRICE)
+        ? Number(searchParams.get(shopUrlParams.MAX_PRICE))
+        : 500
+    );
+  }, [pathname, searchParams]);
 
   const onPriceSliderChange = (value: [number, number]): void => {
-    setPriceFrom(value[0]);
-    setPriceTo(value[1]);
+    setMinPrice(value[0]);
+    setMaxPrice(value[1]);
   };
 
   const onPriceFromInputChange = (newValue: number | null): void => {
-    setPriceFrom(newValue ?? 0);
+    setMinPrice(newValue ?? 0);
   };
 
   const onPriceToInputChange = (newValue: number | null): void => {
-    setPriceTo(newValue ?? 0);
+    setMaxPrice(newValue ?? 500);
   };
 
   const onButtonClick = (): void => {
-    dispatch(setFilterByPrice({ from: priceFrom, to: priceTo }));
+    searchParams.set(shopUrlParams.MIN_PRICE, minPrice.toString());
+    searchParams.set(shopUrlParams.MAX_PRICE, maxPrice.toString());
+    setSearchParams(searchParams);
   };
 
   return (
     <ProductPriceFilterContainer>
       <DecoratedHeading>Filter by price</DecoratedHeading>
       <Slider
-        range
+        range={{ draggableTrack: true }}
         max={ProductPrice.MAX}
         min={ProductPrice.MIN}
         trackStyle={[{ backgroundColor: '#EAEAEA' }]}
         railStyle={{ backgroundColor: '#CECECE' }}
         onChange={onPriceSliderChange}
-        value={[priceFrom, priceTo]}
+        value={[minPrice, maxPrice]}
       />
       <PriceFilterBox>
         <DualInputRangeContainer>
@@ -100,7 +108,7 @@ const ProductPriceFilter: React.FC = () => {
             className="price-input"
             max={ProductPrice.MAX}
             min={ProductPrice.MIN}
-            value={priceFrom}
+            value={minPrice}
             onChange={onPriceFromInputChange}
           />
           <DashSign />
@@ -109,7 +117,7 @@ const ProductPriceFilter: React.FC = () => {
             className="price-input"
             max={ProductPrice.MAX}
             min={ProductPrice.MIN}
-            value={priceTo}
+            value={maxPrice}
             onChange={onPriceToInputChange}
           />
         </DualInputRangeContainer>
