@@ -116,7 +116,7 @@ const LoginPage: React.FC = () => {
     await login(data)
       .unwrap()
       .finally(() => {
-        reset(initialValues);
+        reset({ ...initialValues, email: data.email });
       });
   });
 
@@ -126,7 +126,7 @@ const LoginPage: React.FC = () => {
 
   useLayoutEffect(() => {
     if (accessToken != null) navigate(AppRoute.HOME);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
   return (

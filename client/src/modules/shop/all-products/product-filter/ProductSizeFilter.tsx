@@ -37,6 +37,7 @@ const ProductSizeFilter: React.FC = () => {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     searchParams.set(shopUrlParams.SIZE, e.target.value);
+    searchParams.delete(shopUrlParams.PAGE);
     setSearchParams(searchParams);
   };
 

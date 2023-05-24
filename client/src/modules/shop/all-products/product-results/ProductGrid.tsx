@@ -1,23 +1,20 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styled from '@emotion/styled';
-import React, { useLayoutEffect, useMemo, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import { useSelector } from 'react-redux';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
 import { ShopPathname } from '~/config/route';
 import { NextBtnIcon, PrevBtnIcon } from '~/shared/components/icon';
 import { ListCards } from '~/shared/components/list-cards';
-import { calcActualPrice } from '~/shared/utils/renderPrice';
-import { useFetchClothingQuery } from '~/store/clothes/clothesService';
+import { clothesApi } from '~/store/clothes/clothesService';
 
 import { shopUrlParams } from '~/shared/@types/ShopURLParams';
 import { Color, Gender, Type } from '~/shared/@types/category';
-import type { Clothes } from '~/shared/@types/clothes';
 import { Size } from '~/shared/@types/size';
 import { Sorting } from '~/shared/@types/sorting';
-import type { RootState } from '~/store/store';
 
-const ITEM_PER_PAGE = 3;
+const ITEM_PER_PAGE = 9;
 
 const ProductGridContainer = styled.div`
   width: 100%;
@@ -72,122 +69,79 @@ const ProductGrid: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // EXTRACT SEARCH PARAMS
-  const colorParam = searchParams.get(shopUrlParams.COLOR) as Color;
-  const typeParam = searchParams.get(shopUrlParams.TYPE) as Type;
-  const sizeParam = searchParams.get(shopUrlParams.SIZE) as Size;
-  const keywordParam = searchParams.get(shopUrlParams.KEYWORD);
-  const sortByPriceParam = searchParams.get(
-    shopUrlParams.SORT_BY_PRICE
-  ) as Sorting;
+  const colorParam = searchParams.get(shopUrlParams.COLOR) ?? Color.WHITE;
+  const typeParam = searchParams.get(shopUrlParams.TYPE) ?? Type.CLOTHING;
+  const sizeParam = searchParams.get(shopUrlParams.SIZE) ?? Size.S;
+  const keywordParam = searchParams.get(shopUrlParams.KEYWORD) ?? '';
+  const sortByPriceParam =
+    searchParams.get(shopUrlParams.SORT_BY_PRICE) ?? Sorting.DEFAULT;
   const pageParam = Number(searchParams.get(shopUrlParams.PAGE));
   const minPriceParam = Number(searchParams.get(shopUrlParams.MIN_PRICE));
-  const maxPriceParam = Number(searchParams.get(shopUrlParams.MAX_PRICE));
+  const maxPriceParam = Number(
+    searchParams.get(shopUrlParams.MAX_PRICE) ?? 500
+  );
 
-  const { isFetching } = useFetchClothingQuery();
+  const [trigger, { data, isFetching }] =
+    clothesApi.useLazyFetchClothingQuery();
   const { pathname } = useLocation();
   const [pageCount, setPageCount] = useState<number>(0);
-  const [currentItems, setCurrentItems] = useState<Clothes[] | undefined>(
-    undefined
-  );
-  const [itemOffset, setItemOffset] = useState<number>(0);
   const [forcePage, setForcePage] = useState<number>(pageParam);
-  const clothings = useSelector((state: RootState) => state.clothes.clothings);
+  const clothings = data?.data.clothings;
 
-  const sortedClothings = useMemo(() => {
-    if (clothings != null) {
-      switch (sortByPriceParam) {
-        case Sorting.LOW_TO_HIGH:
-          return [...clothings].sort((a, b) => {
-            return (
-              calcActualPrice(a.price, a.salePercent) -
-              calcActualPrice(b.price, b.salePercent)
-            );
-          });
-        case Sorting.HIGH_TO_LOW:
-          return [...clothings].sort((a, b) => {
-            return (
-              calcActualPrice(b.price, b.salePercent) -
-              calcActualPrice(a.price, a.salePercent)
-            );
-          });
-        default:
-          return clothings;
-      }
+  const genderParam = useMemo(() => {
+    switch (pathname) {
+      case ShopPathname.WOMEN:
+        return Gender.WOMEN;
+      case ShopPathname.UNISEX:
+        return Gender.UNISEX;
+      default:
+        return Gender.MEN;
     }
-    return clothings;
-  }, [clothings, sortByPriceParam]);
-
-  const filteredClothings = useMemo(() => {
-    return sortedClothings
-      ?.filter(cloth => {
-        switch (pathname) {
-          case ShopPathname.WOMEN:
-            return cloth.category[0] === Gender.WOMEN;
-          case ShopPathname.UNISEX:
-            return cloth.category[0] === Gender.UNISEX;
-          default:
-            return cloth.category[0] === Gender.MEN;
-        }
-      })
-      .filter(cloth => cloth.category[1] === (typeParam ?? Type.CLOTHING))
-      .filter(cloth => {
-        return (
-          calcActualPrice(cloth.price, cloth.salePercent) >= minPriceParam &&
-          calcActualPrice(cloth.price, cloth.salePercent) <=
-            (searchParams.has(shopUrlParams.MAX_PRICE) ? maxPriceParam : 500)
-        );
-      })
-      .filter(cloth =>
-        cloth.category.slice(2).includes(colorParam ?? Color.WHITE)
-      )
-      .filter(cloth => cloth.sizes.includes(sizeParam ?? Size.S))
-      .filter(cloth =>
-        cloth.name
-          .toLowerCase()
-          .includes((keywordParam ?? '').trim().toLowerCase())
-      );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname, searchParams, sortedClothings]);
+  }, [pathname]);
 
   // INITIAL REACT-PAGINATE
   useLayoutEffect(() => {
-    const endOffset = itemOffset + ITEM_PER_PAGE;
-    if (filteredClothings == null) return;
-    setCurrentItems(filteredClothings.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(filteredClothings.length / ITEM_PER_PAGE));
-  }, [filteredClothings, itemOffset]);
-
-  // WHEN FILTER APPLY, SET CURRENT PAGE TO 0
-  useLayoutEffect(() => {
-    if (pageCount > 0) {
-      searchParams.delete(shopUrlParams.PAGE);
-      setSearchParams(searchParams);
-    }
-  }, [
-    pageCount,
-    colorParam,
-    sizeParam,
-    keywordParam,
-    typeParam,
-    minPriceParam,
-    maxPriceParam
-  ]);
+    if (data == null) return;
+    setPageCount(Math.ceil(data.results / ITEM_PER_PAGE));
+  }, [data]);
 
   // HANDLE SYNCHRONISE BETWEEN PAGE PARAMS AND FORCE PAGE
   useLayoutEffect(() => {
     if (pageParam <= pageCount - 1) {
       setForcePage(pageParam);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageCount, searchParams]);
 
-  // HANDLE PAGINATION CHANGE
-  useLayoutEffect(() => {
-    if (filteredClothings != null) {
-      const newOffset = (forcePage * ITEM_PER_PAGE) % filteredClothings.length;
-      setItemOffset(newOffset);
-    }
-  }, [filteredClothings, forcePage]);
+  // FETCH DATA
+  useEffect(() => {
+    const fetchData = trigger({
+      color: colorParam as Color,
+      size: sizeParam as Size,
+      type: typeParam as Type,
+      minPrice: minPriceParam,
+      maxPrice: maxPriceParam,
+      page: pageParam,
+      limit: ITEM_PER_PAGE,
+      gender: genderParam,
+      keyword: keywordParam,
+      sortByPrice: sortByPriceParam as Sorting
+    });
+
+    return () => {
+      fetchData.abort();
+    };
+  }, [
+    pathname,
+    colorParam,
+    sizeParam,
+    keywordParam,
+    typeParam,
+    minPriceParam,
+    maxPriceParam,
+    pageParam,
+    sortByPriceParam
+  ]);
 
   const onPageClick = (clickEvent: {
     selected: number
@@ -211,10 +165,11 @@ const ProductGrid: React.FC = () => {
     <ProductGridContainer>
       <ListCards
         loading={isFetching}
+        loadingRows={3}
         columnCount={3}
-        data={currentItems}
+        data={clothings}
       />
-      {currentItems != null && pageCount > 1 && (
+      {clothings != null && pageCount > 1 && (
         <ReactPaginate
           breakLabel="..."
           pageCount={pageCount}

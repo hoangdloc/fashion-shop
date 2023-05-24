@@ -51,6 +51,7 @@ const SortingSelect: React.FC = () => {
 
   const onChange = (value: Sorting): void => {
     searchParams.set(shopUrlParams.SORT_BY_PRICE, value);
+    searchParams.delete(shopUrlParams.PAGE);
     setSearchParams(searchParams);
   };
 

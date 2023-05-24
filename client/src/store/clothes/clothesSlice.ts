@@ -31,7 +31,7 @@ export const clothesSlice = createSlice({
     builder.addMatcher(
       clothesApi.endpoints.fetchClothing.matchFulfilled,
       (state, action) => {
-        state.clothings = action.payload;
+        state.clothings = action.payload.data.clothings;
       }
     );
     builder.addMatcher(

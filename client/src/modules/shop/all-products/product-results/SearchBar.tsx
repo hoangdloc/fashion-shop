@@ -28,6 +28,7 @@ const SearchBar: React.FC = () => {
       return;
     }
     searchParams.set(shopUrlParams.KEYWORD, value);
+    searchParams.delete(shopUrlParams.PAGE);
     setSearchParams(searchParams);
   };
 

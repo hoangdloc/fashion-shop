@@ -16,6 +16,7 @@ interface ListCardsProps {
   columnCount: number
   data?: Clothes[]
   loading: boolean
+  loadingRows?: number
 }
 
 const antdColsSystem = 24;
@@ -28,11 +29,11 @@ const ListCardsStyles = styled('div')(() => ({
 }));
 
 const ListCards: React.FC<ListCardsProps> = props => {
-  const { data, columnCount, loading = false } = props;
+  const { data, columnCount, loading = false, loadingRows = 2 } = props;
   const [parent] = useAutoAnimate({ duration: 500 });
 
   const renderSkeletonList = (): JSX.Element[] => {
-    return new Array(2).fill(0).map(() => (
+    return new Array(loadingRows).fill(0).map(() => (
       <Row key={v4()}>
         {new Array(columnCount).fill(0).map(() => (
           <Col
@@ -72,11 +73,11 @@ const ListCards: React.FC<ListCardsProps> = props => {
 
   return (
     <ListCardsStyles ref={parent}>
-      {loading && data === undefined
-        ? renderSkeletonList()
+      {loading || data === undefined
+        ? (renderSkeletonList())
         : data != null && data.length > 0
-          ? renderList()
-          : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+          ? (renderList())
+          : (<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />)}
     </ListCardsStyles>
   );
 };

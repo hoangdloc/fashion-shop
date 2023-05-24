@@ -3,6 +3,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { toast } from 'react-toastify';
 
 import { axiosBaseQuery } from '~/config/axios';
+
 import type { Color, Gender, Type } from '~/shared/@types/category';
 import type {
   Clothes,
@@ -10,15 +11,21 @@ import type {
   ClothingsResponse
 } from '~/shared/@types/clothes';
 import type { Size } from '~/shared/@types/size';
+import type { Sorting } from '~/shared/@types/sorting';
 
 interface FetchClothingParams {
   gender?: Gender
   type?: Type
   color?: Color
   size?: Size
-  sortByPrice?: 0 | 1
+  sortByPrice?: Sorting
   bestSeller?: boolean
   featured?: boolean
+  minPrice?: number
+  maxPrice?: number
+  keyword?: string
+  page?: number
+  limit?: number
 }
 
 export const clothesApi = createApi({
@@ -27,28 +34,28 @@ export const clothesApi = createApi({
   baseQuery: axiosBaseQuery(),
   refetchOnReconnect: true,
   endpoints: builder => ({
-    fetchClothing: builder.query<Clothes[], FetchClothingParams | void>({
-      query: params => ({
-        url: '/clothes',
-        method: 'get',
-        params
-      }),
-      transformResponse: (response: ClothingsResponse) =>
-        response.data.clothings,
-      providesTags: result => {
-        if (result != null) {
-          const final = [
-            ...result.map(({ id }) => ({
-              type: 'Clothes' as const,
-              id
-            })),
-            { type: 'Clothes' as const, id: 'LIST' }
-          ];
-          return final;
+    fetchClothing: builder.query<ClothingsResponse, FetchClothingParams | void>(
+      {
+        query: params => ({
+          url: '/clothes',
+          method: 'get',
+          params
+        }),
+        providesTags: result => {
+          if (result != null) {
+            const final = [
+              ...result.data.clothings.map(({ id }) => ({
+                type: 'Clothes' as const,
+                id
+              })),
+              { type: 'Clothes' as const, id: 'LIST' }
+            ];
+            return final;
+          }
+          return [{ type: 'Clothes', id: 'LIST' }];
         }
-        return [{ type: 'Clothes', id: 'LIST' }];
       }
-    }),
+    ),
     getCurrentClothes: builder.query<Clothes, string>({
       query: slug => ({
         url: `/clothes/current/${slug}`,
@@ -65,4 +72,8 @@ export const clothesApi = createApi({
   })
 });
 
-export const { useFetchClothingQuery, useGetCurrentClothesQuery } = clothesApi;
+export const {
+  useFetchClothingQuery,
+  useGetCurrentClothesQuery,
+  useLazyFetchClothingQuery
+} = clothesApi;

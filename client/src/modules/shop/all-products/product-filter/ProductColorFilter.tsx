@@ -36,6 +36,7 @@ const ProductColorFilter: React.FC = () => {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     searchParams.set(shopUrlParams.COLOR, e.target.value);
+    searchParams.delete(shopUrlParams.PAGE);
     setSearchParams(searchParams);
   };
 

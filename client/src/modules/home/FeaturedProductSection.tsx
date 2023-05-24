@@ -44,14 +44,14 @@ const FeaturedProductSectionStyles = styled('section')(props => ({
 const FeaturedProductSection: React.FC = () => {
   const emotionTheme = useTheme();
   const { data, isFetching } = useFetchClothingQuery({ featured: true });
-  const featuredWomenClothings = data
-    ?.filter(item => item.category[0] === Gender.WOMEN)
+  const featuredWomenClothings = data?.data.clothings
+    .filter(item => item.category[0] === Gender.WOMEN)
     .slice(0, 8);
-  const featuredMenClothings = data
-    ?.filter(item => item.category[0] === Gender.MEN)
+  const featuredMenClothings = data?.data.clothings
+    .filter(item => item.category[0] === Gender.MEN)
     .slice(0, 8);
-  const featuredUnisexClothings = data
-    ?.filter(item => item.category[0] === Gender.UNISEX)
+  const featuredUnisexClothings = data?.data.clothings
+    .filter(item => item.category[0] === Gender.UNISEX)
     .slice(0, 8);
 
   const tabItems = [

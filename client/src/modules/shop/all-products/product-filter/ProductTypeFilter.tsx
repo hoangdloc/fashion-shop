@@ -27,6 +27,7 @@ const ProductTypeFilter: React.FC = () => {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     searchParams.set(shopUrlParams.TYPE, e.target.value);
+    searchParams.delete(shopUrlParams.PAGE);
     setSearchParams(searchParams);
   };
 
