@@ -1,4 +1,3 @@
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Layout, Typography } from 'antd';
 import React from 'react';
@@ -21,72 +20,132 @@ import {
 import { MyOutlinedInput } from '~/shared/components/input';
 import { useFakeLoading } from '~/shared/hooks/useFakeLoading';
 
-const LayoutFooter = styled(Layout.Footer)(props => ({
-  backgroundColor: props.theme.colors.footerBg,
-  padding: '0 16rem',
-  '& .footer-container': {
-    padding: '4rem 0 6rem 0',
-    paddingBottom: '6rem',
-    display: 'grid',
-    // gridTemplateColumns: '25.4rem 26.8rem 17.3rem 36.3rem',
-    gridTemplateColumns: 'minmax(25.4rem, 1fr) 1fr minmax(17.3rem, 1fr) 1fr',
-    justifyItems: 'start',
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignItems: 'start',
-    columnGap: '1.6rem',
-    '& a': {
-      display: 'flex',
-      alignItems: 'start',
-      gap: '0.8rem',
-      p: {
-        fontSize: '1.4rem',
-        margin: 0
-      }
-    },
-    '& .ant-typography': {
-      fontSize: '1.6rem',
-      textTransform: 'uppercase'
-    },
-    '& > section': {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'start',
-      gap: '2.6rem',
-      '& > ul': {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1.2rem'
-      },
-      '& > div': {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        gap: '2rem',
-        form: {
-          display: 'flex',
-          alignItems: 'center',
-          '& + ul': {
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1.2rem'
-          }
-        }
-      }
-    }
-  },
-  '& .copyright': {
-    padding: '2rem 0',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    '& > .payments': {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '1.2rem'
+const LayoutFooter = styled(Layout.Footer)`
+  background-color: ${props => props.theme.colors.footerBg};
+  padding: 0 16rem;
+  @media ${props => props.theme.devices.mobile} {
+    padding: 0 2.4rem;
+  }
+`;
+
+const FooterContainer = styled.div`
+  padding: 4rem 0 6rem 0;
+  display: grid;
+  grid-template-columns: minmax(25.4rem, 1fr) 1fr minmax(17.3rem, 1fr) 1fr;
+  justify-items: start;
+  justify-content: center;
+  align-content: center;
+  align-items: start;
+  column-gap: 1.6rem;
+  @media ${props => props.theme.devices.mobile} {
+    padding: 3.2rem 0 5.3rem 0;
+    grid-template-columns: none;
+    grid-template-areas:
+      'subcribe subcribe'
+      'contact contact'
+      'quick_links get_help';
+    row-gap: 3.2rem;
+    justify-content: space-between;
+  }
+  & a {
+    display: flex;
+    align-items: start;
+    gap: 0.8rem;
+    p {
+      font-size: 1.4rem;
+      margin: 0;
     }
   }
-}));
+  & .ant-typography {
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    margin: 0;
+  }
+`;
+
+const SectionStyles = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 3rem;
+  @media ${props => props.theme.devices.mobile} {
+    gap: 1.6rem;
+  }
+  & > ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+    form {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      & > .btn-submit {
+        height: 4rem;
+        font-size: 1.4rem;
+        font-weight: 700;
+        padding: 1rem 1.6rem;
+        border: none;
+      }
+      & + ul {
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+      }
+    }
+  }
+  .subcribe-input {
+    min-width: 36.3rem;
+    max-width: 100%;
+    height: 4rem;
+    font-size: 1.4rem;
+    padding: 1rem 1.2rem;
+    border: 0.15rem solid ${props => props.theme.colors.primaryBlack};
+  }
+  @media ${props => props.theme.devices.mobile} {
+    &:first-child {
+      grid-area: contact;
+    }
+    &:nth-child(2) {
+      grid-area: get_help;
+    }
+    &:nth-child(3) {
+      grid-area: quick_links;
+    }
+    &:last-child {
+      grid-area: subcribe;
+    }
+  }
+`;
+
+const CopyrightContainer = styled.div`
+  padding: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  & > .copyright-text {
+    font-family: ${props => props.theme.fontFamily.DmSans};
+    font-size: 1.2rem;
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 1.4rem;
+    }
+  }
+  & > .payments {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+  @media ${props => props.theme.devices.mobile} {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+`;
 
 const contactItems = [
   {
@@ -164,13 +223,12 @@ const paymentItems = [
 ];
 
 const AppFooter: React.FC = () => {
-  const emotionTheme = useTheme();
   const { loading, fakeLoading } = useFakeLoading();
 
   return (
     <LayoutFooter>
-      <div className="footer-container">
-        <section>
+      <FooterContainer>
+        <SectionStyles>
           <Typography.Title level={5}>Contact us</Typography.Title>
           <ul>
             {contactItems.map(item => (
@@ -186,8 +244,8 @@ const AppFooter: React.FC = () => {
               </li>
             ))}
           </ul>
-        </section>
-        <section>
+        </SectionStyles>
+        <SectionStyles>
           <Typography.Title level={5}>Get help</Typography.Title>
           <ul>
             {getHelpItems.map(item => (
@@ -196,45 +254,32 @@ const AppFooter: React.FC = () => {
               </li>
             ))}
           </ul>
-        </section>
-        <section>
+        </SectionStyles>
+        <SectionStyles>
           <Typography.Title level={5}>Quick Link</Typography.Title>
           <ul>
             {quickLinkItems.map(item => (
               <li key={v4()}>{item.label}</li>
             ))}
           </ul>
-        </section>
-        <section>
+        </SectionStyles>
+        <SectionStyles>
           <Typography.Title level={5}>
             Subcribe for our newsletter
           </Typography.Title>
           <div>
             <form>
               <MyOutlinedInput
-                style={{
-                  minWidth: '36.3rem',
-                  maxWidth: '100%',
-                  height: '4rem',
-                  fontSize: '1.4rem',
-                  padding: '1rem 1.2rem',
-                  border: `0.15rem solid ${emotionTheme.colors.primaryBlack}`
-                }}
+                className="subcribe-input"
                 placeholder="youremail.@gmail.com"
                 placeholderColor="#666666"
               />
               <MyButton
+                className="btn-submit"
                 onClick={() => {
                   void fakeLoading();
                 }}
                 type="primary"
-                style={{
-                  height: '4rem',
-                  fontSize: '1.4rem',
-                  fontWeight: 700,
-                  padding: '1rem 1.6rem',
-                  border: 'none'
-                }}
                 loading={loading}
               >
                 Submit
@@ -254,16 +299,11 @@ const AppFooter: React.FC = () => {
               ))}
             </ul>
           </div>
-        </section>
-      </div>
+        </SectionStyles>
+      </FooterContainer>
       <hr />
-      <div className="copyright">
-        <Typography.Text
-          style={{
-            fontFamily: emotionTheme.fontFamily.DmSans,
-            fontSize: '1.2rem'
-          }}
-        >
+      <CopyrightContainer>
+        <Typography.Text className="copyright-text">
           &copy;2022 Fashion Designer, Adamo Software
         </Typography.Text>
         <ul className="payments">
@@ -277,7 +317,7 @@ const AppFooter: React.FC = () => {
             </li>
           ))}
         </ul>
-      </div>
+      </CopyrightContainer>
     </LayoutFooter>
   );
 };

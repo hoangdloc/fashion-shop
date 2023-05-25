@@ -87,6 +87,7 @@ const ProductPriceFilter: React.FC = () => {
     searchParams.set(shopUrlParams.MIN_PRICE, minPrice.toString());
     searchParams.set(shopUrlParams.MAX_PRICE, maxPrice.toString());
     searchParams.delete(shopUrlParams.PAGE);
+    searchParams.delete(shopUrlParams.KEYWORD);
     setSearchParams(searchParams);
   };
 

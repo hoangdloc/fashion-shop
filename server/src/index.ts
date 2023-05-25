@@ -28,7 +28,7 @@ app.use(cookieParser());
 
 // FAKE RESPONSE WAITING
 app.use((req: Request, res: Response, next: NextFunction) => {
-  setTimeout(() => next(), 3000);
+  setTimeout(() => next(), 1000);
 });
 
 app.use('/api/v1/clothes', clothesRouter);

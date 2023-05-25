@@ -24,7 +24,6 @@ export interface ClothesCardProps {
 const ClothesCardStyles = styled.div`
   .img-box {
     display: block;
-    // width: '26.8rem',
     width: 100%;
     height: 40.4rem;
     position: relative;
@@ -52,6 +51,9 @@ const ClothesCardStyles = styled.div`
       z-index: 2;
       color: ${props => props.theme.colors.primaryBlack};
     }
+    @media ${props => props.theme.devices.mobile} {
+      height: 36.3rem;
+    }
   }
 `;
 const Overlay = styled.div`
@@ -76,6 +78,9 @@ const InfoBox = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 1.4rem;
+    }
   }
 `;
 
@@ -85,6 +90,9 @@ const ProductPrice = styled.div`
   gap: 1.5rem;
   & > .ant-typography {
     font-size: 1.6rem;
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 1.4rem;
+    }
   }
 `;
 

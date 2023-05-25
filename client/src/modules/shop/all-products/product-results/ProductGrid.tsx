@@ -81,8 +81,7 @@ const ProductGrid: React.FC = () => {
     searchParams.get(shopUrlParams.MAX_PRICE) ?? 500
   );
 
-  const [trigger, { data, isFetching }] =
-    clothesApi.useLazyFetchClothingQuery();
+  const [trigger, { data, isFetching }] = clothesApi.useLazyFetchClothingQuery();
   const { pathname } = useLocation();
   const [pageCount, setPageCount] = useState<number>(0);
   const [forcePage, setForcePage] = useState<number>(pageParam);
@@ -128,8 +127,10 @@ const ProductGrid: React.FC = () => {
       sortByPrice: sortByPriceParam as Sorting
     });
 
+    window.scrollTo({ top: 525, behavior: 'smooth' });
+
     return () => {
-      fetchData.abort();
+      fetchData.unsubscribe();
     };
   }, [
     pathname,

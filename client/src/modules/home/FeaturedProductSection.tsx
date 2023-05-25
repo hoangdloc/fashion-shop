@@ -7,39 +7,68 @@ import { Gender } from '~/shared/@types/category';
 import CarouselCards from '~/shared/components/carousel-cards';
 import { useFetchClothingQuery } from '~/store/clothes/clothesService';
 
-const FeaturedProductSectionStyles = styled('section')(props => ({
-  padding: '6rem 16rem 7rem 16rem',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  '& .ant-tabs': {
-    width: '100%',
-    '& .ant-tabs-nav': {
-      marginBottom: '1.6rem',
-      '&::before': {
-        content: 'none'
-      },
-      '.ant-tabs-nav-list': {
-        display: 'flex',
-        gap: '6.4rem',
-        alignItems: 'center',
-        justifyContent: 'center'
-      },
-      '.ant-tabs-tab': {
-        margin: 0,
-        '&.ant-tabs-tab-active': {
-          '& > .ant-tabs-tab-btn': {
-            color: props.theme.colors.secondaryRed
+const FeaturedProductSectionStyles = styled.section`
+  padding: 6rem 16rem 7rem 16rem;
+  display: flex;
+  flex-direction: column;
+  align-items: 'center';
+  @media ${props => props.theme.devices.mobile} {
+    padding: 2.4rem;
+  }
+  & > .featured-intro {
+    text-align: center;
+    font-family: ${props => props.theme.fontFamily.Rufina};
+    font-size: 3.2rem;
+    font-weight: 700;
+    letter-spacing: 0.02rem;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 2rem;
+      margin-bottom: 0.4rem;
+    }
+  }
+  & > .featured-description {
+    width: 55.2rem;
+    text-align: center;
+    color: ${props => props.theme.colors.textSubtitle};
+    font-size: 1.6rem;
+    font-weight: 300;
+    margin-bottom: 3.6rem;
+    @media ${props => props.theme.devices.mobile} {
+      width: 100%;
+      font-size: 1.4rem;
+      margin-bottom: 2.8rem;
+    }
+  }
+  & .ant-tabs {
+    width: 100%;
+    & .ant-tabs-nav {
+      margin-bottom: 1.6rem;
+      &::before {
+        content: none;
+      }
+      .ant-tabs-nav-list {
+        display: flex;
+        gap: 6.4rem;
+        align-items: center;
+        justify-content: center;
+      }
+      .ant-tabs-tab {
+        margin: 0;
+        &.ant-tabs-tab-active {
+          & > .ant-tabs-tab-btn {
+            color: ${props => props.theme.colors.secondaryRed};
           }
         }
-      },
-      '.ant-tabs-ink-bar': {
-        backgroundColor: props.theme.colors.secondaryRed,
-        bottom: '1.2rem'
+      }
+      .ant-tabs-ink-bar {
+        background-color: ${props => props.theme.colors.secondaryRed};
+        bottom: 1.2rem;
       }
     }
   }
-}));
+`;
 
 const FeaturedProductSection: React.FC = () => {
   const emotionTheme = useTheme();
@@ -90,30 +119,12 @@ const FeaturedProductSection: React.FC = () => {
   return (
     <FeaturedProductSectionStyles>
       <Typography.Title
-        style={{
-          fontFamily: emotionTheme.fontFamily.Rufina,
-          fontSize: '3.2rem',
-          fontWeight: 700,
-          lineHeight: '3.952rem',
-          letterSpacing: '10%',
-          textTransform: 'uppercase',
-          marginBottom: '1.2rem'
-        }}
+        className="featured-intro"
         level={3}
       >
         Featured product
       </Typography.Title>
-      <Typography.Text
-        style={{
-          width: '55.2rem',
-          textAlign: 'center',
-          color: emotionTheme.colors.textSubtitle,
-          fontSize: '1.6rem',
-          fontWeight: 300,
-          lineHeight: '2.24rem',
-          marginBottom: '3.6rem'
-        }}
-      >
+      <Typography.Text className="featured-description">
         Wanna shine with the most outstanding outfits? Let&lsquo;s see our
         featured products and choose the best choice for you
       </Typography.Text>

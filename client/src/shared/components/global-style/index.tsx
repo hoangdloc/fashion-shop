@@ -13,7 +13,8 @@ const EmotionGlobalStyles: React.FC = () => {
           boxSizing: 'border-box'
         },
         html: {
-          fontSize: '62.5%'
+          fontSize: '62.5%',
+          scrollBehavior: 'smooth'
         },
         body: {
           fontFamily: theme.fontFamily.Oxygen,

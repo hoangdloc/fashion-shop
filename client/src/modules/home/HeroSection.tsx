@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useTheme } from '@emotion/react';
 import { Carousel, Typography } from 'antd';
 import type { CarouselRef } from 'antd/es/carousel';
 import React, { useRef } from 'react';
@@ -38,6 +37,11 @@ const HeroSectionStyles = styled.div`
     height: 82rem;
     width: 100%;
     background-color: black;
+    .ant-typography {
+      margin: 0;
+      color: ${props => props.theme.colors.textWhite};
+      line-height: 140%;
+    }
     .hero-img {
       opacity: 0.6;
       width: 100%;
@@ -56,10 +60,18 @@ const HeroSectionStyles = styled.div`
       align-items: center;
       justify-content: center;
       text-align: center;
-      .ant-typography {
-        margin: 0;
-        color: ${props => props.theme.colors.textWhite};
-        line-height: 140%;
+      .hero-title {
+        font-size: 5.2rem;
+        font-family: ${props => props.theme.fontFamily.PlayfairDisplay};
+        font-weight: 700;
+        letter-spacing: 0.2rem;
+        text-transform: uppercase;
+        margin-bottom: 0.8rem;
+      }
+      .hero-subtitle {
+        font-family: ${props => props.theme.fontFamily.DmSans};
+        font-size: 1.8rem;
+        margin-bottom: 4rem;
       }
     }
   }
@@ -74,9 +86,26 @@ const HeroSectionStyles = styled.div`
         height: 100%;
       }
       .hero-box {
-        top: 22.2rem;
-        width: 32.7rem;
+        align-items: flex-start;
+        top: 20.2rem;
+        width: 100%;
+        padding: 0 2.4rem;
+        .hero-title {
+          font-size: 2.8rem;
+          margin-bottom: 0.4rem;
+          text-align: start;
+        }
+        .hero-subtitle {
+          font-weight: 300;
+          font-size: 1.4rem;
+          text-align: start;
+        }
       }
+    }
+    .slick-dots.slick-dots-bottom {
+      justify-content: start;
+      margin-left: 2.4rem;
+      margin-bottom: 8.2rem;
     }
   }
 `;
@@ -117,7 +146,6 @@ const heroContentItems = [
 ];
 
 const HeroSection: React.FC = () => {
-  const emotionTheme = useTheme();
   const carouselRef = useRef<CarouselRef>(null);
 
   const handlePrevSlide = (): void => {
@@ -135,7 +163,10 @@ const HeroSection: React.FC = () => {
         icon={<LeftArrowIcon />}
         onClick={handlePrevSlide}
       />
-      <Carousel ref={carouselRef} autoplay>
+      <Carousel
+        ref={carouselRef}
+        autoplay
+      >
         {heroContentItems.map((item, index) => (
           <div
             key={index}
@@ -149,30 +180,20 @@ const HeroSection: React.FC = () => {
             />
             <div className="hero-box">
               <Typography.Title
-                className='hero-title'
-                style={{
-                  fontSize: '5.2rem',
-                  fontFamily: emotionTheme.fontFamily.PlayfairDisplay,
-                  fontWeight: 700,
-                  letterSpacing: '0.2rem',
-                  textTransform: 'uppercase',
-                  marginBottom: '0.8rem'
-                }}
+                className="hero-title"
                 level={2}
               >
                 {item.title}
               </Typography.Title>
-              <Typography.Text
-                className='hero-subtitle'
-                style={{
-                  fontFamily: emotionTheme.fontFamily.DmSans,
-                  fontSize: '1.8rem',
-                  marginBottom: '4rem'
-                }}
-              >
+              <Typography.Text className="hero-subtitle">
                 {item.description}
               </Typography.Text>
-              <MyLinkButton to={item.link}>View our shop</MyLinkButton>
+              <MyLinkButton
+                style={{ padding: '1.5rem 3.5rem' }}
+                to={item.link}
+              >
+                View our shop
+              </MyLinkButton>
             </div>
           </div>
         ))}

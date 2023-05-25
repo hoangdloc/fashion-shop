@@ -1,3 +1,4 @@
+/* eslint-disable multiline-ternary */
 import styled from '@emotion/styled';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Col, Empty, Row } from 'antd';
@@ -11,6 +12,8 @@ import {
 
 import type { Clothes } from '~/shared/@types/clothes';
 import { chunkArray } from '~/shared/utils/chunkArray';
+import { useMedia } from '~/shared/hooks/useMedia';
+import CarouselCards from '../carousel-cards';
 
 interface ListCardsProps {
   columnCount: number
@@ -21,16 +24,22 @@ interface ListCardsProps {
 
 const antdColsSystem = 24;
 
-const ListCardsStyles = styled('div')(() => ({
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '2.8rem'
-}));
+const ListCardsStyles = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.8rem;
+`;
 
 const ListCards: React.FC<ListCardsProps> = props => {
   const { data, columnCount, loading = false, loadingRows = 2 } = props;
   const [parent] = useAutoAnimate({ duration: 500 });
+
+  const resultUI = useMedia<'list' | 'carousel'>(
+    ['(min-width: 37.5rem)', '(min-width: 0)'],
+    ['list', 'carousel'],
+    'list'
+  );
 
   const renderSkeletonList = (): JSX.Element[] => {
     return new Array(loadingRows).fill(0).map(() => (
@@ -73,11 +82,21 @@ const ListCards: React.FC<ListCardsProps> = props => {
 
   return (
     <ListCardsStyles ref={parent}>
-      {loading || data === undefined
-        ? (renderSkeletonList())
-        : data != null && data.length > 0
-          ? (renderList())
-          : (<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />)}
+      {loading || data === undefined ? (
+        resultUI === 'list' ? (
+          renderSkeletonList()
+        ) : (
+          <CarouselCards loading={true} />
+        )
+      ) : data != null && data.length > 0 ? (
+        resultUI === 'list' ? (
+          renderList()
+        ) : (
+          <CarouselCards loading={false} data={data} />
+        )
+      ) : (
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      )}
     </ListCardsStyles>
   );
 };
