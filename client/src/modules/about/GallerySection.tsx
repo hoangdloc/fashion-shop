@@ -16,6 +16,10 @@ const GallerySectionStyles = styled('section')`
   align-items: center;
   justify-content: center;
   gap: 4rem;
+  @media ${props => props.theme.devices.mobile} {
+    padding: 3rem 2.4rem;
+    gap: 3rem;
+  }
   & .story-title {
     font-weight: 700;
     font-family: ${props => props.theme.fontFamily.PlayfairDisplay};
@@ -23,12 +27,18 @@ const GallerySectionStyles = styled('section')`
     font-size: 3.2rem;
     line-height: 4.3rem;
     letter-spacing: 0.2rem;
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 2rem;
+    }
   }
   & .story-content {
     font-weight: 300;
     font-size: 1.6rem;
     line-height: 2.24rem;
     color: ${props => props.theme.colors.textSubtitle};
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 1.4rem;
+    }
   }
 `;
 
@@ -42,6 +52,9 @@ const GalleryStory = styled('div')`
   .ant-typography {
     margin: 0;
     text-align: center;
+  }
+  @media ${props => props.theme.devices.mobile} {
+    width: 100%;
   }
 `;
 

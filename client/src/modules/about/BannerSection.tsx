@@ -7,6 +7,9 @@ const BannerSectionStyles = styled('section')`
   background-image: url('/img/about-us-banner.png');
   background-repeat: no-repeat;
   background-size: cover;
+  @media ${props => props.theme.devices.mobile} {
+    height: 24rem;
+  }
 `;
 
 const BannerSection: React.FC = () => {

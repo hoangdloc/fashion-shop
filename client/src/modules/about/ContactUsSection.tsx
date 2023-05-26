@@ -19,7 +19,11 @@ const ContactUsSectionStyles = styled.section`
     url('/img/contact-us.png');
   background-size: cover;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
+  @media ${props => props.theme.devices.mobile} {
+    justify-content: flex-start;
+    height: min-content;
+  }
 `;
 
 const ContactFormStyles = styled.form`
@@ -27,6 +31,11 @@ const ContactFormStyles = styled.form`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
   padding: 6rem 16rem 6rem 4rem;
+  @media ${props => props.theme.devices.mobile} {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 3rem 2.4rem;
+  }
   .ant-typography {
     color: ${props => props.theme.colors.textWhite};
     margin: 0;
@@ -38,11 +47,18 @@ const ContactFormStyles = styled.form`
       letter-spacing: 0.2rem;
       margin-bottom: 0.8rem;
       line-height: 4.3rem;
+      @media ${props => props.theme.devices.mobile} {
+        font-size: 2rem;
+        margin-bottom: 0.4rem;
+      }
     }
     &.contact-subtitle {
       font-weight: 300;
       font-size: 1.6rem;
       color: rgba(256, 256, 256, 0.8);
+      @media ${props => props.theme.devices.mobile} {
+        font-size: 1.4rem;
+      }
     }
   }
   .send-btn {
@@ -58,6 +74,9 @@ const ContactFormStyles = styled.form`
       background-color: ${props => props.theme.colors.textWhite};
       border-color: ${props => props.theme.colors.textWhite};
     }
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 1.4rem;
+    }
   }
 `;
 
@@ -66,6 +85,14 @@ const ContactFormFieldsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
+  @media ${props => props.theme.devices.mobile} {
+    margin-top: 3.2rem;
+    & input,
+    label,
+    textarea {
+      font-size: 1.4rem;
+    }
+  }
 `;
 
 const schema = yup.object().shape({

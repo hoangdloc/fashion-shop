@@ -13,6 +13,10 @@ const StorySectionStyles = styled('section')`
   align-items: center;
   justify-content: center;
   gap: 8rem;
+  @media ${props => props.theme.devices.mobile} {
+    padding: 3rem 2.4rem;
+    gap: 4rem;
+  }
   & .story-title {
     font-weight: 700;
     font-family: ${props => props.theme.fontFamily.PlayfairDisplay};
@@ -20,12 +24,18 @@ const StorySectionStyles = styled('section')`
     font-size: 3.2rem;
     line-height: 4.3rem;
     letter-spacing: 0.2rem;
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 2rem;
+    }
   }
   & .story-content {
     font-weight: 300;
     font-size: 1.6rem;
     line-height: 2.24rem;
     color: ${props => props.theme.colors.textSubtitle};
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 1.4rem;
+    }
   }
 `;
 
@@ -36,6 +46,10 @@ const FirstExpandationStyles = styled('div')`
   justify-content: center;
   width: 74.2rem;
   gap: 1.2rem;
+  @media ${props => props.theme.devices.mobile} {
+    width: 100%;
+    gap: 0;
+  }
   .ant-typography {
     margin: 0;
     text-align: center;
@@ -45,9 +59,18 @@ const FirstExpandationStyles = styled('div')`
 const StoryContainerStyles = styled('div')`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  /* justify-items: center; */
   column-gap: 11.1rem;
   row-gap: 8rem;
+  @media ${props => props.theme.devices.mobile} {
+    width: 100%;
+    grid-template-columns: none;
+    grid-template-areas:
+      'mission_image'
+      'mission-content'
+      'contact_image'
+      'contact-content';
+    row-gap: 3rem;
+  }
 `;
 
 const StoryImgBox = styled('div')<{ bgImgSrc: string }>`
@@ -56,6 +79,16 @@ const StoryImgBox = styled('div')<{ bgImgSrc: string }>`
   background-image: url(${props => props.bgImgSrc});
   background-repeat: no-repeat;
   background-size: cover;
+  @media ${props => props.theme.devices.mobile} {
+    width: 100%;
+    height: 32rem;
+    &:first-of-type {
+      grid-area: mission_image;
+    }
+    &:last-of-type {
+      grid-area: contact_image;
+    }
+  }
 `;
 
 const StoryContentBox = styled('div')`
@@ -67,6 +100,26 @@ const StoryContentBox = styled('div')`
   gap: 1.2rem;
   .ant-typography {
     margin: 0;
+    width: 100%;
+  }
+  & > .contact-btn {
+    padding: 1.5rem 3.7rem;
+    text-transform: uppercase;
+    height: 5.2rem;
+    margin-top: 4rem;
+    @media ${props => props.theme.devices.mobile} {
+      margin: 3rem auto;
+    }
+  }
+  @media ${props => props.theme.devices.mobile} {
+    width: 100%;
+    text-align: center;
+    &:first-of-type {
+      grid-area: mission_content;
+    }
+    &:last-of-type {
+      grid-area: contact_content;
+    }
   }
 `;
 
@@ -141,12 +194,7 @@ const StorySection: React.FC = () => {
             giving customers what they want.
           </Typography.Text>
           <MyButton
-            style={{
-              padding: '1.5rem 3.7rem',
-              textTransform: 'uppercase',
-              height: '5.2rem',
-              marginTop: '4rem'
-            }}
+            className='contact-btn'
             type="primary"
             onClick={() => {
               navigate(AppRoute.CONTACT);

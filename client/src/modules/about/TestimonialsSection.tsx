@@ -18,13 +18,21 @@ const TestimonialsSectionStyles = styled('section')`
   align-items: center;
   justify-content: center;
   text-align: center;
+  @media ${props => props.theme.devices.mobile} {
+    padding: 4rem 0 2.8rem 0;
+    height: min-content;
+  }
   .ant-typography {
     color: ${props => props.theme.colors.textWhite};
     &.testimonial-intro {
       margin-bottom: 1.4rem;
       font-size: 1.4rem;
       font-weight: 700;
-      line-height: 0.196rem;
+      line-height: 0.02rem;
+      @media ${props => props.theme.devices.mobile} {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+      }
     }
     &.testimonial-title {
       margin: 0;
@@ -35,12 +43,27 @@ const TestimonialsSectionStyles = styled('section')`
       margin-bottom: 2.8rem;
       font-weight: 700;
       line-height: 4.3rem;
+      @media ${props => props.theme.devices.mobile} {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
     }
   }
 `;
 
 const CarouselContainer = styled('div')`
   position: relative;
+  @media ${props => props.theme.devices.mobile} {
+    width: 100%;
+  }
+  .carousel {
+    height: 20.8rem;
+    width: 74.2rem;
+    @media ${props => props.theme.devices.mobile} {
+      width: 100%;
+      height: 24rem;
+    }
+  }
   .slide-btn {
     position: absolute;
     top: 15%;
@@ -65,6 +88,9 @@ const CarouselContainer = styled('div')`
     &__right {
       right: -16rem;
     }
+    @media ${props => props.theme.devices.mobile} {
+      display: none;
+    }
   }
 `;
 
@@ -72,6 +98,10 @@ const TestimonialItemStyles = styled('div')`
   display: flex !important;
   flex-direction: column !important;
   gap: 1.2rem;
+  @media ${props => props.theme.devices.mobile} {
+    gap: 1rem;
+    padding: 0 2.4rem;
+  }
   .ant-typography {
     font-size: 1.6rem;
     &.description {
@@ -92,6 +122,15 @@ const TestimonialItemStyles = styled('div')`
         top: 50%;
         left: 37%;
         transform: translateY(-50%);
+      }
+    }
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 1.4rem;
+      &.customer-name {
+        &::before {
+          width: 2rem;
+          left: 30%;
+        }
       }
     }
   }
@@ -151,7 +190,7 @@ const TestimonialsSection: React.FC = () => {
         </button>
         <Carousel
           ref={carouselRef}
-          style={{ minHeight: '20.8rem', width: '74.2rem' }}
+          className="carousel"
           autoplay
         >
           {testimonialItems.map((item, index) => (
