@@ -108,16 +108,16 @@ const SectionStyles = styled.section`
     border: 0.15rem solid ${props => props.theme.colors.primaryBlack};
   }
   @media ${props => props.theme.devices.mobile} {
-    &:first-child {
+    &:first-of-type {
       grid-area: contact;
     }
-    &:nth-child(2) {
+    &:nth-of-type(2) {
       grid-area: get_help;
     }
-    &:nth-child(3) {
+    &:nth-of-type(3) {
       grid-area: quick_links;
     }
-    &:last-child {
+    &:last-of-type {
       grid-area: subcribe;
     }
   }

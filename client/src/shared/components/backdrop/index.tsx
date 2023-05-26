@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import React from 'react';
 import { createPortal } from 'react-dom';
+import { useLockBodyScroll } from '~/shared/hooks/useLockBodyScroll';
 
 const BackdropStyles = styled(motion.div)`
   position: fixed;
@@ -16,6 +17,8 @@ const BackdropStyles = styled(motion.div)`
 `;
 
 const Backdrop: React.FC = () => {
+  useLockBodyScroll();
+
   return createPortal(
     <BackdropStyles
       initial={{ opacity: 0 }}

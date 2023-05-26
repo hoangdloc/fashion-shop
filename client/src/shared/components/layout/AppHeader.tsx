@@ -24,8 +24,8 @@ import { useScrollDirection } from '~/shared/hooks/useScrollListener';
 import { renderPrice } from '~/shared/utils/renderPrice';
 import { authApi } from '~/store/auth/authService';
 import type { RootState } from '~/store/store';
-import { BurgerButton } from '../button';
 import { CartIcon, PhoneIcon } from '../icon';
+import BurgerSection from './BurgerSection';
 
 const LayoutHeader = styled(Layout.Header)`
   position: sticky;
@@ -89,7 +89,7 @@ const MainNav = styled.nav`
     width: 7.6rem;
     height: 7rem;
   }
-  & > .burger-btn {
+  & > .burger-section {
     display: none;
   }
   @media ${props => props.theme.devices.mobile} {
@@ -99,7 +99,7 @@ const MainNav = styled.nav`
       width: 4.3rem;
       height: 4rem;
     }
-    & > .burger-btn {
+    & > .burger-section {
       display: block;
     }
   }
@@ -124,10 +124,11 @@ const NavList = styled.ul`
       content: '';
       display: block;
       position: absolute;
-      border: 0.15rem solid ${props => props.theme.colors.secondaryRed};
+      height: 0.15rem;
       width: 1.6rem;
       bottom: -0.4rem;
       left: 50%;
+      background-color: ${props => props.theme.colors.secondaryRed};
       transform: translateX(-50%);
       animation: ${props => props.theme.keyframes.pulse};
     }
@@ -349,7 +350,7 @@ const AppHeader: React.FC = () => {
             $ {cardTotal.toFixed(2)}
           </Typography.Text>
         </CutomerCart>
-        <BurgerButton className="burger-btn" />
+        <BurgerSection className="burger-section" />
       </MainNav>
     </LayoutHeader>
   );
