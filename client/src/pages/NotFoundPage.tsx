@@ -1,4 +1,3 @@
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Typography } from 'antd';
 import React, { useLayoutEffect } from 'react';
@@ -6,47 +5,70 @@ import { Link } from 'react-router-dom';
 
 import { AppRoute } from '~/config/route';
 
-const NotFoundPageStyles = styled('section')(props => ({
-  height: 'calc(100vh - 14.2rem - 31.5rem)',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: props.theme.colors.primaryBlack,
-  textAlign: 'center'
-}));
+const NotFoundPageStyles = styled.section`
+  height: calc(100vh - 14.2rem - 31.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: ${props => props.theme.colors.primaryBlack};
+  text-align: center;
+  & > .title {
+    font-size: 4.8rem;
+    margin-top: -1rem;
+  }
+  & > .status {
+    font-size: 2.4rem;
+    margin-bottom: 1.6rem;
+  }
+  & > .description {
+    font-size: 1.4rem;
+    width: 48rem;
+    color: ${props => props.theme.colors.textGray};
+    margin-bottom: 1.4rem;
+  }
+  & > .homepage-link {
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 0.6rem;
+    font-size: 1.4rem;
+  }
+  @media ${props => props.theme.devices.mobile} {
+    height: calc(100vh - 6.4rem - 24.8rem);
+    & > .title {
+      font-size: 3.2rem;
+      margin-top: 0;
+    }
+    & > .status {
+      font-size: 2rem;
+      margin-bottom: 1.4rem;
+    }
+    & > .description {
+      font-size: 1.2rem;
+      width: 32.8rem;
+      margin-bottom: 1.6rem;
+    }
+    & > .homepage-link {
+      font-size: 1.2rem;
+    }
+  }
+`;
 
 const NotFoundPage: React.FC = () => {
-  const emotionTheme = useTheme();
-
   useLayoutEffect(() => {
     document.title = 'Fashion | Not Found';
   }, []);
 
   return (
     <NotFoundPageStyles>
-      <Typography.Title style={{ fontSize: '4.8rem', marginTop: '-1rem' }}>Oops!</Typography.Title>
-      <Typography.Text style={{ fontSize: '2.4rem', marginBottom: '1.6rem' }}>
-        404 - Page Not Found
-      </Typography.Text>
-      <Typography.Text
-        style={{
-          fontSize: '1.4rem',
-          width: '48rem',
-          color: emotionTheme.colors.textGray,
-          marginBottom: '1.4rem'
-        }}
-      >
+      <Typography.Title className="title">Oops!</Typography.Title>
+      <Typography.Text className="status">404 - Page Not Found</Typography.Text>
+      <Typography.Text className="description">
         The page you looking for might have been removed had its name changed or
         is temporaily unvailable.
       </Typography.Text>
       <Link
-        style={{
-          textTransform: 'uppercase',
-          textDecoration: 'underline',
-          textUnderlineOffset: '0.6rem',
-          fontSize: '1.4rem'
-        }}
+        className="homepage-link"
         to={AppRoute.HOME}
       >
         Go to homepage

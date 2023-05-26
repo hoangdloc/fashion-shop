@@ -7,7 +7,7 @@ import { LeftArrowIcon, RightArrowIcon } from '~/shared/components/icon';
 
 const TestimonialsSectionStyles = styled('section')`
   width: 100vw;
-  height: 42.3rem;
+  min-height: 42.3rem;
   padding: 8rem 0 5.6rem 0;
   position: relative;
   background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
@@ -20,7 +20,6 @@ const TestimonialsSectionStyles = styled('section')`
   text-align: center;
   @media ${props => props.theme.devices.mobile} {
     padding: 4rem 0 2.8rem 0;
-    height: min-content;
   }
   .ant-typography {
     color: ${props => props.theme.colors.textWhite};
@@ -57,11 +56,11 @@ const CarouselContainer = styled('div')`
     width: 100%;
   }
   .carousel {
-    height: 20.8rem;
+    min-height: 20.8rem;
     width: 74.2rem;
     @media ${props => props.theme.devices.mobile} {
       width: 100%;
-      height: 24rem;
+      min-height: 30rem;
     }
   }
   .slide-btn {
@@ -129,7 +128,7 @@ const TestimonialItemStyles = styled('div')`
       &.customer-name {
         &::before {
           width: 2rem;
-          left: 30%;
+          left: 25%;
         }
       }
     }

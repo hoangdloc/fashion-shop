@@ -70,6 +70,7 @@ const SectionStyles = styled.section`
   gap: 3rem;
   @media ${props => props.theme.devices.mobile} {
     gap: 1.6rem;
+    width: 100%;
   }
   & > ul {
     display: flex;
@@ -81,16 +82,31 @@ const SectionStyles = styled.section`
     flex-direction: column;
     align-items: flex-start;
     gap: 2rem;
+    width: 100%;
     form {
       width: 100%;
       display: flex;
       align-items: center;
+      & > .subcribe-input {
+        width: 36.3rem;
+        max-width: 100%;
+        height: 4rem;
+        font-size: 1.4rem;
+        padding: 1rem 1.2rem;
+        border: 0.15rem solid ${props => props.theme.colors.primaryBlack};
+        @media ${props => props.theme.devices.mobile} {
+          width: 100%;
+        }
+      }
       & > .btn-submit {
         height: 4rem;
         font-size: 1.4rem;
         font-weight: 700;
         padding: 1rem 1.6rem;
         border: none;
+        @media ${props => props.theme.devices.mobile} {
+          
+        }
       }
       & + ul {
         display: flex;
@@ -98,14 +114,6 @@ const SectionStyles = styled.section`
         gap: 1.2rem;
       }
     }
-  }
-  .subcribe-input {
-    min-width: 36.3rem;
-    max-width: 100%;
-    height: 4rem;
-    font-size: 1.4rem;
-    padding: 1rem 1.2rem;
-    border: 0.15rem solid ${props => props.theme.colors.primaryBlack};
   }
   @media ${props => props.theme.devices.mobile} {
     &:first-of-type {
