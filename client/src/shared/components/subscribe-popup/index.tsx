@@ -15,15 +15,25 @@ import type { RootState } from '~/store/store';
 const SubcribePopupStyles = styled(Modal)`
   .ant-modal-content {
     padding: 0;
-    min-height: 40rem;
+    height: 40rem;
+    @media ${props => props.theme.devices.mobile} {
+      height: 68rem;
+    }
     & > .ant-modal-body {
       height: 100%;
       & > .popup-container {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         height: 100%;
+        @media ${props => props.theme.devices.mobile} {
+          grid-template-columns: 1fr;
+        }
         .subcribe-box {
           padding: 8rem 2rem;
+          @media ${props => props.theme.devices.mobile} {
+            padding: 2.8rem 2.4rem 6rem 2.4rem;
+            height: 29.6rem;
+          }
           .title {
             font-size: 2.4rem;
             font-family: ${props => props.theme.fontFamily.PlayfairDisplay};
@@ -61,11 +71,20 @@ const SubcribePopupStyles = styled(Modal)`
             }
           }
         }
-        img {
+        .subcribe-img {
           width: 100%;
           height: 40rem;
           object-fit: cover;
+          @media ${props => props.theme.devices.mobile} {
+            height: calc(68rem - 29.6rem);
+          }
         }
+      }
+    }
+    & > .ant-modal-close {
+      color: ${props => props.theme.colors.textWhite};
+      @media ${props => props.theme.devices.mobile} {
+        color: ${props => props.theme.colors.horizontalColor};
       }
     }
   }
@@ -128,6 +147,7 @@ const SubcribePopup: React.FC = () => {
           </MyCheckbox>
         </div>
         <img
+          className="subcribe-img"
           src={subcribeImg}
           alt="A desk with some tools"
         />
