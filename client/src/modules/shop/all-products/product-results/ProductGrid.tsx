@@ -23,11 +23,17 @@ const ProductGridContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 6.5rem;
+  @media ${props => props.theme.devices.mobile} {
+    gap: 4rem;
+  }
   & > .pagination {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1.6rem;
+    @media ${props => props.theme.devices.mobile} {
+      gap: 0.8rem;
+    }
     & .page-num,
     .prev-btn,
     .next-btn {
@@ -44,6 +50,11 @@ const ProductGridContainer = styled.div`
       &:hover {
         border: 0.1rem solid ${props => props.theme.colors.secondaryRed};
         color: ${props => props.theme.colors.secondaryRed};
+      }
+      @media ${props => props.theme.devices.mobile} {
+        width: 3.2rem;
+        height: 3.2rem;
+        font-size: 1.4rem;
       }
     }
     & .disabled-btn,
@@ -81,7 +92,8 @@ const ProductGrid: React.FC = () => {
     searchParams.get(shopUrlParams.MAX_PRICE) ?? 500
   );
 
-  const [trigger, { data, isFetching }] = clothesApi.useLazyFetchClothingQuery();
+  const [trigger, { data, isFetching }] =
+    clothesApi.useLazyFetchClothingQuery();
   const { pathname } = useLocation();
   const [pageCount, setPageCount] = useState<number>(0);
   const [forcePage, setForcePage] = useState<number>(pageParam);
@@ -127,7 +139,7 @@ const ProductGrid: React.FC = () => {
       sortByPrice: sortByPriceParam as Sorting
     });
 
-    window.scrollTo({ top: 525, behavior: 'smooth' });
+    // window.scrollTo({ top: 525, behavior: 'smooth' });
 
     return () => {
       fetchData.unsubscribe();
@@ -175,6 +187,7 @@ const ProductGrid: React.FC = () => {
           breakLabel="..."
           pageCount={pageCount}
           forcePage={forcePage}
+          marginPagesDisplayed={1}
           pageRangeDisplayed={2}
           nextLabel={<NextBtnIcon />}
           previousLabel={<PrevBtnIcon />}

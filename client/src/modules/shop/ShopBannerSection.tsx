@@ -22,6 +22,9 @@ const ShopBannerSectionStyles = styled.section<{ imageUrl: string }>`
     url(${props => props.imageUrl});
   background-repeat: no-repeat;
   background-size: cover;
+  @media ${props => props.theme.devices.mobile} {
+    height: 20rem;
+  }
 `;
 
 const ShopBannerSection: React.FC = () => {

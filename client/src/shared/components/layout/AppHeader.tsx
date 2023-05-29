@@ -25,7 +25,7 @@ import { renderPrice } from '~/shared/utils/renderPrice';
 import { authApi } from '~/store/auth/authService';
 import type { RootState } from '~/store/store';
 import { CartIcon, PhoneIcon } from '../icon';
-import BurgerSection from './BurgerSection';
+import BurgerPopup from './BurgerPopup';
 
 const LayoutHeader = styled(Layout.Header)`
   position: sticky;
@@ -37,6 +37,9 @@ const LayoutHeader = styled(Layout.Header)`
   padding: 0;
   border-bottom: 0.1rem solid ${props => props.theme.colors.horizontalColor};
   transition: all 0.5s ease-in-out;
+  -webkit-box-shadow: 0 0.3rem 0.5rem rgba(57, 63, 72, 0.3);
+  -moz-box-shadow: 0 0.3rem 0.5rem rgba(57, 63, 72, 0.3);
+  box-shadow: 0 0.3rem 0.5rem rgba(57, 63, 72, 0.3);
   &[data-scroll='down'] {
     visibility: visible;
     opacity: 1;
@@ -350,7 +353,7 @@ const AppHeader: React.FC = () => {
             $ {cardTotal.toFixed(2)}
           </Typography.Text>
         </CutomerCart>
-        <BurgerSection className="burger-section" />
+        <BurgerPopup className="burger-section" />
       </MainNav>
     </LayoutHeader>
   );

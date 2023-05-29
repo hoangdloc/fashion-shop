@@ -14,6 +14,9 @@ const ProductCategoryFilterContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
+  @media ${props => props.theme.devices.mobile} {
+    gap: 1.2rem;
+  }
 `;
 
 const categoryFilterItems: RadioItems[] = Object.values(Type).map(type => ({

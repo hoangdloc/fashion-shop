@@ -4,25 +4,34 @@ import ProductTypeFilter from './ProductTypeFilter';
 import ProductPriceFilter from './ProductPriceFilter';
 import ProductColorFilter from './ProductColorFilter';
 import ProductSizeFilter from './ProductSizeFilter';
+import SearchBar from '../product-results/SearchBar';
+import SortingSelect from '../product-results/SortingSelect';
 
-const SideToolbarContainer = styled.aside`
+const DrawerBody = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5.6rem;
-  @media ${props => props.theme.devices.mobile} {
-    display: none;
-  }
+  gap: 3.2rem;
 `;
 
-const SideToolbar: React.FC = () => {
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+`;
+
+const FiltersDrawer: React.FC = () => {
   return (
-    <SideToolbarContainer>
+    <DrawerBody>
+      <Wrapper>
+        <SearchBar />
+        <SortingSelect />
+      </Wrapper>
       <ProductTypeFilter />
       <ProductPriceFilter />
       <ProductColorFilter />
       <ProductSizeFilter />
-    </SideToolbarContainer>
+    </DrawerBody>
   );
 };
 
-export default SideToolbar;
+export default FiltersDrawer;

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Typography } from 'antd';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { AppRoute } from '~/config/route';
 import { MyLinkButton } from '~/shared/components/button';
@@ -24,11 +24,11 @@ const ShortIntroduceSectionStyles = styled.section`
     justify-content: start;
     padding: 0 2.4rem;
     background-image: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.5),
-      rgba(0, 0, 0, 0.5)
-    ),
-    url('./img/intro.png');
+        0deg,
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0.5)
+      ),
+      url('./img/intro.png');
   }
 `;
 
@@ -85,7 +85,7 @@ const IntroBox = styled.div`
 
 const ShortIntroduceSection: React.FC = () => {
   const descriptionLength = useMedia<'long' | 'short'>(
-    ['(min-width: 37.5rem)', '(min-width: 0)'],
+    ['(min-width: 37.5em)', '(min-width: 0)'],
     ['long', 'short'],
     'long'
   );
@@ -96,7 +96,7 @@ const ShortIntroduceSection: React.FC = () => {
         <Typography.Title className="title">Our mission</Typography.Title>
         <Typography.Text className="description">
           {descriptionLength === 'long' && (
-            <>
+            <Fragment>
               Fashion is a contemporary clothing store known for its
               trend-driven styles with affordable prices. Drawing inspiration
               from the latest trends, from street style to runway, Fashion
@@ -105,16 +105,16 @@ const ShortIntroduceSection: React.FC = () => {
               Fashion store can keep you going from day-to-night. Shop the
               latest collection from Fashion clothing line, ranging in dresses
               to tops, backpacks, rompers, pants, outerwear, watches and shoes.
-            </>
+            </Fragment>
           )}
           {descriptionLength === 'short' && (
-            <>
+            <Fragment>
               Fashion is a contemporary clothing store known for its
               trend-driven styles with affordable prices. Drawing inspiration
               from the latest trends, from street style to runway, Fashion
               clothing store offers an array of styles that is fit for the
               fashion loving people.
-            </>
+            </Fragment>
           )}
         </Typography.Text>
         <MyLinkButton

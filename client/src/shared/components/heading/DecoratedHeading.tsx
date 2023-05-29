@@ -22,6 +22,13 @@ const DecoratedHeadingStyles = styled.div`
     bottom: -1.2rem;
     transform: translateY(-50%);
   }
+  @media ${props => props.theme.devices.mobile} {
+    font-size: 1.6rem;
+    letter-spacing: 0.08rem;
+    &::after {
+      width: 4.8rem;
+    }
+  }
 `;
 
 const DecoratedHeading: React.FC<HeadingProps> = ({

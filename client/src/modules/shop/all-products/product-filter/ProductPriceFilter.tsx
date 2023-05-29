@@ -26,20 +26,36 @@ const ProductPriceFilterContainer = styled.div`
       }
     }
   }
+  @media ${props => props.theme.devices.mobile} {
+    width: 100%;
+    gap: 1.2rem;
+  }
 `;
 
 const PriceFilterBox = styled.div`
   display: flex;
   align-items: center;
   gap: 1.2rem;
+  @media ${props => props.theme.devices.mobile} {
+    gap: 2.4rem;
+    & > .ant-btn {
+      width: 10rem;
+    }
+  }
 `;
 
 const DualInputRangeContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.8rem;
+  @media ${props => props.theme.devices.mobile} {
+    gap: 1.2rem;
+  }
   & > .price-input {
     width: 6rem;
+    @media ${props => props.theme.devices.mobile} {
+      width: 8rem;
+    }
   }
 `;
 

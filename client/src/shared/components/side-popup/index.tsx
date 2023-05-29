@@ -15,7 +15,7 @@ const SidePopupStyles = styled(motion.div)`
   position: fixed;
   background-color: ${props => props.theme.colors.bgWhite};
   width: 26.5rem;
-  min-height: 31.8rem;
+  min-height: 37.5rem;
   right: 0;
   top: 6.4rem;
   z-index: 1000;

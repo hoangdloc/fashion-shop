@@ -1,18 +1,23 @@
+import { LogoutOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { Fragment, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { AppRoute, ShopRoute } from '~/config/route';
 import { useCart } from '~/contexts/cart-context';
-import {
+import
+{
   BackArrowIcon,
   BurgerIcon,
   RightChevronIcon
 } from '~/shared/components/icon';
 import SidePopup from '~/shared/components/side-popup';
 import { useOnClickOutside } from '~/shared/hooks/useOnClickOutside';
-import { MyLinkButton } from '../button';
+import { authApi } from '~/store/auth/authService';
+import { MyButton, MyLinkButton } from '../button';
+import { type RootState } from '~/store/store';
 
 const BurgerPopupContainer = styled(motion.div)`
   display: flex;
@@ -37,6 +42,10 @@ const BurgerPopupContainer = styled(motion.div)`
       border: solid 0.15rem ${props => props.theme.colors.secondaryRed};
       color: ${props => props.theme.colors.secondaryRed};
     }
+  }
+  & > .logout-btn {
+    font-size: 1.6rem;
+    padding: 0;
   }
 `;
 
@@ -115,13 +124,17 @@ const shopItems = [
   }
 ];
 
-const BurgerSection: React.FC<
+const BurgerPopup: React.FC<
 React.HTMLAttributes<HTMLButtonElement>
 > = props => {
   const [showAppMenu, setShowAppMenu] = useState<boolean>(false);
   const [showShopMenu, setShowShopMenu] = useState<boolean>(false);
   const burgerAppMenuRef = useRef<HTMLDivElement>(null);
   const { cart } = useCart();
+  const [trigger] = authApi.useLazyUserLogoutQuery();
+  const isLoggingOut = useSelector(
+    (state: RootState) => state.auth.isLoggingOut
+  );
 
   const handleOpenAppMenu = (): void => {
     setShowAppMenu(true);
@@ -221,6 +234,17 @@ React.HTMLAttributes<HTMLButtonElement>
               >
                 Cart ({cart.length})
               </MyLinkButton>
+              <MyButton
+                icon={<LogoutOutlined />}
+                type="ghost"
+                className="logout-btn"
+                onClick={() => {
+                  void trigger();
+                }}
+                loading={isLoggingOut}
+              >
+                Logout
+              </MyButton>
             </BurgerPopupContainer>
           )}
           {showShopMenu && (
@@ -262,4 +286,4 @@ React.HTMLAttributes<HTMLButtonElement>
   );
 };
 
-export default BurgerSection;
+export default BurgerPopup;

@@ -19,6 +19,12 @@ const BreadcrumbShopSection = styled.section`
       color: inherit;
     }
   }
+  @media ${props => props.theme.devices.mobile} {
+    padding: 1.4rem 2.4rem;
+    & > .ant-breadcrumb {
+      font-size: 1.4rem;
+    }
+  }
 `;
 
 const breadcrumbNameMap: Record<string, string> = {

@@ -54,7 +54,7 @@ const imgItems = [
 
 const PartnerRibbon: React.FC = () => {
   const isCarousel = useMedia<boolean>(
-    ['(min-width: 37.5rem)', '(min-width: 0)'],
+    ['(min-width: 37.5em)', '(min-width: 0)'],
     [false, true],
     false
   );

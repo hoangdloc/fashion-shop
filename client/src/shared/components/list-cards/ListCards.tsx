@@ -36,7 +36,7 @@ const ListCards: React.FC<ListCardsProps> = props => {
   const [parent] = useAutoAnimate({ duration: 500 });
 
   const resultUI = useMedia<'list' | 'carousel'>(
-    ['(min-width: 37.5rem)', '(min-width: 0)'],
+    ['(min-width: 37.5em)', '(min-width: 0)'],
     ['list', 'carousel'],
     'list'
   );
