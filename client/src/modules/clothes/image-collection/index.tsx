@@ -83,26 +83,24 @@ const ImageCollection: React.FC = () => {
         ))}
       </ImageBoxListContainer>
       <CurrentImageBox>
-        {
-          <ReactImageMagnify
-            {...{
-              smallImage: {
-                alt: currentClothes.name,
-                isFluidWidth: false,
-                width: 363,
-                height: 550,
-                src: currentImage ?? currentClothes.images[0]
-              },
-              largeImage: {
-                src: currentImage ?? currentClothes.images[0],
-                width: 1200,
-                height: 1600
-              },
-              imageClassName: 'small-image',
-              style: { zIndex: 1 }
-            }}
-          />
-        }
+        <ReactImageMagnify
+          {...{
+            smallImage: {
+              alt: currentClothes.name,
+              isFluidWidth: false,
+              width: 363,
+              height: 550,
+              src: currentImage ?? currentClothes.images[0]
+            },
+            largeImage: {
+              src: currentImage ?? currentClothes.images[0],
+              width: 1200,
+              height: 1600
+            },
+            imageClassName: 'small-image',
+            style: { zIndex: 1 }
+          }}
+        />
       </CurrentImageBox>
     </ImageCollectionContainer>
   );

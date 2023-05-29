@@ -46,6 +46,9 @@ const CollapseContainer = styled(Collapse)`
     font-size: 1.6rem;
     list-style: square inside;
     color: ${props => props.theme.colors.textSubtitle};
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 1.4rem;
+    }
   }
 `;
 

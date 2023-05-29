@@ -32,6 +32,13 @@ const ClothesInformationContainer = styled.div`
     font-size: 1.6rem;
     color: ${props => props.theme.colors.textSubtitle};
     margin-bottom: 4rem;
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 1.4rem;
+      margin-bottom: 3.2rem;
+    }
+  }
+  @media ${props => props.theme.devices.mobile} {
+    padding: 0 2.4rem;
   }
 `;
 
@@ -39,6 +46,13 @@ const ClothesTitle = styled.div`
   display: flex;
   align-items: center;
   gap: 1.6rem;
+  margin-bottom: 2rem;
+  @media ${props => props.theme.devices.mobile} {
+    gap: 1.2rem;
+    margin-bottom: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
   & > .product-name {
     margin: 0;
     font-weight: 400;
@@ -46,27 +60,43 @@ const ClothesTitle = styled.div`
     font-size: 2.8rem;
     letter-spacing: 0.2rem;
     text-transform: uppercase;
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 2rem;
+      letter-spacing: 0.1rem;
+    }
   }
   & > .product-badge {
     height: 100%;
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 1.2rem;
+    }
   }
-  margin-bottom: 2rem;
 `;
 
 const ProductPrice = styled.div`
   display: flex;
   align-items: center;
   gap: 1.6rem;
+  margin-bottom: 2rem;
+  @media ${props => props.theme.devices.mobile} {
+    margin-bottom: 1.6rem;
+  }
   & > .ant-typography {
     font-size: 3.2rem;
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 2.4rem;
+    }
   }
-  margin-bottom: 2rem;
 `;
 
 const AddToCartBox = styled.div`
   display: flex;
   align-items: center;
   gap: 2.4rem;
+  margin-bottom: 2.8rem;
+  @media ${props => props.theme.devices.mobile} {
+    margin-bottom: 2.4rem;
+  }
   & > .quantity-box {
     border: none;
     & > .quantity-btn {
@@ -82,12 +112,22 @@ const AddToCartBox = styled.div`
       &:active {
         transform: scale(1.05);
       }
+      @media ${props => props.theme.devices.mobile} {
+        width: 4rem;
+        height: 4rem;
+        padding: 1.2rem;
+      }
     }
     & > .quantity-text {
       height: 5.2rem;
       width: 8.8rem;
       background-color: #f9f9f9;
       font-size: 1.6rem;
+      @media ${props => props.theme.devices.mobile} {
+        height: 4rem;
+        width: 6.6rem;
+        font-size: 1.4rem;
+      }
     }
   }
   & > .action-btn {
@@ -96,8 +136,12 @@ const AddToCartBox = styled.div`
     text-transform: uppercase;
     font-size: 1.6rem;
     font-weight: 700;
+    @media ${props => props.theme.devices.mobile} {
+      height: 4rem;
+      padding: 0 2rem;
+      font-size: 1.4rem;
+    }
   }
-  margin-bottom: 2.8rem;
 `;
 
 const ClothesInformation: React.FC = () => {

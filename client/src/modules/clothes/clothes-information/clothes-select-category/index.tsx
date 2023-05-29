@@ -18,13 +18,21 @@ const Container = styled.div`
   align-items: start;
   gap: 1.8rem;
   margin-bottom: 2.8rem;
+  @media ${props => props.theme.devices.mobile} {
+    margin-bottom: 2rem;
+  }
 `;
 
-const ClothesSelectCategory: React.FC<ClothesSelectCategoryProps> = ({ colors, sizes }) => {
-  return <Container>
-    <ClothesColorSelect colors={colors} />
-    <ClothesSizeSelect sizes={sizes} />
-  </Container>;
+const ClothesSelectCategory: React.FC<ClothesSelectCategoryProps> = ({
+  colors,
+  sizes
+}) => {
+  return (
+    <Container>
+      <ClothesColorSelect colors={colors} />
+      <ClothesSizeSelect sizes={sizes} />
+    </Container>
+  );
 };
 
 export default ClothesSelectCategory;

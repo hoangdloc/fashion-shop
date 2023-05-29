@@ -13,6 +13,7 @@ import { shopUrlParams } from '~/shared/@types/ShopURLParams';
 import { Color, Gender, Type } from '~/shared/@types/category';
 import { Size } from '~/shared/@types/size';
 import { Sorting } from '~/shared/@types/sorting';
+import { useMedia } from '~/shared/hooks/useMedia';
 
 const ITEM_PER_PAGE = 9;
 
@@ -99,6 +100,12 @@ const ProductGrid: React.FC = () => {
   const [forcePage, setForcePage] = useState<number>(pageParam);
   const clothings = data?.data.clothings;
 
+  const isDesktop = useMedia<boolean>(
+    ['(min-width: 37.5em)', '(min-width: 0)'],
+    [true, false],
+    true
+  );
+
   const genderParam = useMemo(() => {
     switch (pathname) {
       case ShopPathname.WOMEN:
@@ -139,7 +146,7 @@ const ProductGrid: React.FC = () => {
       sortByPrice: sortByPriceParam as Sorting
     });
 
-    // window.scrollTo({ top: 525, behavior: 'smooth' });
+    window.scrollTo({ top: isDesktop ? 525 : 250, behavior: 'smooth' });
 
     return () => {
       fetchData.unsubscribe();

@@ -6,12 +6,18 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
+  @media ${props => props.theme.devices.mobile} {
+    gap: 2.8rem;
+  }
 `;
 
 const ActionContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 2.4rem;
+  @media ${props => props.theme.devices.mobile} {
+    gap: 2rem;
+  }
 `;
 
 const SelectContainer = styled.div`
@@ -20,6 +26,10 @@ const SelectContainer = styled.div`
   align-items: start;
   gap: 1.8rem;
   margin-bottom: 2.8rem;
+  @media ${props => props.theme.devices.mobile} {
+    gap: 2.6rem;
+    margin-bottom: 2.4rem;
+  }
 `;
 
 const ClothesInformationSkeleton: React.FC = () => {

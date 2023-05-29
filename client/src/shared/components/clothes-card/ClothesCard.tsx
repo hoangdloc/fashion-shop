@@ -41,6 +41,7 @@ const ClothesCardStyles = styled.div`
       height: 100%;
       object-fit: cover;
       transition: transform 0.3s;
+      user-select: none;
     }
     .add-to-cart-btn {
       position: absolute;
