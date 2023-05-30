@@ -29,6 +29,9 @@ const ImgContainer = styled(motion.section)`
   img {
     transform: scaleX(-1);
   }
+  @media ${props => props.theme.devices.mobile} {
+    display: none;
+  }
 `;
 
 const ForgotPasswordSection = styled(motion.section)`
@@ -54,6 +57,9 @@ const ForgotPasswordSection = styled(motion.section)`
     top: 0;
     left: 0;
   }
+  @media ${props => props.theme.devices.mobile} {
+    padding: 0;
+  }
 `;
 
 const StepContainer = styled.div`
@@ -65,17 +71,29 @@ const StepContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  @media ${props => props.theme.devices.mobile} {
+    width: 94%;
+    padding: 2.8rem 2rem;
+    gap: 1rem;
+  }
   .brand-name {
     font-size: 3.2rem;
     font-family: ${props => props.theme.fontFamily.PlayfairDisplay};
     letter-spacing: 0.1rem;
     text-align: center;
     margin-bottom: 2.8rem;
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 2.8rem;
+      margin-bottom: 1.8rem;
+    }
   }
   .sign-up {
     margin-top: 1.6rem;
     font-size: 1.4rem;
     text-align: center;
+    @media ${props => props.theme.devices.mobile} {
+      margin-top: 1.4rem;
+    }
   }
   a {
     color: ${props => props.theme.colors.secondaryRed};
@@ -88,7 +106,7 @@ const StepContainer = styled.div`
 `;
 
 const ForgotPasswordPage: React.FC = () => {
-  const [showSection, setShowSection] = useState<ShowSection>('email');
+  const [showSection, setShowSection] = useState<ShowSection>('password');
 
   useLayoutEffect(() => {
     document.title = 'Fashion | Forgot Password';

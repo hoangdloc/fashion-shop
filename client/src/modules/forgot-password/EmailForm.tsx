@@ -24,6 +24,9 @@ const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  @media ${props => props.theme.devices.mobile} {
+    gap: 1rem;
+  }
   .field-label {
     font-weight: 700;
     font-size: 1.4rem;

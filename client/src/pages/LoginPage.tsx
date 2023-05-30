@@ -16,53 +16,41 @@ import { useUserLoginMutation } from '~/store/auth/authService';
 
 import type { RootState } from '~/store/store';
 
-const LoginPageStyles = styled('main')(props => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '100vw',
-  height: '100vh',
-  overflow: 'hidden',
-  position: 'relative',
-  backgroundColor: props.theme.colors.bgWhite,
-  '.logo': {
-    width: '5.2rem',
-    height: '5.2rem',
-    position: 'absolute',
-    top: '4rem',
-    left: '4rem',
-    zIndex: 1
-  },
-  '.login-form': {
-    padding: '5rem 6rem',
-    backgroundColor: props.theme.colors.textWhite,
-    boxShadow:
-      'rgba(0, 0, 0, 0.1) 0 0.2rem 0.6rem -0.1rem, rgba(0, 0, 0, 0.06) 0 0.1rem 0.4rem -0.1rem',
-    borderRadius: '0.4rem',
-    zIndex: 2,
-    width: '43.7rem',
-    fontSize: '1.4rem',
-    '.form-items': {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '1rem'
-    },
-    '.field-label': {
-      fontWeight: 700,
-      fontSize: '1.4rem'
-    }
-  },
-  a: {
-    color: props.theme.colors.secondaryRed,
-    textDecoration: 'underline',
-    '&:hover': {
-      color: props.theme.colors.secondaryRed,
-      textDecoration: 'underline'
+const LoginPageStyles = styled.main`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background-color: ${props => props.theme.colors.bgWhite};
+  @media ${props => props.theme.devices.mobile} {
+    flex-direction: column;
+    gap: 4rem;
+  }
+  .logo {
+    width: 5.2rem;
+    height: 5.2rem;
+    position: absolute;
+    top: 4rem;
+    left: 4rem;
+    z-index: 1;
+    @media ${props => props.theme.devices.mobile} {
+      position: static;
     }
   }
-}));
+  a {
+    color: ${props => props.theme.colors.secondaryRed};
+    text-decoration: underline;
+    &:hover {
+      color: ${props => props.theme.colors.secondaryRed};
+      text-decoration: underline;
+    }
+  }
+`;
 
-const EllipseBgStyles = styled('div')`
+const EllipseBgStyles = styled.div`
   background-image: linear-gradient(
     0deg,
     rgba(200, 200, 200, 0.1),
@@ -74,6 +62,30 @@ const EllipseBgStyles = styled('div')`
   position: absolute;
   top: 50%;
   z-index: 1;
+`;
+
+const LoginForm = styled.form`
+  padding: 5rem 6rem;
+  background-color: ${props => props.theme.colors.textWhite};
+  box-shadow: rgba(0, 0, 0, 0.1) 0 0.2rem 0.6rem -0.1rem,
+    rgba(0, 0, 0, 0.06) 0 0.1rem 0.4rem -0.1rem;
+  border-radius: 0.4rem;
+  z-index: 2;
+  width: 43.7rem;
+  font-size: 1.4rem;
+  @media ${props => props.theme.devices.mobile} {
+    width: 90vw;
+    padding: 4rem 2.4rem;
+  }
+  .form-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .field-label {
+    font-weight: 700;
+    font-size: 1.4rem;
+  }
 `;
 
 const schema = yup
@@ -138,7 +150,7 @@ const LoginPage: React.FC = () => {
         draggable={false}
       />
       <EllipseBgStyles />
-      <form
+      <LoginForm
         onSubmit={e => {
           void onSubmit(e);
         }}
@@ -212,7 +224,7 @@ const LoginPage: React.FC = () => {
         >
           Sign in
         </MyButton>
-      </form>
+      </LoginForm>
     </LoginPageStyles>
   );
 };
