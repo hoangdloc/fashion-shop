@@ -4,5 +4,6 @@
   "arrowParens": "avoid",
   "trailingComma": "none",
   "printWidth": 80,
-  "singleAttributePerLine": true
+  "singleAttributePerLine": true,
+  "useTabs": false
 }

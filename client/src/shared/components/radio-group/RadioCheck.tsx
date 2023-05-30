@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Typography } from 'antd';
 import React from 'react';
 
-import { CheckIcon } from '~/shared/components/icon';
+import { Icon } from '~/shared/components/icon';
 
 interface RadioCheckProps extends React.ComponentPropsWithRef<'input'> {
   children?: React.ReactNode
@@ -60,12 +60,14 @@ const RadioCheck = React.forwardRef<HTMLInputElement, RadioCheckProps>(
         <div className="my-radio">
           <div className="my-radio-square">
             <span className="check-icon">
-              <CheckIcon />
+              <Icon
+                name="check"
+                width="12"
+                height="10"
+              />
             </span>
           </div>
-          <Typography.Text className="radio-label">
-            {children}
-          </Typography.Text>
+          <Typography.Text className="radio-label">{children}</Typography.Text>
         </div>
       </RadioCheckStyles>
     );

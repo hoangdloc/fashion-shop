@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Collapse, Typography } from 'antd';
 import React from 'react';
 
-import { PlusIcon, SubstractIcon } from '~/shared/components/icon';
+import { Icon } from '~/shared/components/icon';
 
 import type { Category } from '~/shared/@types/category';
 import type { Size } from '~/shared/@types/size';
@@ -77,8 +77,18 @@ const ClothesDetails: React.FC<ClothesDetailsProps> = ({
       size="small"
       expandIcon={({ isActive }) =>
         isActive === false
-          ? (<PlusIcon size="small" />)
-          : (<SubstractIcon size="small" />)
+          ? (
+            <Icon
+              name="plus"
+              width="12"
+              height="12"
+            />)
+          : (
+            <Icon
+              name="substract"
+              width="12"
+              height="2"
+            />)
       }
       expandIconPosition="end"
       defaultActiveKey={['1', '2', '3']}

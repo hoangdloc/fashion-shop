@@ -4,10 +4,10 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import hausLogo from '~/assets/svg/haus-logo.svg';
-import loremipsum2Logo from '~/assets/svg/logoipsum-logo-2.svg';
-import loremipsumLogo from '~/assets/svg/logoipsum-logo.svg';
-import startupVenturelogo from '~/assets/svg/startup-venture-logo.svg';
+import hausLogo from '~/assets/logos/haus-logo.svg';
+import loremipsum2Logo from '~/assets/logos/logoipsum-logo-2.svg';
+import loremipsumLogo from '~/assets/logos/logoipsum-logo.svg';
+import startupVenturelogo from '~/assets/logos/startup-venture-logo.svg';
 import { useMedia } from '~/shared/hooks/useMedia';
 
 const PartnerRibbonStyles = styled.div`

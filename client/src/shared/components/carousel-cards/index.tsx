@@ -9,7 +9,7 @@ import {
   ClothesCard,
   ClothesSkeletonCard
 } from '~/shared/components/clothes-card';
-import { LeftArrowIcon, RightArrowIcon } from '~/shared/components/icon';
+import { Icon } from '~/shared/components/icon';
 
 import type { Clothes } from '~/shared/@types/clothes';
 
@@ -50,7 +50,13 @@ const CarouselCards: React.FC<MyCarouselProps> = props => {
         type="ghost"
         shape="circle"
         className="slide-btn prev-slide"
-        icon={<LeftArrowIcon />}
+        icon={
+          <Icon
+            name="leftArrow"
+            width="14"
+            height="24"
+          />
+        }
         onClick={() => {
           swiperInstance.slidePrev();
         }}
@@ -93,7 +99,13 @@ const CarouselCards: React.FC<MyCarouselProps> = props => {
         type="ghost"
         shape="circle"
         className="slide-btn next-slide"
-        icon={<RightArrowIcon />}
+        icon={
+          <Icon
+            name="rightArrow"
+            width="14"
+            height="24"
+          />
+        }
         onClick={() => {
           swiperInstance.slideNext();
         }}

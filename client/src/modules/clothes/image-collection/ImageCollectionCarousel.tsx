@@ -5,7 +5,7 @@ import React, { useRef } from 'react';
 import { v4 } from 'uuid';
 
 import { useClothesDetails } from '~/contexts/clothes-details-context';
-import { LeftArrowIcon, RightArrowIcon } from '~/shared/components/icon';
+import { Icon } from '~/shared/components/icon';
 import ImageCollectionCarouselSkeleton from './ImageCollectionCarouselSkeleton';
 
 const Container = styled.div`
@@ -80,13 +80,21 @@ const ImageCollectionCarousel: React.FC = () => {
         onClick={handlePrevSlide}
         className="slide-btn slide-btn__prev"
       >
-        <LeftArrowIcon />
+        <Icon
+          name="leftArrow"
+          width="14"
+          height="24"
+        />
       </button>
       <button
         onClick={handleNextSlide}
         className="slide-btn slide-btn__next"
       >
-        <RightArrowIcon />
+        <Icon
+          name="rightArrow"
+          width="14"
+          height="24"
+        />
       </button>
     </Container>
   );

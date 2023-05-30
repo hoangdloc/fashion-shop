@@ -4,19 +4,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { v4 } from 'uuid';
 
-import CashSVG from '~/assets/svg/cash.svg';
-import PaypalSVG from '~/assets/svg/paypal.svg';
-import VisaSVG from '~/assets/svg/visa.svg';
+import CashSVG from '~/assets/logos/cash.svg';
+import PaypalSVG from '~/assets/logos/paypal.svg';
+import VisaSVG from '~/assets/logos/visa.svg';
 import { AppRoute } from '~/config/route';
 import { MyButton } from '~/shared/components/button';
-import {
-  FacebookIcon,
-  InstagramIcon,
-  LinkedInIcon,
-  MailIcon,
-  MapMarkerIcon,
-  PhoneIcon
-} from '~/shared/components/icon';
+import { Icon } from '~/shared/components/icon';
 import { MyOutlinedInput } from '~/shared/components/input';
 import { useFakeLoading } from '~/shared/hooks/useFakeLoading';
 
@@ -105,7 +98,6 @@ const SectionStyles = styled.section`
         padding: 1rem 1.6rem;
         border: none;
         @media ${props => props.theme.devices.mobile} {
-          
         }
       }
       & + ul {
@@ -158,17 +150,35 @@ const CopyrightContainer = styled.div`
 const contactItems = [
   {
     href: 'tel:+0123456789',
-    icon: <PhoneIcon />,
+    icon: (
+      <Icon
+        name="phone"
+        width="16"
+        height="16"
+      />
+    ),
     label: '(01) 23 456 789'
   },
   {
     href: 'mailto:support.fashion@gmail.com',
-    icon: <MailIcon />,
+    icon: (
+      <Icon
+        name="mail"
+        width="16"
+        height="12"
+      />
+    ),
     label: 'support.fashion@gmail.com'
   },
   {
     href: 'https://maps.google.com/maps?q=254+Milacina+Streets,+Behansed+Tower,+London',
-    icon: <MapMarkerIcon />,
+    icon: (
+      <Icon
+        name="mapMarker"
+        width="18"
+        height="18"
+      />
+    ),
     label: '254 Milacina Streets, Behansed Tower, London'
   }
 ];
@@ -190,15 +200,33 @@ const getHelpItems = [
 
 const socialItems = [
   {
-    label: <InstagramIcon />,
+    label: (
+      <Icon
+        name="instagram"
+        width="28"
+        height="28"
+      />
+    ),
     href: 'https://www.instagram.com/hoang__loc/'
   },
   {
-    label: <FacebookIcon />,
+    label: (
+      <Icon
+        name="facebook"
+        width="28"
+        height="28"
+      />
+    ),
     href: 'https://www.facebook.com/mr.cairne/'
   },
   {
-    label: <LinkedInIcon />,
+    label: (
+      <Icon
+        name="linkedIn"
+        width="28"
+        height="28"
+      />
+    ),
     href: 'https://www.linkedin.com/in/hoang-loc/'
   }
 ];

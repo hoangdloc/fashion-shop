@@ -16,7 +16,7 @@ import { CSSTransition } from 'react-transition-group';
 import type { RefSelectProps, DefaultOptionType } from 'antd/es/select';
 
 import MyCheckbox from '~/shared/components/checkbox';
-import { CheckIcon } from '../icon';
+import { Icon } from '../icon';
 import classNames from 'classnames';
 import { phoneNumberAutoFormat } from '~/shared/utils/phoneNumberAutoFormat';
 import { RadioCheck } from '../radio-group';
@@ -184,7 +184,7 @@ const MyFormItem = <T extends FieldValues>(
           >
             {state => (
               <p
-                className='error-text'
+                className="error-text"
                 style={{
                   ...defaultErrorStyles,
                   ...transitionErrorStyle[state],
@@ -226,7 +226,7 @@ const MyFormItem = <T extends FieldValues>(
           >
             {state => (
               <p
-                className='error-text'
+                className="error-text"
                 style={{
                   ...defaultErrorStyles,
                   ...transitionErrorStyle[state],
@@ -255,7 +255,11 @@ const MyFormItem = <T extends FieldValues>(
                   }}
                   ref={successRef}
                 >
-                  <CheckIcon size="medium" />
+                  <Icon
+                    name="check"
+                    width="16"
+                    height="12"
+                  />
                 </span>
               )}
             </CSSTransition>
@@ -293,7 +297,7 @@ const MyFormItem = <T extends FieldValues>(
           >
             {state => (
               <p
-                className='error-text'
+                className="error-text"
                 style={{
                   ...defaultErrorStyles,
                   ...transitionErrorStyle[state],
@@ -322,7 +326,11 @@ const MyFormItem = <T extends FieldValues>(
                   }}
                   ref={successRef}
                 >
-                  <CheckIcon size="medium" />
+                  <Icon
+                    name="check"
+                    width="16"
+                    height="12"
+                  />
                 </span>
               )}
             </CSSTransition>
@@ -356,7 +364,7 @@ const MyFormItem = <T extends FieldValues>(
           >
             {state => (
               <p
-                className='error-text'
+                className="error-text"
                 style={{
                   ...defaultErrorStyles,
                   ...transitionErrorStyle[state],

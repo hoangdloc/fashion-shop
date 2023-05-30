@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import subcribeImg from '~/assets/images/subcribe.png';
 import { MyButton } from '~/shared/components/button';
 import MyCheckbox from '~/shared/components/checkbox';
-import { CloseIcon } from '~/shared/components/icon';
+import { Icon } from '~/shared/components/icon';
 import { MyOutlinedInput } from '~/shared/components/input';
 import { useFakeLoading } from '~/shared/hooks/useFakeLoading';
 import { toggleShowPopupAgain } from '~/store/general/generalSlice';
@@ -113,7 +113,13 @@ const SubcribePopup: React.FC = () => {
       onCancel={handleCancel}
       footer={null}
       centered
-      closeIcon={<CloseIcon />}
+      closeIcon={
+        <Icon
+          name="close"
+          width="20"
+          height="20"
+        />
+      }
     >
       <div className="popup-container">
         <div className="subcribe-box">

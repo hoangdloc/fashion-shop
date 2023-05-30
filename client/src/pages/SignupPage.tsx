@@ -2,6 +2,7 @@ import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Typography } from 'antd';
+import { motion } from 'framer-motion';
 import React, { useLayoutEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
@@ -65,7 +66,7 @@ const EllipseBgStyles = styled.div`
   z-index: 1;
 `;
 
-const SignupForm = styled.form`
+const SignupForm = styled(motion.form)`
   padding: 4rem 6rem;
   background-color: ${props => props.theme.colors.textWhite};
   box-shadow: rgba(0, 0, 0, 0.1) 0 0.2rem 0.6rem -0.1rem,
@@ -186,6 +187,10 @@ const SignupPage: React.FC = () => {
       />
       <EllipseBgStyles />
       <SignupForm
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 100 }}
+        transition={{ type: 'tween', duration: 0.5 }}
         onSubmit={e => {
           void onSubmit(e);
         }}

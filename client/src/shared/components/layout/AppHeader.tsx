@@ -1,8 +1,7 @@
 import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import
-{
+import {
   Badge,
   Dropdown,
   Layout,
@@ -23,7 +22,7 @@ import { Spinner } from '~/shared/components/loader';
 import { useScrollDirection } from '~/shared/hooks/useScrollListener';
 import { authApi } from '~/store/auth/authService';
 import type { RootState } from '~/store/store';
-import { CartIcon, PhoneIcon } from '../icon';
+import { Icon } from '../icon';
 import BurgerPopup from './BurgerPopup';
 
 const LayoutHeader = styled(Layout.Header)`
@@ -211,7 +210,11 @@ const AppHeader: React.FC = () => {
           href="tel:+0123456789"
           className="phone-line"
         >
-          <PhoneIcon />
+          <Icon
+            name="phone"
+            width="16"
+            height="16"
+          />
           <Typography.Text>Hotline: (01) 23 456 789</Typography.Text>
         </a>
         <Dropdown
@@ -334,7 +337,7 @@ const AppHeader: React.FC = () => {
             showZero
           >
             <Link to={AppRoute.CART}>
-              <CartIcon />
+              <Icon name="cart" />
             </Link>
           </Badge>
           <Typography.Text style={{ fontSize: '1.6rem' }}>

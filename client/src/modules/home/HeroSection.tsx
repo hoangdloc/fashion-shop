@@ -9,7 +9,7 @@ import hero3 from '~/assets/images/hero3.jpg';
 import hero4 from '~/assets/images/hero4.jpg';
 import { AppRoute, ShopRoute } from '~/config/route';
 import { MyButton, MyLinkButton } from '~/shared/components/button';
-import { LeftArrowIcon, RightArrowIcon } from '~/shared/components/icon';
+import { Icon } from '~/shared/components/icon';
 
 const HeroSectionStyles = styled.div`
   width: 100%;
@@ -160,7 +160,13 @@ const HeroSection: React.FC = () => {
     <HeroSectionStyles>
       <MyButton
         className="slide-btn slide-btn__left"
-        icon={<LeftArrowIcon />}
+        icon={
+          <Icon
+            name="leftArrow"
+            width="14"
+            height="24"
+          />
+        }
         onClick={handlePrevSlide}
       />
       <Carousel
@@ -200,7 +206,13 @@ const HeroSection: React.FC = () => {
       </Carousel>
       <MyButton
         className="slide-btn slide-btn__right"
-        icon={<RightArrowIcon />}
+        icon={
+          <Icon
+            name="rightArrow"
+            width="14"
+            height="24"
+          />
+        }
         onClick={handleNextSlide}
       />
     </HeroSectionStyles>

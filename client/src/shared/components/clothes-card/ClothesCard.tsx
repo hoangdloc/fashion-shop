@@ -8,10 +8,13 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '~/config/route';
 import { renderBadge } from '~/shared/utils/renderBadge';
 import { renderPrice } from '~/shared/utils/renderPrice';
-import { setClothesPopup, setCurrentClothes } from '~/store/clothes/clothesSlice';
+import {
+  setClothesPopup,
+  setCurrentClothes
+} from '~/store/clothes/clothesSlice';
 import MyBadge from '../badge';
 import { MyButton } from '../button';
-import { ShoppingBagIcon } from '../icon';
+import { Icon } from '../icon';
 import ClothesSkeletonCard from './ClothesSkeletonCard';
 
 import type { Gender } from '~/shared/@types/category';
@@ -161,7 +164,13 @@ const ClothesCard: React.FC<ClothesCardProps> = props => {
         >
           <MyButton
             className="add-to-cart-btn"
-            icon={<ShoppingBagIcon />}
+            icon={
+              <Icon
+                name="bag"
+                width="20"
+                height="20"
+              />
+            }
             shape="circle"
             onClick={onAddToCartBtnClick}
           />

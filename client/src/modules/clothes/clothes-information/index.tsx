@@ -9,7 +9,7 @@ import { v4 } from 'uuid';
 
 import MyBadge from '~/shared/components/badge';
 import { MyButton } from '~/shared/components/button';
-import { PlusIcon, SubstractIcon } from '~/shared/components/icon';
+import { Icon } from '~/shared/components/icon';
 import QuantityBox from '~/shared/components/quantity-box';
 import { useFakeLoading } from '~/shared/hooks/useFakeLoading';
 import { renderBadge } from '~/shared/utils/renderBadge';
@@ -238,8 +238,20 @@ const ClothesInformation: React.FC = () => {
           containerClassName="quantity-box"
           btnClassName="quantity-btn"
           quantityClassName="quantity-text"
-          plusIcon={<PlusIcon />}
-          substractIcon={<SubstractIcon />}
+          plusIcon={
+            <Icon
+              name="plus"
+              width="16"
+              height="16"
+            />
+          }
+          substractIcon={
+            <Icon
+              name="substract"
+              width="16"
+              height="2"
+            />
+          }
           initialValue={quantity}
           handlePlus={handleAddQuantity}
           handleSubtract={handleSubstractQuantity}

@@ -11,7 +11,7 @@ const FeaturedProductSectionStyles = styled.section`
   padding: 6rem 16rem 7rem 16rem;
   display: flex;
   flex-direction: column;
-  align-items: 'center';
+  align-items: center;
   @media ${props => props.theme.devices.mobile} {
     padding: 2.4rem;
   }

@@ -5,7 +5,7 @@ import ReactPaginate from 'react-paginate';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
 import { ShopPathname } from '~/config/route';
-import { NextBtnIcon, PrevBtnIcon } from '~/shared/components/icon';
+import { Icon } from '~/shared/components/icon';
 import { ListCards } from '~/shared/components/list-cards';
 import { clothesApi } from '~/store/clothes/clothesService';
 
@@ -196,8 +196,20 @@ const ProductGrid: React.FC = () => {
           forcePage={forcePage}
           marginPagesDisplayed={1}
           pageRangeDisplayed={2}
-          nextLabel={<NextBtnIcon />}
-          previousLabel={<PrevBtnIcon />}
+          nextLabel={
+            <Icon
+              name="nextBtn"
+              width="11"
+              height="18"
+            />
+          }
+          previousLabel={
+            <Icon
+              name="prevBtn"
+              width="11"
+              height="18"
+            />
+          }
           renderOnZeroPageCount={null}
           className="pagination"
           pageLinkClassName="page-num"

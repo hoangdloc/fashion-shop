@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 import { AppRoute } from '~/config/route';
 import { useCart } from '~/contexts/cart-context';
-import { PlusIcon, SubstractIcon, TrashIcon } from '~/shared/components/icon';
+import { Icon } from '~/shared/components/icon';
 import ImageBox from '~/shared/components/image-box';
 import QuantityBox from '~/shared/components/quantity-box';
 import { renderPrice } from '~/shared/utils/renderPrice';
@@ -198,11 +198,27 @@ const CartProductItemMobile: React.FC<CartProductItemMobileProps> = ({
           className="delete-btn"
           onClick={handleDeleteProduct}
         >
-          <TrashIcon />
+          <Icon
+            name="trash"
+            width="18"
+            height="20"
+          />
         </button>
         <QuantityBox
-          plusIcon={<PlusIcon size="small" />}
-          substractIcon={<SubstractIcon size="small" />}
+          plusIcon={
+            <Icon
+              name="plus"
+              width="12"
+              height="12"
+            />
+          }
+          substractIcon={
+            <Icon
+              name="substract"
+              width="12"
+              height="2"
+            />
+          }
           initialValue={cartItem.quantity}
           quantityClassName="quantity"
           containerClassName="quantity-box"

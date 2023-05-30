@@ -7,7 +7,7 @@ import CartProductItem from './CartProductItem';
 
 import { useCart } from '~/contexts/cart-context';
 import type { CartItem } from '~/shared/@types/cart';
-import { PlusIcon, SubstractIcon, TrashIcon } from '~/shared/components/icon';
+import { Icon } from '~/shared/components/icon';
 import { localePrice, renderPrice } from '~/shared/utils/renderPrice';
 import { plusProduct, substractProduct } from '~/store/cart/cartSlice';
 
@@ -100,8 +100,20 @@ const CartProductTableRow: React.FC<CartProductTableRowProps> = ({
       </td>
       <td className="quantity">
         <QuantityBox
-          plusIcon={<PlusIcon size="small" />}
-          substractIcon={<SubstractIcon size="small" />}
+          plusIcon={
+            <Icon
+              name="plus"
+              width="12"
+              height="12"
+            />
+          }
+          substractIcon={
+            <Icon
+              name="substract"
+              width="12"
+              height="2"
+            />
+          }
           initialValue={cartItem.quantity}
           quantityClassName="quantity"
           containerClassName="quantity-box"
@@ -113,7 +125,11 @@ const CartProductTableRow: React.FC<CartProductTableRowProps> = ({
       <td className="subtotal">{subtotal} $</td>
       <td className="delete-btn">
         <button onClick={handleDeleteProduct}>
-          <TrashIcon />
+          <Icon
+            name="trash"
+            width="18"
+            height="20"
+          />
         </button>
       </td>
     </TableRow>

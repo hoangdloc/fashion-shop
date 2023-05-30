@@ -3,7 +3,7 @@ import { Carousel, Typography } from 'antd';
 import type { CarouselRef } from 'antd/es/carousel';
 import React, { useRef } from 'react';
 
-import { LeftArrowIcon, RightArrowIcon } from '~/shared/components/icon';
+import { Icon } from '~/shared/components/icon';
 
 const TestimonialsSectionStyles = styled('section')`
   width: 100vw;
@@ -185,7 +185,11 @@ const TestimonialsSection: React.FC = () => {
           className="slide-btn slide-btn__left"
           onClick={handlePrevSlide}
         >
-          <LeftArrowIcon />
+          <Icon
+            name="leftArrow"
+            width="14"
+            height="24"
+          />
         </button>
         <Carousel
           ref={carouselRef}
@@ -207,7 +211,11 @@ const TestimonialsSection: React.FC = () => {
           className="slide-btn slide-btn__right"
           onClick={handleNextSlide}
         >
-          <RightArrowIcon />
+          <Icon
+            name="rightArrow"
+            width="14"
+            height="24"
+          />
         </button>
       </CarouselContainer>
     </TestimonialsSectionStyles>

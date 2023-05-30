@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Typography } from 'antd';
 import React from 'react';
 
-import { CheckIcon } from '~/shared/components/icon';
+import { Icon } from '~/shared/components/icon';
 
 interface MyCheckboxProps extends React.ComponentPropsWithRef<'input'> {
   children?: React.ReactNode
@@ -48,25 +48,33 @@ const MyCheckBoxStyles = styled('label')`
   }
 `;
 
-const MyCheckbox = React.forwardRef<HTMLInputElement, MyCheckboxProps>(({ children, ...rest }, ref) => {
-  return (
-    <MyCheckBoxStyles>
-      <input
-        type="checkbox"
-        ref={ref}
-        {...rest}
-      />
-      <div className="my-checkbox">
-        <div className="my-checkbox-square">
-          <span className="check-icon">
-            <CheckIcon />
-          </span>
+const MyCheckbox = React.forwardRef<HTMLInputElement, MyCheckboxProps>(
+  ({ children, ...rest }, ref) => {
+    return (
+      <MyCheckBoxStyles>
+        <input
+          type="checkbox"
+          ref={ref}
+          {...rest}
+        />
+        <div className="my-checkbox">
+          <div className="my-checkbox-square">
+            <span className="check-icon">
+              <Icon
+                name="check"
+                width="12"
+                height="10"
+              />
+            </span>
+          </div>
+          <Typography.Text className="checkbox-label">
+            {children}
+          </Typography.Text>
         </div>
-        <Typography.Text className="checkbox-label">{children}</Typography.Text>
-      </div>
-    </MyCheckBoxStyles>
-  );
-});
+      </MyCheckBoxStyles>
+    );
+  }
+);
 
 MyCheckbox.displayName = 'MyCheckbox';
 

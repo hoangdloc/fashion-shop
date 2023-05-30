@@ -7,12 +7,7 @@ import { useSelector } from 'react-redux';
 
 import { AppRoute, ShopRoute } from '~/config/route';
 import { useCart } from '~/contexts/cart-context';
-import
-{
-  BackArrowIcon,
-  BurgerIcon,
-  RightChevronIcon
-} from '~/shared/components/icon';
+import { Icon } from '~/shared/components/icon';
 import SidePopup from '~/shared/components/side-popup';
 import { useOnClickOutside } from '~/shared/hooks/useOnClickOutside';
 import { authApi } from '~/store/auth/authService';
@@ -161,7 +156,11 @@ React.HTMLAttributes<HTMLButtonElement>
         {...props}
         onClick={handleOpenAppMenu}
       >
-        <BurgerIcon />
+        <Icon
+          name="burger"
+          width="22"
+          height="16"
+        />
       </button>
       <SidePopup
         ref={burgerAppMenuRef}
@@ -183,7 +182,11 @@ React.HTMLAttributes<HTMLButtonElement>
                 className="cancel-btn"
                 onClick={handleCloseAppMenu}
               >
-                <BackArrowIcon />
+                <Icon
+                  name="backArrow"
+                  width="24"
+                  height="14"
+                />
               </button>
               <NavList>
                 <NavLink
@@ -195,7 +198,11 @@ React.HTMLAttributes<HTMLButtonElement>
                   end
                 >
                   <span className="link-title">Home</span>
-                  <RightChevronIcon />
+                  <Icon
+                    name="rightChevron"
+                    width="7"
+                    height="13"
+                  />
                 </NavLink>
                 <NavLink
                   className={({ isActive }) =>
@@ -206,14 +213,22 @@ React.HTMLAttributes<HTMLButtonElement>
                   end
                 >
                   <span className="link-title">About</span>
-                  <RightChevronIcon />
+                  <Icon
+                    name="rightChevron"
+                    width="7"
+                    height="13"
+                  />
                 </NavLink>
                 <button
                   className="link-item"
                   onClick={handleOpenShopMenu}
                 >
                   <span className="link-title">Shop</span>
-                  <RightChevronIcon />
+                  <Icon
+                    name="rightChevron"
+                    width="7"
+                    height="13"
+                  />
                 </button>
                 <NavLink
                   className={({ isActive }) =>
@@ -224,7 +239,11 @@ React.HTMLAttributes<HTMLButtonElement>
                   end
                 >
                   <span className="link-title">Contact</span>
-                  <RightChevronIcon />
+                  <Icon
+                    name="rightChevron"
+                    width="7"
+                    height="13"
+                  />
                 </NavLink>
               </NavList>
               <MyLinkButton
@@ -259,7 +278,11 @@ React.HTMLAttributes<HTMLButtonElement>
                 className="back-btn"
                 onClick={handleCloseShopMenu}
               >
-                <BackArrowIcon />
+                <Icon
+                  name="backArrow"
+                  width="24"
+                  height="14"
+                />
                 <span>Shop</span>
               </button>
               <NavList>
@@ -274,7 +297,11 @@ React.HTMLAttributes<HTMLButtonElement>
                     end
                   >
                     <span className="link-title">{item.label}</span>
-                    <RightChevronIcon />
+                    <Icon
+                      name="rightChevron"
+                      width="7"
+                      height="13"
+                    />
                   </NavLink>
                 ))}
               </NavList>
