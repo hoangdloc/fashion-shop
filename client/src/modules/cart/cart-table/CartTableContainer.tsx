@@ -1,20 +1,18 @@
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { Divider, Empty, Typography } from 'antd';
-import React, { Fragment, useMemo } from 'react';
+import { Divider, Empty } from 'antd';
+import React, { Fragment, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { v4 } from 'uuid';
 
 import { AppRoute, CartRoute } from '~/config/route';
 import { useCart } from '~/contexts/cart-context';
 import { MyButton } from '~/shared/components/button';
 import { useFakeLoading } from '~/shared/hooks/useFakeLoading';
-import { localePrice, renderPrice } from '~/shared/utils/renderPrice';
+import { useMedia } from '~/shared/hooks/useMedia';
 import { updateProductToCart } from '~/store/cart/cartSlice';
-import CartProductTableRow from './CartProductTableRow';
+import { TableDesktop, TableMobile, type TableRef } from './table';
 
 const CartTableContainerStyles = styled.div`
   min-width: 100%;
@@ -27,57 +25,8 @@ const CartTableContainerStyles = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
-
-const Table = styled.table`
-  min-width: 100%;
-  & > thead,
-  tbody,
-  tfoot {
-    & > tr {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      .product {
-        text-align: left;
-        width: 60%;
-      }
-      .quantity {
-        text-align: center;
-        width: 20%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .subtotal {
-        text-align: right;
-        width: 20%;
-      }
-      th {
-        font-weight: 400;
-        padding-bottom: 1.6rem;
-        font-size: 1.6rem;
-      }
-    }
-    &:not(:last-child) {
-      border-bottom: 0.1rem solid ${props => props.theme.colors.horizontalColor};
-    }
-  }
-  & > tfoot {
-    & > tr {
-      align-items: flex-start;
-      & > td {
-        padding: 2.4rem 0;
-        .serve {
-          font-size: 1.4rem;
-          color: ${props => props.theme.colors.grayDark};
-        }
-        .total {
-          font-size: 2.4rem;
-          font-weight: 700;
-        }
-      }
-    }
+  @media ${props => props.theme.devices.mobile} {
+    padding: 2.4rem;
   }
 `;
 
@@ -87,11 +36,19 @@ const ActionBox = styled.div`
   align-items: center;
   justify-content: end;
   gap: 1.5rem;
+  @media ${props => props.theme.devices.mobile} {
+    flex-direction: column;
+    gap: 1.8rem;
+  }
   & > .ant-btn {
     height: 5.2rem;
     text-transform: uppercase;
     font-size: 1.6rem;
     font-weight: 700;
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 1.4rem;
+      height: 4rem;
+    }
     &.update-btn {
       padding: 1.5rem 3.4rem;
       border: 0.15rem solid ${props => props.theme.colors.primaryBlack};
@@ -99,9 +56,17 @@ const ActionBox = styled.div`
         color: ${props => props.theme.colors.textWhite};
         background-color: ${props => props.theme.colors.primaryBlack};
       }
+      @media ${props => props.theme.devices.mobile} {
+        height: 4rem;
+        width: 100%;
+      }
     }
-    &.checkout-btn, &.back-btn {
+    &.checkout-btn,
+    &.back-btn {
       padding: 1.5rem 4rem;
+      @media ${props => props.theme.devices.mobile} {
+        width: 100%;
+      }
     }
   }
 `;
@@ -110,26 +75,23 @@ const CartTableContainer: React.FC = () => {
   const emotionTheme = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [parent, enableAnimations] = useAutoAnimate();
   const { loading: updateLoading, fakeLoading: fakeUpdateLoading } =
     useFakeLoading();
   const { loading: checkoutLoading, fakeLoading: fakeCheckoutLoading } =
     useFakeLoading();
   const { cart } = useCart();
-  const cartTotal = useMemo(() => {
-    return cart.reduce((total, current) => {
-      const { quantity, clothes } = current;
-      const { actualPrice } = renderPrice(
-        clothes.price,
-        clothes.salePercent,
-        clothes.status
-      );
-      return total + quantity * +actualPrice;
-    }, 0);
-  }, [cart]);
+
+  const isDesktop = useMedia<boolean>(
+    ['(min-width: 37.5em)', '(min-width: 0)'],
+    [true, false],
+    true
+  );
+  const tableDekstopRef = useRef<TableRef>(null);
+  const tableMobileRef = useRef<TableRef>(null);
 
   const handleUpdateCart = async (): Promise<void> => {
-    enableAnimations(false);
+    tableDekstopRef.current?.disableAnimation();
+    tableMobileRef.current?.disableAnimation();
     await fakeUpdateLoading();
     dispatch(updateProductToCart(cart));
     await Swal.fire({
@@ -142,7 +104,8 @@ const CartTableContainer: React.FC = () => {
   };
 
   const handleProceesToCheckout = async (): Promise<void> => {
-    enableAnimations(false);
+    tableDekstopRef.current?.disableAnimation();
+    tableMobileRef.current?.disableAnimation();
     await fakeCheckoutLoading();
     dispatch(updateProductToCart(cart));
     navigate(CartRoute.CHECKOUT);
@@ -154,40 +117,8 @@ const CartTableContainer: React.FC = () => {
 
   return (
     <CartTableContainerStyles>
-      {cart.length > 0 && (
-        <Table>
-          <thead>
-            <tr>
-              <th className="product">Product</th>
-              <th className="quantity">Quantity</th>
-              <th className="subtotal">Subtotal</th>
-            </tr>
-          </thead>
-          <tbody ref={parent}>
-            {cart.map(item => (
-              <CartProductTableRow
-                key={v4()}
-                cartItem={item}
-                enableAnimations={enableAnimations}
-              />
-            ))}
-          </tbody>
-          <tfoot>
-            <tr>
-              <td>
-                <Typography.Text className="serve">
-                  It is our pleasure to serve you!
-                </Typography.Text>
-              </td>
-              <td>
-                <Typography.Text className="total">
-                  {localePrice(cartTotal.toFixed(2))} $
-                </Typography.Text>
-              </td>
-            </tr>
-          </tfoot>
-        </Table>
-      )}
+      {isDesktop && cart.length > 0 && <TableDesktop ref={tableDekstopRef} />}
+      {!isDesktop && cart.length > 0 && <TableMobile ref={tableMobileRef} />}
       {cart.length <= 0 && (
         <Fragment>
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
@@ -211,7 +142,7 @@ const CartTableContainer: React.FC = () => {
             }}
             type="primary"
             loading={checkoutLoading}
-            className='checkout-btn'
+            className="checkout-btn"
           >
             Process to checkout
           </MyButton>
@@ -220,7 +151,7 @@ const CartTableContainer: React.FC = () => {
           <MyButton
             onClick={handlebackToShopping}
             type="primary"
-            className='back-btn'
+            className="back-btn"
           >
             Keep shoping
           </MyButton>

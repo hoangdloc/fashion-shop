@@ -17,6 +17,10 @@ const ImageBoxStyles = styled.figure<Pick<ImageBoxProps, 'size'>>`
     height: 100%;
     object-fit: cover;
   }
+  @media ${props => props.theme.devices.mobile} {
+    width: calc(${props => props.size} / 1.5);
+    height: calc(${props => props.size} / 1.5);
+  }
 `;
 
 const ImageBox: React.FC<ImageBoxProps> = ({

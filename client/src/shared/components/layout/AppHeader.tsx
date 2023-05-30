@@ -10,7 +10,7 @@ import
   Typography,
   type MenuProps
 } from 'antd';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
@@ -21,7 +21,6 @@ import { AppRoute, ShopRoute } from '~/config/route';
 import { useCart } from '~/contexts/cart-context';
 import { Spinner } from '~/shared/components/loader';
 import { useScrollDirection } from '~/shared/hooks/useScrollListener';
-import { renderPrice } from '~/shared/utils/renderPrice';
 import { authApi } from '~/store/auth/authService';
 import type { RootState } from '~/store/store';
 import { CartIcon, PhoneIcon } from '../icon';
@@ -189,18 +188,7 @@ const AppHeader: React.FC = () => {
   const isLoggingOut = useSelector(
     (state: RootState) => state.auth.isLoggingOut
   );
-  const { cart } = useCart();
-  const cardTotal = useMemo(() => {
-    return cart.reduce((total, current) => {
-      const { quantity, clothes } = current;
-      const { actualPrice } = renderPrice(
-        clothes.price,
-        clothes.salePercent,
-        clothes.status
-      );
-      return total + quantity * +actualPrice;
-    }, 0);
-  }, [cart]);
+  const { cart, cartTotal } = useCart();
   const [trigger] = authApi.useLazyUserLogoutQuery();
   const scrollDirection = useScrollDirection();
 
@@ -350,7 +338,7 @@ const AppHeader: React.FC = () => {
             </Link>
           </Badge>
           <Typography.Text style={{ fontSize: '1.6rem' }}>
-            $ {cardTotal.toFixed(2)}
+            $ {cartTotal.toFixed(2)}
           </Typography.Text>
         </CutomerCart>
         <BurgerPopup className="burger-section" />

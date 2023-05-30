@@ -5,6 +5,10 @@ const CartBannerSectionContainer = styled.section`
   width: 100%;
   height: 24rem;
   padding: 2.4rem 16rem;
+  @media ${props => props.theme.devices.mobile} {
+    padding: 0;
+    height: 20rem;
+  }
 `;
 
 const CartBannerImg = styled.div`
