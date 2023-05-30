@@ -25,6 +25,9 @@ const ThanksPopupStyles = styled(Modal)`
     & > .ant-modal-body {
       height: 100%;
     }
+    @media ${props => props.theme.devices.mobile} {
+      min-height: 32rem;
+    }
   }
 `;
 
@@ -36,6 +39,9 @@ const PopupContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  @media ${props => props.theme.devices.mobile} {
+    padding: 4rem 2.4rem 3rem 2.4rem;
+  }
   .ant-typography {
     text-align: center;
     margin: 0;
@@ -46,6 +52,9 @@ const PopupContainer = styled.div`
       text-transform: uppercase;
       letter-spacing: 0.2rem;
       margin-bottom: 1.2rem;
+      @media ${props => props.theme.devices.mobile} {
+        font-size: 2rem;
+      }
     }
     &.popup-text {
       color: ${props => props.theme.colors.textSubtitle};
@@ -59,12 +68,19 @@ const PopupContainer = styled.div`
       & > * {
         margin: 0;
       }
+      @media ${props => props.theme.devices.mobile} {
+        font-size: 1.4rem;
+        margin-bottom: 3rem;
+      }
     }
   }
   & > img {
     width: 5rem;
     object-fit: cover;
     margin-bottom: 1.6rem;
+    @media ${props => props.theme.devices.mobile} {
+      width: 4.8rem;
+    }
   }
   & > .back-to-homepage-btn {
     height: 5.2rem;
@@ -72,6 +88,10 @@ const PopupContainer = styled.div`
     text-transform: uppercase;
     font-weight: 700;
     font-size: 1.6rem;
+    @media ${props => props.theme.devices.mobile} {
+      height: 4rem;
+      font-size: 1.4rem;
+    }
   }
 `;
 

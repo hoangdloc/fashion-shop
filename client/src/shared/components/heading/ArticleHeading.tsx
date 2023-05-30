@@ -16,12 +16,19 @@ const ArticleHeadingStyles = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  @media ${props => props.theme.devices.mobile} {
+    font-size: 1.8rem;
+    gap: 1.2rem;
+  }
 `;
 
 const DecoratedLine = styled.div`
   width: 3.6rem;
   height: 0.15rem;
   background-color: ${props => props.theme.colors.primaryBlack};
+  @media ${props => props.theme.devices.mobile} {
+    width: 3rem;
+  }
 `;
 
 const ArticleHeading: React.FC<HeadingProps> = ({

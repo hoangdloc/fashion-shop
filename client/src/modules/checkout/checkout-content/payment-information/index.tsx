@@ -18,6 +18,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2.7rem;
+  @media ${props => props.theme.devices.mobile} {
+    padding: 2.4rem 1.6rem;
+  }
   & .ant-select {
     & .ant-select-selector {
       & .ant-select-selection-item {

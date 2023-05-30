@@ -23,6 +23,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2.7rem;
+  @media ${props => props.theme.devices.mobile} {
+    padding: 2.4rem 1.6rem;
+  }
 `;
 
 const PersonalInfoForm = styled.form`
@@ -32,9 +35,17 @@ const PersonalInfoForm = styled.form`
   .field-label {
     font-weight: 700;
     font-size: 1.6rem;
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 1.4rem;
+    }
   }
   .my-form-item {
     margin: 0;
+    & > * {
+      @media ${props => props.theme.devices.mobile} {
+        font-size: 1.4rem;
+      }
+    }
   }
 `;
 
@@ -42,12 +53,30 @@ const GroupFormItems = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
+  @media ${props => props.theme.devices.mobile} {
+    flex-direction: column;
+    gap: 2.7rem;
+    & > .my-form-item {
+      width: 100%;
+      & .ant-select {
+        & .ant-select-selector {
+          & .ant-select-selection-item {
+            font-size: 1.6rem;
+          }
+        }
+      }
+    }
+  }
 `;
 
 const GroupRadio = styled.div`
   display: flex;
   align-items: start;
   gap: 3rem;
+  @media ${props => props.theme.devices.mobile} {
+    flex-direction: column;
+    gap: 2.7rem;
+  }
 `;
 
 const schema = yup

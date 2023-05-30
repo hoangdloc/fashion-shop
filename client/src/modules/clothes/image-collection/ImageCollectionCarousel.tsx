@@ -18,12 +18,14 @@ const Container = styled.div`
     width: 3rem;
     height: 3rem;
     border-radius: 100%;
+    opacity: 0.6;
     background-color: ${props => props.theme.colors.bgGray};
     color: ${props => props.theme.colors.primaryBlack};
     transition: all 0.2s ease-in-out;
     &:hover {
       color: ${props => props.theme.colors.textWhite};
       background-color: ${props => props.theme.colors.secondaryRed};
+      opacity: 1;
     }
     &:active {
       scale: 1.1;

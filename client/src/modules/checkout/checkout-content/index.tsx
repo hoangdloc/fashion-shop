@@ -20,6 +20,10 @@ const Container = styled.section`
     flex-direction: column;
     gap: 1.6rem;
   }
+  @media ${props => props.theme.devices.mobile} {
+    flex-direction: column;
+    padding: 2.4rem 2.4rem 6rem 2.4rem;
+  }
 `;
 
 const CheckoutContentSection: React.FC = () => {

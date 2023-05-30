@@ -19,6 +19,10 @@ const Container = styled.aside`
   box-shadow: 0px 10.786210060119629px 18.783418655395508px 0px #00000009,
     0px 47px 113px 0px #00000012;
   padding: 3.2rem 4rem 4rem 4rem;
+  @media ${props => props.theme.devices.mobile} {
+    padding: 2.4rem 1.6rem;
+    width: 100%;
+  }
   & > .order-btn,
   .back-btn {
     text-transform: uppercase;
@@ -26,6 +30,10 @@ const Container = styled.aside`
     font-weight: 700;
     padding: 1.5rem 0;
     height: 5.2rem;
+    @media ${props => props.theme.devices.mobile} {
+      height: 4rem;
+      font-size: 1.4rem;
+    }
   }
 `;
 
@@ -35,16 +43,26 @@ const OrderInfoContainer = styled.div`
   gap: 2rem;
   min-width: 100%;
   margin-bottom: 3.7rem;
+  @media ${props => props.theme.devices.mobile} {
+    gap: 1.8rem;
+    margin-bottom: 3.2rem;
+  }
 `;
 
 const OrderContainerStyles = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
+  @media ${props => props.theme.devices.mobile} {
+    gap: 1.2rem;
+  }
   .ant-typography {
     margin: 0;
     &.title {
       font-size: 1.6rem;
+      @media ${props => props.theme.devices.mobile} {
+        font-size: 1.4rem;
+      }
     }
   }
 `;
@@ -59,6 +77,9 @@ const SummaryContainerStyles = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  @media ${props => props.theme.devices.mobile} {
+    gap: 1rem;
+  }
   & > .ant-typography {
     margin: 0;
   }
@@ -68,6 +89,9 @@ const SummaryContainerStyles = styled.ul`
     justify-content: space-between;
     & > .ant-typography {
       font-size: 1.4rem;
+      @media ${props => props.theme.devices.mobile} {
+        font-size: 1.2rem;
+      }
     }
   }
 `;
@@ -84,6 +108,9 @@ const TotalPrice = styled.div`
     font-weight: 700;
     font-size: 2rem;
     text-transform: uppercase;
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 1.8rem;
+    }
   }
 `;
 
@@ -112,7 +139,7 @@ const OrderInformation: React.FC = () => {
       });
       navigate(AppRoute.SHOP);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleBackToShopClick = (): void => {

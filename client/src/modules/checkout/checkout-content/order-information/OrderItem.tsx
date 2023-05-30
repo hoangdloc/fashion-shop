@@ -30,6 +30,9 @@ const Container = styled.figure`
   display: flex;
   align-items: center;
   gap: 2rem;
+  @media ${props => props.theme.devices.mobile} {
+    gap: 1.2rem;
+  }
 `;
 
 const OrderInfoContainer = styled.div`
@@ -39,6 +42,9 @@ const OrderInfoContainer = styled.div`
   justify-content: center;
   width: 100%;
   gap: 1rem;
+  @media ${props => props.theme.devices.mobile} {
+    gap: 0.4rem;
+  }
   & > .order-item-name {
     font-size: 1.4rem;
     font-weight: 400;
@@ -46,6 +52,9 @@ const OrderInfoContainer = styled.div`
     & > a:hover,
     a:link:hover {
       color: ${props => props.theme.colors.secondaryRed};
+    }
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 1.2rem;
     }
   }
 `;
@@ -58,12 +67,18 @@ const OrderItemInfo = styled.div`
   & > .order-item-category {
     font-size: 1.4rem;
     color: ${props => props.theme.colors.grayDarker};
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 1.2rem;
+    }
   }
   & > .order-item-price {
     display: flex;
     align-items: center;
     gap: 0.4rem;
     font-size: 1.6rem;
+    @media ${props => props.theme.devices.mobile} {
+      font-size: 1.4rem;
+    }
   }
 `;
 

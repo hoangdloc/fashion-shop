@@ -184,6 +184,7 @@ const MyFormItem = <T extends FieldValues>(
           >
             {state => (
               <p
+                className='error-text'
                 style={{
                   ...defaultErrorStyles,
                   ...transitionErrorStyle[state],
@@ -225,6 +226,7 @@ const MyFormItem = <T extends FieldValues>(
           >
             {state => (
               <p
+                className='error-text'
                 style={{
                   ...defaultErrorStyles,
                   ...transitionErrorStyle[state],
@@ -291,6 +293,7 @@ const MyFormItem = <T extends FieldValues>(
           >
             {state => (
               <p
+                className='error-text'
                 style={{
                   ...defaultErrorStyles,
                   ...transitionErrorStyle[state],
@@ -353,6 +356,7 @@ const MyFormItem = <T extends FieldValues>(
           >
             {state => (
               <p
+                className='error-text'
                 style={{
                   ...defaultErrorStyles,
                   ...transitionErrorStyle[state],
