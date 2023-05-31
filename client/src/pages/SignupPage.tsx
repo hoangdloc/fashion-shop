@@ -29,7 +29,8 @@ const SignupPageStyles = styled.main`
   @media ${props => props.theme.devices.mobile} {
     flex-direction: column;
     gap: 4rem;
-    height: 140vh;
+    height: max-content;
+    padding: 4rem 0;
   }
   .logo {
     width: 5.2rem;
@@ -143,7 +144,6 @@ const SignupPage: React.FC = () => {
   const {
     control,
     handleSubmit,
-    reset,
     formState: { isValid, errors }
   } = useForm<FormData>({
     resolver: yupResolver(schema),
@@ -161,11 +161,7 @@ const SignupPage: React.FC = () => {
       phoneNumber: data.phoneNumber,
       password: data.password
     };
-    await signup(newUser)
-      .unwrap()
-      .finally(() => {
-        reset(initialValues);
-      });
+    await signup(newUser).unwrap();
   });
 
   useLayoutEffect(() => {

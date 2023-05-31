@@ -106,7 +106,7 @@ const StepContainer = styled.div`
 `;
 
 const ForgotPasswordPage: React.FC = () => {
-  const [showSection, setShowSection] = useState<ShowSection>('password');
+  const [showSection, setShowSection] = useState<ShowSection>('email');
 
   useLayoutEffect(() => {
     document.title = 'Fashion | Forgot Password';
