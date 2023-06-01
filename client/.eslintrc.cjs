@@ -7,7 +7,8 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-    'standard-with-typescript'
+    'standard-with-typescript',
+    'plugin:storybook/recommended'
   ],
   overrides: [],
   parserOptions: {
@@ -18,7 +19,13 @@ module.exports = {
   },
   plugins: ['react', 'react-hooks'],
   rules: {
-    indent: ['error', 2, { SwitchCase: 1 }],
+    indent: [
+      'error',
+      2,
+      {
+        SwitchCase: 1
+      }
+    ],
     semi: ['error', 'always'],
     '@typescript-eslint/semi': 'off',
     'no-console': 'error',

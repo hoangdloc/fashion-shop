@@ -1,9 +1,25 @@
-import { Global, useTheme, css } from '@emotion/react';
+import '@fontsource/dm-sans/400.css';
+import '@fontsource/dm-sans/500.css';
+import '@fontsource/dm-sans/700.css';
+import '@fontsource/oxygen/300.css';
+import '@fontsource/oxygen/400.css';
+import '@fontsource/oxygen/700.css';
+import '@fontsource/playfair-display/400.css';
+import '@fontsource/playfair-display/500.css';
+import '@fontsource/playfair-display/600.css';
+import '@fontsource/playfair-display/700.css';
+import '@fontsource/rufina/400.css';
+import '@fontsource/rufina/700.css';
+import 'antd/dist/reset.css';
 import React from 'react';
+import { Global, ThemeProvider, css } from '@emotion/react';
+import { withThemeFromJSXProvider } from '@storybook/addon-styling';
+import { withRouter } from 'storybook-addon-react-router-v6';
+import type { Preview } from '@storybook/react';
 
-const EmotionGlobalStyles: React.FC = () => {
-  const theme = useTheme();
+import { theme } from '../src/config/theme';
 
+const GlobalStyles: React.FC = () => {
   return (
     <Global
       styles={css`
@@ -17,10 +33,10 @@ const EmotionGlobalStyles: React.FC = () => {
           scroll-behavior: smooth;
         }
         body {
-          font-family: ${theme.fontFamily.Oxygen};
+          font-family: 'Oxygen', sans-serif;
           line-height: 1;
           font-weight: 400;
-          color: ${theme.colors.primaryBlack};
+          color: #2B2F32;
           text-rendering: optimizeLegibility;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
@@ -32,7 +48,7 @@ const EmotionGlobalStyles: React.FC = () => {
         }
         a:hover,
         a:active {
-          color: ${theme.colors.secondaryRed};
+          color: #C97178;
         }
         ul {
           margin: 0;
@@ -45,7 +61,7 @@ const EmotionGlobalStyles: React.FC = () => {
           cursor: pointer;
         }
         hr {
-          border: 0.05rem solid ${theme.colors.horizontalColor};
+          border: 0.05rem solid #D5D5D6;
         }
         figure {
           margin: 0;
@@ -70,9 +86,9 @@ const EmotionGlobalStyles: React.FC = () => {
           }
           &
             .ant-select-item.ant-select-item-option.ant-select-item-option-selected {
-            background-color: ${theme.colors.secondaryRed};
+            background-color: #C97178;
             & > .ant-select-item-option-content {
-              color: ${theme.colors.textWhite};
+              color: #FFFFFF;
             }
           }
         }
@@ -92,4 +108,27 @@ const EmotionGlobalStyles: React.FC = () => {
   );
 };
 
-export default EmotionGlobalStyles;
+const preview: Preview = {
+  parameters: {
+    actions: { argTypesRegex: '^on[A-Z].*' },
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/
+      }
+    }
+  },
+  decorators: [
+    withRouter,
+    withThemeFromJSXProvider({
+      Provider: ThemeProvider,
+      themes: {
+        primary: theme
+      },
+      defaultTheme: 'primary',
+      GlobalStyles
+    })
+  ]
+};
+
+export default preview;

@@ -38,7 +38,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       </ReduxProvider>
     </EmotionThemeProvider>
     <ToastContainer
-      autoClose={false}
+      autoClose={5000}
       draggablePercent={60}
       position={toast.POSITION.BOTTOM_RIGHT}
       theme="light"

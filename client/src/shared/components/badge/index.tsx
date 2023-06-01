@@ -1,4 +1,3 @@
-import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
 import React from 'react';
 
@@ -7,20 +6,19 @@ interface MyBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   label?: React.ReactNode
 }
 
-const MyBadgeStyles = styled('span', {
-  shouldForwardProp: prop => isPropValid(prop) && prop !== 'color'
-})(props => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '0.4rem 1.2rem',
-  backgroundColor: props.color,
-  fontSize: '1.4rem',
-  fontWeight: 700,
-  textTransform: 'uppercase',
-  color: props.theme.colors.textWhite,
-  userSelect: 'none'
-}));
+const MyBadgeStyles = styled.span<{ color: string }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  background-color: ${props => props.color};
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: ${props => props.theme.colors.textWhite};
+  user-select: none;
+  width: max-content;
+`;
 
 const MyBadge: React.FC<MyBadgeProps> = props => {
   const { label = 'Hot', color = '#C97178', ...rest } = props;

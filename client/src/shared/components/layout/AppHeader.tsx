@@ -24,6 +24,7 @@ import { authApi } from '~/store/auth/authService';
 import type { RootState } from '~/store/store';
 import { Icon } from '../icon';
 import BurgerPopup from './BurgerPopup';
+import { useMedia } from '~/shared/hooks/useMedia';
 
 const LayoutHeader = styled(Layout.Header)`
   position: sticky;
@@ -190,6 +191,11 @@ const AppHeader: React.FC = () => {
   const { cart, cartTotal } = useCart();
   const [trigger] = authApi.useLazyUserLogoutQuery();
   const scrollDirection = useScrollDirection();
+  const isDesktop = useMedia<boolean>(
+    ['(min-width: 37.5em)', '(min-width: 0)'],
+    [true, false],
+    true
+  );
 
   const detailItems: MenuProps['items'] = [
     {
@@ -344,7 +350,7 @@ const AppHeader: React.FC = () => {
             $ {cartTotal.toFixed(2)}
           </Typography.Text>
         </CutomerCart>
-        <BurgerPopup className="burger-section" />
+        {!isDesktop && <BurgerPopup className="burger-section" />}
       </MainNav>
     </LayoutHeader>
   );
