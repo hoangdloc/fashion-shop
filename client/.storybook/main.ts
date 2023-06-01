@@ -9,7 +9,8 @@ const config: StorybookConfig = {
         esModuleInterop: false,
       },
       propFilter: () => true
-    }
+    },
+    check: false
   },
   addons: [
     '@storybook/addon-links',

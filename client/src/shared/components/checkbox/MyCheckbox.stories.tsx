@@ -7,8 +7,7 @@ const meta: Meta<typeof MyCheckbox> = {
   tags: ['autodocs'],
   argTypes: {
     checked: {
-      table: { defaultValue: { summary: false } },
-      description: 'HTML Attributes',
+      table: { defaultValue: { summary: false }, type: { summary: 'boolean' } },
       control: { type: 'boolean' }
     }
   }

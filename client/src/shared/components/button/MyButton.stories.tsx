@@ -12,12 +12,14 @@ const meta: Meta<typeof MyButton> = {
   tags: ['autodocs'],
   argTypes: {
     disabled: {
-      table: { defaultValue: { summary: false } },
-      description: 'HTML Attributes',
+      table: { defaultValue: { summary: false }, type: { summary: 'boolean' } },
       control: { type: 'boolean' }
     },
     htmlType: {
-      table: { defaultValue: { summary: 'button' } }
+      table: {
+        defaultValue: { summary: 'button' },
+        type: { summary: 'primary | dashed | ghost | text | link | default' }
+      }
     },
     loading: {
       table: { defaultValue: { summary: false }, type: { summary: 'boolean' } },
