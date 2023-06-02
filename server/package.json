@@ -4,12 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
     "start:build": "tsc -w",
     "start:run": "nodemon build/index.js",
-    "start:dev": "concurrently npm:start:*",
-    "start": "ts-node src/index.ts",
-    "vercel-build": "echo vercel-build"
+    "start": "concurrently npm:start:*"
   },
   "keywords": [],
   "author": "",
