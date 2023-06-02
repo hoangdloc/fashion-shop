@@ -200,7 +200,7 @@ const SignupPage: React.FC = () => {
             textAlign: 'center'
           }}
         >
-          Welcome back!
+          Shopping today!
         </Typography.Title>
         <Typography.Text
           style={{
