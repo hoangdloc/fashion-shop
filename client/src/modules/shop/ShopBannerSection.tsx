@@ -8,11 +8,11 @@ import bannerWomen from '~/assets/images/banner-women.png';
 import bannerMen from '~/assets/images/banner-men.png';
 import bannerUnisex from '~/assets/images/banner-unisex.png';
 
-enum ShopLocation {
-  WOMEN = `${AppRoute.SHOP}/${ShopRoute.WOMEN}`,
-  MEN = `${AppRoute.SHOP}/${ShopRoute.MEN}`,
-  UNISEX = `${AppRoute.SHOP}/${ShopRoute.UNISEX}`
-}
+const ShopLocation = {
+  WOMEN: `${AppRoute.SHOP}/${ShopRoute.WOMEN}`,
+  MEN: `${AppRoute.SHOP}/${ShopRoute.MEN}`,
+  UNISEX: `${AppRoute.SHOP}/${ShopRoute.UNISEX}`
+};
 
 const ShopBannerSectionStyles = styled.section<{ imageUrl: string }>`
   width: 100%;

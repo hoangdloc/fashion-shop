@@ -26,10 +26,10 @@ app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
 
-// FAKE RESPONSE WAITING
-app.use((req: Request, res: Response, next: NextFunction) => {
-  setTimeout(() => next(), 1000);
-});
+// // FAKE RESPONSE WAITING
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   setTimeout(() => next(), 1000);
+// });
 
 app.use('/api/v1/clothes', clothesRouter);
 app.use('/api/v1/users', userRouter);
