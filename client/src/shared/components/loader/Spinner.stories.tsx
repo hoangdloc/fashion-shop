@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { theme } from '~/config/theme';
-import { Spinner } from '.';
+import Spinner from '~/shared/components/loader/Spinner';
 
 const meta: Meta<typeof Spinner> = {
   /* 👇 The title prop is optional.
@@ -22,12 +22,17 @@ const meta: Meta<typeof Spinner> = {
   },
   argTypes: {
     size: {
-      table: { defaultValue: { summary: '"24"' } },
-      description: 'Only number or string digits. Not accept length unit'
+      table: {
+        defaultValue: { summary: '"24"' },
+        type: { summary: 'string | number' }
+      }
     },
     color: {
-      table: { defaultValue: { summary: '"#2B2F32"' } },
-      description: 'Color of spinner'
+      table: {
+        defaultValue: { summary: '"#2B2F32"' },
+        type: { summary: 'string' }
+      },
+      description: 'Color code'
     }
   }
 };

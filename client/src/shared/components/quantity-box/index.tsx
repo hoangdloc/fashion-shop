@@ -36,25 +36,23 @@ const QuantityBoxContainer = styled.div`
   }
 `;
 
-const QuantityBox: React.FC<QuantityBoxProps> = props => {
-  const {
-    handlePlus,
-    handleSubtract,
-    plusIcon = '+',
-    substractIcon = '-',
-    initialValue = 1,
-    plusBtnClassName,
-    substratBtnClassName,
-    quantityClassName,
-    containerClassName,
-    btnClassName,
-    plusBtnStyle,
-    substractBtnStyle,
-    containerStyle,
-    quantityStyle,
-    btnStyle
-  } = props;
-
+const QuantityBox: React.FC<QuantityBoxProps> = ({
+  handlePlus,
+  handleSubtract,
+  plusIcon = '+',
+  substractIcon = '-',
+  initialValue = 1,
+  plusBtnClassName,
+  substratBtnClassName,
+  quantityClassName,
+  containerClassName,
+  btnClassName,
+  plusBtnStyle,
+  substractBtnStyle,
+  containerStyle,
+  quantityStyle,
+  btnStyle
+}) => {
   return (
     <QuantityBoxContainer
       style={containerStyle}

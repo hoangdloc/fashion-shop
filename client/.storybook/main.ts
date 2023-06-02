@@ -2,15 +2,10 @@ import type { StorybookConfig } from '@storybook/react-vite';
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   typescript: {
-    reactDocgen: 'react-docgen-typescript',
-    reactDocgenTypescriptOptions: {
-      compilerOptions: {
-        allowSyntheticDefaultImports: false,
-        esModuleInterop: false,
-      },
-      propFilter: () => true
-    },
-    check: false
+    // Overrides the default Typescript configuration to allow multi-package components to be documented via Autodocs.
+    reactDocgen: 'react-docgen',
+    skipBabel: true,
+    check: false,
   },
   addons: [
     '@storybook/addon-links',

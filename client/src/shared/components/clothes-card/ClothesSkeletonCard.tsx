@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import { Skeleton } from 'antd';
 import React from 'react';
 
-const ClothesSkeletonCardStyles = styled('div')(() => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '2rem'
-}));
+const ClothesSkeletonCardStyles = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+`;
 
 const ClothesSkeletonCard: React.FC = () => {
   return (

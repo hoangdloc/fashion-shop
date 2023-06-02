@@ -8,8 +8,10 @@ const meta: Meta<typeof MyBadge> = {
   tags: ['autodocs'],
   argTypes: {
     label: {
-      table: { defaultValue: { summary: '"Hot"' } },
-      description: 'ReactNode'
+      table: {
+        defaultValue: { summary: '"Hot"' },
+        type: { summary: 'ReactNode' }
+      }
     },
     color: {
       table: {

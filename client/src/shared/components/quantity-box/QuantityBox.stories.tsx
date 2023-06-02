@@ -1,13 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import QuantityBox from '.';
+import QuantityBox from '~/shared/components/quantity-box';
 
-const meta: Meta<typeof QuantityBox> = {
+const meta = {
   title: 'Components/QuantityBox',
   component: QuantityBox,
   tags: ['autodocs'],
-  args: {},
-  argTypes: {}
-};
+  argTypes: {
+    handleSubtract: {
+      table: { type: { summary: '() => void' } }
+    },
+    handlePlus: {
+      table: { type: { summary: '() => void' } }
+    },
+    plusIcon: {
+      table: { type: { summary: 'ReactNode' } }
+    }
+  }
+} satisfies Meta<typeof QuantityBox>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
