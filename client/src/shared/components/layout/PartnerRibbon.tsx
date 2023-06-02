@@ -2,6 +2,7 @@ import 'swiper/css';
 
 import styled from '@emotion/styled';
 import React from 'react';
+import { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import hausLogo from '~/assets/logos/haus-logo.svg';
@@ -72,8 +73,10 @@ const PartnerRibbon: React.FC = () => {
         ))}
       {isCarousel && (
         <Swiper
+          modules={[Autoplay]}
           grabCursor
           slidesPerView={2}
+          autoplay={{ delay: 1000 }}
         >
           {imgItems.map((item, index) => (
             <SwiperSlide
